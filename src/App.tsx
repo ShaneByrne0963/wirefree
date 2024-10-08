@@ -1,9 +1,11 @@
 import NavBar from './NavBar';
-
-import Download from './Download';
+import SidePanel from './SidePanel';
 
 function App() {
-  return <NavBar></NavBar>;
+  return <>
+    <NavBar></NavBar>
+    <SidePanel></SidePanel>
+  </>;
 }
 
 export default App

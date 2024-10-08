@@ -1,0 +1,16 @@
+#root {
+    height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+#nav-bar {
+    grid-column-start: 1;
+    grid-column-end: 5;
+}
+
+#side-panel {
+    height: 100%;
+    background-color: lightgray;
+}
