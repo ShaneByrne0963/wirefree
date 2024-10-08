@@ -1,5 +1,5 @@
-import NavBar from './components/main/NavBar';
-import SidePanel from './components/main/SidePanel';
+import NavBar from './components/navbar/NavBar';
+import SidePanel from './components/side-panel/SidePanel';
 
 function App() {
   return <>

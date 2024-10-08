@@ -5,12 +5,29 @@
     grid-template-columns: repeat(4, 1fr);
 }
 
+/* Navigation Bar */
+
 #nav-bar {
     grid-column-start: 1;
     grid-column-end: 5;
 }
 
+/* Side Panel */
+
 #side-panel {
     height: 100%;
-    background-color: lightgray;
+    padding: 4px;
+}
+
+#selected-page {
+    font-size: 1.5em;
+    font-weight: bold;
+    border: 1px solid black;
+    background: linear-gradient(0deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 100%);
+    border-radius: 8px;
+    padding-left: 4px;
+    padding-right: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
