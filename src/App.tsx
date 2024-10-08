@@ -1,7 +1,9 @@
+import NavBar from './NavBar';
+
 import Download from './Download';
 
 function App() {
-  return <Download></Download>;
+  return <NavBar></NavBar>;
 }
 
 export default App
