@@ -1,11 +1,11 @@
 import PageName from "./PageName";
-import ScreenSelect from "./ScreenSelect";
+import SidePanelWindow from "./ScreenSelect";
 
 function SidePanel() {
   return (
     <div id="side-panel" className="red lighten-3">
       <PageName></PageName>
-      <ScreenSelect></ScreenSelect>
+      <SidePanelWindow windowType="screen"></SidePanelWindow>
     </div>
   );
 }
