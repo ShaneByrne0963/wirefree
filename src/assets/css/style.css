@@ -12,13 +12,14 @@
     grid-column-end: 5;
     height: 32px;
     line-height: 32px;
+    z-index: 1;
 }
 
 /* Side Panel */
 
 #side-panel {
     height: 100%;
-    padding: 4px;
+    padding: 8px 4px;
 }
 
 #selected-page {
