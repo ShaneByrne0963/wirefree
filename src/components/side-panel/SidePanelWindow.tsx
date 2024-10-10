@@ -1,5 +1,6 @@
 type SidePanelWindowProps = {
   windowType: string;
+  label?: string;
 }
 
 type WindowComponentProps = {
@@ -9,11 +10,15 @@ type WindowComponentProps = {
 function SidePanelWindow(props: SidePanelWindowProps) {
   let windowSize = "md";
   switch (props.windowType) {
-
+    case "layers":
+      windowSize = "lg";
+      break;
+    default:
+      break;
   }
   return (
     <>
-      <div className="side-panel-label">Screen</div>
+      {props.label && <div className="side-panel-label">{props.label}</div>}
       <WindowComponent size={windowSize}></WindowComponent>
     </>
   );
