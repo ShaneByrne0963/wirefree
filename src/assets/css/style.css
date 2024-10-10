@@ -19,43 +19,45 @@
 
 #side-panel {
     height: 100%;
-    padding: 8px 4px;
+    padding-top: 8px;
+    border-right: 1px solid rgba(0,0,0,0.5);
 }
 
 #selected-page {
     border: 1px solid black;
     background: linear-gradient(0deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 100%);
     border-radius: 8px;
-    padding-left: 8px;
+    padding-left: 4px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 12px;
+    margin: 0 4px 12px 4px;
 }
 
 .side-panel-label {
     font-size: 1.2em;
     font-weight: bold;
+    margin-left: 4px;
 }
 
 .side-panel-window {
     background-color: white;
     width: 100%;
-    border: 1px solid black;
-    border-radius: 8px;
+    border-top: 1px solid rgba(0,0,0,0.5);
+    border-bottom: 1px solid rgba(0,0,0,0.5);
     margin-bottom: 8px;
 }
 
 .side-panel-window.sm {
-    height: 64px;
-}
-
-.side-panel-window.md {
     height: 96px;
 }
 
-.side-panel-window.lg {
+.side-panel-window.md {
     height: 128px;
+}
+
+.side-panel-window.lg {
+    height: 160px;
 }
 
 /* Shapes */
@@ -63,10 +65,12 @@
 #shape-palette {
     display: grid;
     grid-template-rows: 1fr 1fr;
+    padding: 0 4px;
 }
 
 .shape-button {
     width: 100%;
     aspect-ratio: 1 / 1;
-    border: 1px solid black;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    background-color: rgba(0,0,0,0.1);
 }
