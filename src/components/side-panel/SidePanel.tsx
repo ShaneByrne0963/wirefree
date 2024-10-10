@@ -1,18 +1,17 @@
 import PageName from "./PageName";
 import SidePanelWindow from "./SidePanelWindow";
 import ShapePalette from "./ShapePalette";
+import { useContext } from "react";
+import { ThemeContext } from "../../context";
 
-type SidePanelProps = {
-  color: string;
-};
-
-function SidePanel(props: SidePanelProps) {
+function SidePanel() {
+  const color = useContext(ThemeContext);
   return (
-    <div id="side-panel" className={props.color + " lighten-3"}>
+    <div id="side-panel" className={color + " lighten-3"}>
       <PageName></PageName>
-      <SidePanelWindow windowType="screen" label="Screen" color={props.color}></SidePanelWindow>
-      <SidePanelWindow windowType="layers" label="Layers" color={props.color}></SidePanelWindow>
-      <ShapePalette color={props.color}></ShapePalette>
+      <SidePanelWindow windowType="screen" label="Screen"></SidePanelWindow>
+      <SidePanelWindow windowType="layers" label="Layers"></SidePanelWindow>
+      <ShapePalette color={color}></ShapePalette>
     </div>
   );
 }
