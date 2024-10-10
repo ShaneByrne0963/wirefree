@@ -43,6 +43,7 @@
     width: 100%;
     border: 1px solid black;
     border-radius: 8px;
+    margin-bottom: 8px;
 }
 
 .side-panel-window.sm {
@@ -55,4 +56,17 @@
 
 .side-panel-window.lg {
     height: 128px;
+}
+
+/* Shapes */
+
+#shape-palette {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+}
+
+.shape-button {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border: 1px solid black;
 }

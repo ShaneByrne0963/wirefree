@@ -1,12 +1,14 @@
+import SidePanelLabel from "./SidePanelLabel";
+
 type SidePanelWindowProps = {
   windowType: string;
   label?: string;
   color: string;
-}
+};
 
 type WindowComponentProps = {
   size: string;
-}
+};
 
 function SidePanelWindow(props: SidePanelWindowProps) {
   let windowSize = "md";
@@ -19,7 +21,7 @@ function SidePanelWindow(props: SidePanelWindowProps) {
   }
   return (
     <>
-      {props.label && <div className={"side-panel-label " + props.color + "-text text-darken-4"}>{props.label}</div>}
+      {props.label && <SidePanelLabel color={props.color} text={props.label}></SidePanelLabel>}
       <WindowComponent size={windowSize}></WindowComponent>
     </>
   );
