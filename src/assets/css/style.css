@@ -2,14 +2,14 @@
     height: 100vh;
     display: grid;
     grid-template-rows: auto 1fr;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: 25vw 1fr;
 }
 
 /* Navigation Bar */
 
 #nav-bar {
     grid-column-start: 1;
-    grid-column-end: 5;
+    grid-column-end: 3;
     height: 32px;
     line-height: 32px;
     z-index: 1;
@@ -58,6 +58,22 @@
 
 .side-panel-window.lg {
     height: 160px;
+}
+
+.window-content-container {
+    height: 100%;
+    overflow: auto;
+}
+
+#window-screen>.window-content-container {
+    display: flex;
+    white-space: nowrap;
+}
+
+.screen-size-select-button {
+    height: 100%;
+    aspect-ratio: 3 / 4;
+    border-right: 1px solid rgba(0,0,0,0.3);
 }
 
 /* Shapes */

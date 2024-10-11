@@ -6,7 +6,7 @@ import { ThemeContext } from "../../context";
 
 // The size of the window depending on the type
 const windowSizes = {
-  screen: "sm",
+  screen: "md",
   layers: "lg",
 };
 
@@ -15,10 +15,12 @@ const windowSizes = {
 type SidePanelWindowProps = {
   windowType: string;
   label?: string;
+  canOverflow?: boolean;
 };
 
 type WindowComponentProps = {
   windowType: string;
+  canOverflow: boolean;
 };
 
 ///////// Components
@@ -30,7 +32,10 @@ function SidePanelWindow(props: SidePanelWindowProps) {
       {props.label && (
         <SidePanelLabel color={color} text={props.label}></SidePanelLabel>
       )}
-      <WindowComponent windowType={props.windowType}></WindowComponent>
+      <WindowComponent
+        windowType={props.windowType}
+        canOverflow={props.canOverflow === true}
+      ></WindowComponent>
     </>
   );
 
@@ -52,7 +57,13 @@ function WindowComponent(props: WindowComponentProps) {
     <div
       id={"window-" + props.windowType}
       className={"side-panel-window " + windowSize}
-    ></div>
+    >
+      {props.canOverflow && (
+        <div className="window-content-container">
+          <div className="screen-size-select-button"></div>
+        </div>
+      )}
+    </div>
   );
 }
 

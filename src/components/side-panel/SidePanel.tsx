@@ -9,7 +9,11 @@ function SidePanel() {
   return (
     <div id="side-panel" className={color + " lighten-3"}>
       <PageName></PageName>
-      <SidePanelWindow windowType="screen" label="Screen"></SidePanelWindow>
+      <SidePanelWindow
+        windowType="screen"
+        label="Screen"
+        canOverflow={true}
+      ></SidePanelWindow>
       <SidePanelWindow windowType="layers" label="Layers"></SidePanelWindow>
       <ShapePalette color={color}></ShapePalette>
     </div>
