@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import SidePanelLabel from "./SidePanelLabel";
 import { ThemeContext } from "../../context";
+import ScreenSizeButton from "./ScreenSizeButton";
 
 ///////// Configuration
 
@@ -60,7 +61,21 @@ function WindowComponent(props: WindowComponentProps) {
     >
       {props.canOverflow && (
         <div className="window-content-container">
-          <div className="screen-size-select-button"></div>
+          <ScreenSizeButton
+            name="Desktop"
+            width={1920}
+            height={1080}
+          ></ScreenSizeButton>
+          <ScreenSizeButton
+            name="Tablet"
+            width={1200}
+            height={800}
+          ></ScreenSizeButton>
+          <ScreenSizeButton
+            name="Mobile"
+            width={768}
+            height={1024}
+          ></ScreenSizeButton>
         </div>
       )}
     </div>
