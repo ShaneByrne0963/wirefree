@@ -2,6 +2,7 @@ type ScreenSizeButtonProps = {
   name: string;
   width: number;
   height: number;
+  selected?: boolean;
 };
 
 function ScreenSizeButton(props: ScreenSizeButtonProps) {
@@ -14,7 +15,9 @@ function ScreenSizeButton(props: ScreenSizeButtonProps) {
   return (
     <div
       id={"select-screen-" + props.name}
-      className="screen-size-select-button"
+      className={
+        "screen-size-select-button" + (props.selected ? " selected" : "")
+      }
     >
       <div className="screen-blueprint-container">
         <div
@@ -27,7 +30,7 @@ function ScreenSizeButton(props: ScreenSizeButtonProps) {
           <strong>{props.name}</strong>
         </div>
         <small>
-          {props.width} &times; {props.height}
+          {props.width}&times;{props.height}
         </small>
       </div>
     </div>

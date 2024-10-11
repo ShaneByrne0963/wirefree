@@ -7,7 +7,7 @@ import ScreenSizeButton from "./ScreenSizeButton";
 
 // The size of the window depending on the type
 const windowSizes = {
-  screen: "md",
+  screen: "sm",
   layers: "lg",
 };
 
@@ -65,6 +65,7 @@ function WindowComponent(props: WindowComponentProps) {
             name="Desktop"
             width={1920}
             height={1080}
+            selected={true}
           ></ScreenSizeButton>
           <ScreenSizeButton
             name="Tablet"

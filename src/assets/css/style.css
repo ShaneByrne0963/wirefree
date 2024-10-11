@@ -3,6 +3,7 @@
     display: grid;
     grid-template-rows: auto 1fr;
     grid-template-columns: 25vw 1fr;
+    background-color: #DFDFDF;
 }
 
 /* Navigation Bar */
@@ -80,6 +81,10 @@
     flex-direction: column;
     align-items: center;
     justify-content: end;
+}
+
+.screen-size-select-button.selected {
+    background-color: #D5D5FC;
 }
 
 .screen-blueprint-container {
