@@ -1,7 +1,7 @@
 #root {
     height: 100vh;
     display: grid;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: 32px calc(100vh - 32px);
     grid-template-columns: 25vw 1fr;
     background-color: #DFDFDF;
 }
