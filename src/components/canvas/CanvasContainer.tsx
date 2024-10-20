@@ -1,9 +1,13 @@
 import Canvas from "./Canvas";
 
-function CanvasContainer() {
+interface Props {
+  canvasRatio: number;
+}
+
+function CanvasContainer(props: Props) {
   return (
     <div id="canvas-container">
-      <Canvas width={1920} height={1080}></Canvas>
+      <Canvas ratio={props.canvasRatio}></Canvas>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import SidePanelLabel from "./SidePanelLabel";
 import { ThemeContext } from "../../context";
 import ScreenSizeButton from "./ScreenSizeButton";
@@ -17,11 +17,13 @@ type SidePanelWindowProps = {
   windowType: string;
   label?: string;
   canOverflow?: boolean;
+  componentClick?: any;
 };
 
 type WindowComponentProps = {
   windowType: string;
   canOverflow: boolean;
+  componentClick?: any;
 };
 
 ///////// Components
@@ -36,6 +38,7 @@ function SidePanelWindow(props: SidePanelWindowProps) {
       <WindowComponent
         windowType={props.windowType}
         canOverflow={props.canOverflow === true}
+        componentClick={props.componentClick}
       ></WindowComponent>
     </>
   );
@@ -53,7 +56,8 @@ function SidePanelWindow(props: SidePanelWindowProps) {
 
 function WindowComponent(props: WindowComponentProps) {
   // Get the size of the window based on the type
-  let windowSize = windowSizes[props.windowType as keyof typeof windowSizes];
+  const windowSize = windowSizes[props.windowType as keyof typeof windowSizes];
+  const [selectedIndex, setSelectedIndex] = useState(0);
   return (
     <div
       id={"window-" + props.windowType}
@@ -65,17 +69,31 @@ function WindowComponent(props: WindowComponentProps) {
             name="Desktop"
             width={1920}
             height={1080}
-            selected={true}
+            selected={selectedIndex === 0}
+            handler={() => {
+              setSelectedIndex(0);
+              props.componentClick(1920 / 1080);
+            }}
           ></ScreenSizeButton>
           <ScreenSizeButton
             name="Tablet"
             width={1200}
             height={800}
+            selected={selectedIndex === 1}
+            handler={() => {
+              setSelectedIndex(1);
+              props.componentClick(1200 / 800);
+            }}
           ></ScreenSizeButton>
           <ScreenSizeButton
             name="Mobile"
             width={768}
             height={1024}
+            selected={selectedIndex === 2}
+            handler={() => {
+              setSelectedIndex(2);
+              props.componentClick(768 / 1024);
+            }}
           ></ScreenSizeButton>
         </div>
       )}

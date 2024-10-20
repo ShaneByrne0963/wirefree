@@ -88,6 +88,10 @@
 }
 
 .screen-size-select-button.selected {
+    cursor: default;
+}
+
+.screen-size-select-button.selected {
     background-color: #D5D5FC;
 }
 
