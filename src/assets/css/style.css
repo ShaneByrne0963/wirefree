@@ -67,12 +67,18 @@
 
 .window-content-container {
     height: 100%;
-    overflow: auto;
+}
+
+#window-screen {
+    position: relative;
+    overflow-x: auto;
 }
 
 #window-screen>.window-content-container {
+    position: absolute;
+    top: 0;
+    left: 0;
     display: flex;
-    white-space: nowrap;
     max-height: 100%;
 }
 
@@ -89,9 +95,6 @@
 
 .screen-size-select-button.selected {
     cursor: default;
-}
-
-.screen-size-select-button.selected {
     background-color: #D5D5FC;
 }
 

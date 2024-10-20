@@ -11,6 +11,13 @@ const windowSizes = {
   layers: "lg",
 };
 
+// What screen sizes are displayed on page load
+const defaultAppliedScreenSizes = [
+  { name: "Desktop", width: 1920, height: 1080 },
+  { name: "Tablet", width: 1200, height: 800 },
+  { name: "Mobile", width: 768, height: 1024 },
+];
+
 ///////// Property Types
 
 type SidePanelWindowProps = {
@@ -65,36 +72,21 @@ function WindowComponent(props: WindowComponentProps) {
     >
       {props.canOverflow && (
         <div className="window-content-container">
-          <ScreenSizeButton
-            name="Desktop"
-            width={1920}
-            height={1080}
-            selected={selectedIndex === 0}
-            handler={() => {
-              setSelectedIndex(0);
-              props.componentClick(1920 / 1080);
-            }}
-          ></ScreenSizeButton>
-          <ScreenSizeButton
-            name="Tablet"
-            width={1200}
-            height={800}
-            selected={selectedIndex === 1}
-            handler={() => {
-              setSelectedIndex(1);
-              props.componentClick(1200 / 800);
-            }}
-          ></ScreenSizeButton>
-          <ScreenSizeButton
-            name="Mobile"
-            width={768}
-            height={1024}
-            selected={selectedIndex === 2}
-            handler={() => {
-              setSelectedIndex(2);
-              props.componentClick(768 / 1024);
-            }}
-          ></ScreenSizeButton>
+          {defaultAppliedScreenSizes.map((item, index) => {
+            return (
+              <ScreenSizeButton
+                name={item.name}
+                key={item.name}
+                width={item.width}
+                height={item.height}
+                selected={selectedIndex === index}
+                handler={() => {
+                  setSelectedIndex(index);
+                  props.componentClick(item.width / item.height);
+                }}
+              ></ScreenSizeButton>
+            );
+          })}
         </div>
       )}
     </div>
