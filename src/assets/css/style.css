@@ -126,6 +126,16 @@
     line-height: 1;
 }
 
+#add-screen-size {
+    height: 100%;
+    aspect-ratio: 1 / 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #808080;
+}
+
 /* Shapes */
 
 #shape-palette {

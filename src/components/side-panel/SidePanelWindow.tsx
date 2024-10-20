@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import SidePanelLabel from "./SidePanelLabel";
 import { ThemeContext } from "../../context";
 import ScreenSizeButton from "./ScreenSizeButton";
+import AddScreenSize from "./AddScreenSize";
 
 ///////// Configuration
 
@@ -87,6 +88,7 @@ function WindowComponent(props: WindowComponentProps) {
               ></ScreenSizeButton>
             );
           })}
+          <AddScreenSize></AddScreenSize>
         </div>
       )}
     </div>
