@@ -1,7 +1,11 @@
+:root {
+    --nav-height: 32px;
+}
+
 #root {
     height: 100vh;
     display: grid;
-    grid-template-rows: 32px calc(100vh - 32px);
+    grid-template-rows: 32px calc(100vh - var(--nav-height));
     grid-template-columns: 25vw 1fr;
     background-color: #DFDFDF;
 }
@@ -11,8 +15,8 @@
 #nav-bar {
     grid-column-start: 1;
     grid-column-end: 3;
-    height: 32px;
-    line-height: 32px;
+    height: var(--nav-height);
+    line-height: var(--nav-height);
     z-index: 1;
 }
 
