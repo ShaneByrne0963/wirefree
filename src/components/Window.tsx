@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../state/store";
 import { useContext } from "react";
 import { ThemeContext } from "../context";
+import { closeWindow } from "../state/window/WindowSlice";
 
 interface WindowContainerProps {
   status: string;
@@ -22,7 +23,11 @@ function Window() {
   const dispatch = useDispatch();
   return (
     <div id="window" className="z-depth-2">
-      <div id="window-top" className={color + " lighten-2 z-depth-1"}></div>
+      <div id="window-top" className={color + " lighten-2 z-depth-1"}>
+        <button className="close plain" onClick={() => dispatch(closeWindow())}>
+          &times;
+        </button>
+      </div>
     </div>
   );
 }

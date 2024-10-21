@@ -21,4 +21,12 @@
 
 #window-top {
   height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+#window-top>.close {
+  font-size: 2em;
+  cursor: pointer;
 }
