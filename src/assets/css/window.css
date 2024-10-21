@@ -1,0 +1,20 @@
+#window-container {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+#window-container.active {
+  display: flex;
+}
+
+#window {
+  min-width: 300px;
+}
+
+#window-top {
+  height: 32px;
+}
