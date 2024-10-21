@@ -10,6 +10,14 @@
     background-color: #DFDFDF;
 }
 
+button.plain,
+button.plain:hover,
+button.plain:focus,
+button.plain:active {
+    border: none;
+    background: none;
+}
+
 /* Navigation Bar */
 
 #nav-bar {

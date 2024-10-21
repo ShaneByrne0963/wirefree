@@ -13,6 +13,10 @@
 
 #window {
   min-width: 300px;
+  min-height: 500px;
+  background-color: #FDFDFD;
+  border-radius: 4px;
+  overflow: hidden;
 }
 
 #window-top {
