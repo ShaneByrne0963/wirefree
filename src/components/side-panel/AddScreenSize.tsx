@@ -7,7 +7,7 @@ function AddScreenSize() {
     <button
       id="add-screen-size"
       className="plain"
-      onClick={() => dispatch(setWindow())}
+      onClick={() => dispatch(setWindow("addScreenSize"))}
     >
       <i className="small material-icons">add</i>
     </button>
