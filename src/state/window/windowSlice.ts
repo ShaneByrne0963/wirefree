@@ -18,7 +18,7 @@ const windowProperties = {
   addScreenSize: {
     label: "Add Screen Size",
     width: 400,
-    height: 500
+    height: 500,
   }
 }
 

@@ -48,3 +48,24 @@
   margin-bottom: 4px;
   cursor: pointer;
 }
+
+#window-body {
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 100%;
+  padding: 8px;
+}
+
+/* Add Screen Sizes */
+
+.screen-size-radio-text {
+  display: inline-block;
+  width: 100%;
+}
+
+.screen-size-radio-text>div {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

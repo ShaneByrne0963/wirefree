@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { setWindow } from "../../state/window/WindowSlice";
+import { setWindow } from "../../state/window/windowSlice";
 
 function AddScreenSize() {
   const dispatch = useDispatch();

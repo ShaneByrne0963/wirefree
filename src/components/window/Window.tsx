@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../state/store";
+import { RootState } from "../../state/store";
 import { useContext } from "react";
-import { ThemeContext } from "../context";
-import { closeWindow } from "../state/window/WindowSlice";
+import { ThemeContext } from "../../context";
+import { closeWindow } from "../../state/window/windowSlice";
+import AddScreenSizeWindow from "./AddScreenSizeWindow";
 
 function WindowContainer() {
   const isActive = useSelector((state: RootState) => state.window.active);
-  console.log(isActive);
 
   return (
     <div id="window-container" className={isActive ? "active" : ""}>
@@ -34,6 +34,11 @@ function Window() {
         <button className="close plain" onClick={() => dispatch(closeWindow())}>
           &times;
         </button>
+      </div>
+      <div id="window-body">
+        {label === "Add Screen Size" && (
+          <AddScreenSizeWindow></AddScreenSizeWindow>
+        )}
       </div>
     </div>
   );
