@@ -20,11 +20,9 @@ function Window() {
   const dispatch = useDispatch();
   const label = useSelector((state: RootState) => state.window.label);
   const width = useSelector((state: RootState) => state.window.width);
-  const height = useSelector((state: RootState) => state.window.height);
 
   const windowCss = {
-    "--width": `${width}px`,
-    "--height": `${height}px`,
+    width: `${width}px`,
   } as React.CSSProperties;
 
   return (

@@ -4,14 +4,12 @@ interface WindowState {
   active: boolean;
   label: string;
   width: number;
-  height: number;
 };
 
 const initialState: WindowState = {
   active: false,
   label: "",
   width: 600,
-  height: 500,
 };
 
 const windowProperties = {
@@ -30,7 +28,6 @@ const windowSlice = createSlice({
       const newWindowProps = windowProperties[action.payload as keyof typeof windowProperties];
       state.label = newWindowProps.label;
       state.width = newWindowProps.width;
-      state.height = newWindowProps.height;
       state.active = true;
     },
     closeWindow: (state) => {

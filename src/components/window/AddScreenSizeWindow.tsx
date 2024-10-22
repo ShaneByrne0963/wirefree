@@ -39,7 +39,7 @@ function AddScreenSizeWindow() {
               className="with-gap"
               value="Custom"
             />
-            <span>Use Custom Screen Size</span>
+            <span>Custom</span>
           </label>
 
           <div id="custom-screen-size-inputs">
