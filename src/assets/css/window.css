@@ -57,6 +57,15 @@
   font-weight: bold;
 }
 
+#window-body>.window-divided {
+  display: grid;
+  gap: 8px;
+}
+
+#window-body>.window-divided.half {
+  grid-template-columns: 1fr 1fr;
+}
+
 /* Add Screen Sizes */
 
 .screen-size-radio-text {
@@ -103,4 +112,15 @@
 
 #screen-size-units {
   margin-top: 5px;
+}
+
+#screen-size-preview {
+  height: 240px;
+  padding: 0 10px 10px 10px;
+}
+
+#screen-size-preview>div {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
 }

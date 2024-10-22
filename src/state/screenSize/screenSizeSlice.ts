@@ -11,7 +11,7 @@ interface ScreenSizeState {
 };
 
 const initialState: ScreenSizeState = {
-  activeScreens: [defaultScreenSizes[0], defaultScreenSizes[1]],
+  activeScreens: [defaultScreenSizes[0], defaultScreenSizes[1], defaultScreenSizes[2], defaultScreenSizes[3]],
   selectedScreen: 0
 };
 
