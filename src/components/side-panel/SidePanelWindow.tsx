@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { RootState } from "../../state/store";
 import SidePanelLabel from "./SidePanelLabel";
 import { ThemeContext } from "../../context";
