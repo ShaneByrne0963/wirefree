@@ -18,6 +18,10 @@ button.plain:active {
     background: none;
 }
 
+label {
+    color: inherit;
+}
+
 /* Navigation Bar */
 
 #nav-bar {

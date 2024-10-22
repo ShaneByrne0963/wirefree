@@ -15,14 +15,12 @@
 #window-container.active>#window {
   opacity: 1;
   scale: 1;
-  width: var(--width);
-  height: var(--height);
 }
 
 #window {
   width: var(--width);
   height: var(--height);
-  scale: 0.8;
+  scale: 0.9;
   max-width: calc(100vw - 32px);
   max-height: calc(100vh - 32px);
   background-color: #FDFDFD;
@@ -57,6 +55,10 @@
   padding: 8px;
 }
 
+#window-body legend {
+  font-weight: bold;
+}
+
 /* Add Screen Sizes */
 
 .screen-size-radio-text {
@@ -69,4 +71,38 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+#default-screen-sizes {
+  margin-bottom: 16px;
+}
+
+/* Makes the text appear faded when the checkbox is not checked */
+#add-custom-screen-size:not(:has(input:checked))>#custom-screen-size-inputs {
+  color: #AEAEAE;
+  pointer-events: none;
+}
+
+#add-custom-screen-size:not(:has(input:checked)) input {
+  border-bottom: 1px solid #DCDCDC;
+  color: #AEAEAE;
+}
+
+#custom-screen-size-inputs input {
+  height: 2rem;
+}
+
+#dimensions-container {
+  display: flex;
+  justify-content: space-between;
+  column-gap: 4px;
+}
+
+.multiplier {
+  font-size: 1.5rem;
+  height: 2rem;
+}
+
+#screen-size-units {
+  margin-top: 5px;
 }
