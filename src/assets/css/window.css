@@ -14,21 +14,22 @@
 
 #window-container.active>#window {
   opacity: 1;
+  scale: 1;
   width: var(--width);
   height: var(--height);
 }
 
 #window {
-  width: calc(var(--width) - 30px);
-  height: calc(var(--height) - 30px);
+  width: var(--width);
+  height: var(--height);
+  scale: 0.8;
   max-width: calc(100vw - 32px);
   max-height: calc(100vh - 32px);
   background-color: #FDFDFD;
   border-radius: 4px;
   overflow: hidden;
   opacity: 0;
-  transition: width 0.3s ease-out,
-              height 0.3s ease-out,
+  transition: scale 0.3s ease-out,
               opacity 0.3s ease-out;
 }
 
