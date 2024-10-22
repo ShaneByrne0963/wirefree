@@ -1,8 +1,11 @@
 import { useContext, useState } from "react";
+import { RootState } from "../../state/store";
 import SidePanelLabel from "./SidePanelLabel";
 import { ThemeContext } from "../../context";
 import ScreenSizeButton from "./ScreenSizeButton";
 import AddScreenSize from "./AddScreenSize";
+import { useDispatch, useSelector } from "react-redux";
+import { selectScreenSize } from "../../state/screenSize/screenSizeSlice";
 
 ///////// Configuration
 
@@ -12,26 +15,17 @@ const windowSizes = {
   layers: "lg",
 };
 
-// What screen sizes are displayed on page load
-const defaultAppliedScreenSizes = [
-  { name: "Desktop", width: 1920, height: 1080 },
-  { name: "Tablet", width: 1200, height: 800 },
-  { name: "Mobile", width: 768, height: 1024 },
-];
-
 ///////// Property Types
 
 type SidePanelWindowProps = {
   windowType: string;
   label?: string;
   canOverflow?: boolean;
-  componentClick?: any;
 };
 
 type WindowComponentProps = {
   windowType: string;
   canOverflow: boolean;
-  componentClick?: any;
 };
 
 ///////// Components
@@ -46,7 +40,6 @@ function SidePanelWindow(props: SidePanelWindowProps) {
       <WindowComponent
         windowType={props.windowType}
         canOverflow={props.canOverflow === true}
-        componentClick={props.componentClick}
       ></WindowComponent>
     </>
   );
@@ -65,7 +58,14 @@ function SidePanelWindow(props: SidePanelWindowProps) {
 function WindowComponent(props: WindowComponentProps) {
   // Get the size of the window based on the type
   const windowSize = windowSizes[props.windowType as keyof typeof windowSizes];
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const activeScreenSizes = useSelector(
+    (state: RootState) => state.screenSize.activeScreens
+  );
+  const selectedIndex = useSelector(
+    (state: RootState) => state.screenSize.selectedScreen
+  );
+  const dispatch = useDispatch();
+
   return (
     <div
       id={"window-" + props.windowType}
@@ -73,7 +73,7 @@ function WindowComponent(props: WindowComponentProps) {
     >
       {props.canOverflow && (
         <div className="window-content-container">
-          {defaultAppliedScreenSizes.map((item, index) => {
+          {activeScreenSizes.map((item, index) => {
             return (
               <ScreenSizeButton
                 name={item.name}
@@ -82,8 +82,7 @@ function WindowComponent(props: WindowComponentProps) {
                 height={item.height}
                 selected={selectedIndex === index}
                 handler={() => {
-                  setSelectedIndex(index);
-                  props.componentClick(item.width / item.height);
+                  dispatch(selectScreenSize(index));
                 }}
               ></ScreenSizeButton>
             );
