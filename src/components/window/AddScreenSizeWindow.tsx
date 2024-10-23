@@ -1,6 +1,16 @@
 import { useSelector } from "react-redux";
 import { defaultScreenSizes } from "../../context";
 import { RootState } from "../../state/store";
+import { useState } from "react";
+import { ScreenSize } from "../../state/screenSize/screenSizeSlice";
+
+function compareScreenSizes(screenSize1: ScreenSize, screenSize2: ScreenSize) {
+  return (
+    screenSize1.name == screenSize2.name ||
+    (screenSize1.width === screenSize2.width &&
+      screenSize1.height === screenSize2.height)
+  );
+}
 
 function AddScreenSizeWindow() {
   // Finding the available default screen sizes to add
@@ -8,14 +18,11 @@ function AddScreenSizeWindow() {
   const activeScreenSizes = useSelector(
     (state: RootState) => state.screenSize.activeScreens
   );
+
   activeScreenSizes.map((activeScreen) => {
     for (let i = 0; i < availableScreenSizes.length; i++) {
       let defaultScreen = availableScreenSizes[i];
-      if (
-        activeScreen.name === defaultScreen.name ||
-        (activeScreen.width === defaultScreen.width &&
-          activeScreen.height === defaultScreen.height)
-      ) {
+      if (compareScreenSizes(activeScreen, defaultScreen)) {
         availableScreenSizes.splice(i, 1);
         i--;
       }
