@@ -22,7 +22,7 @@ function Window() {
   const width = useSelector((state: RootState) => state.window.width);
 
   const windowCss = {
-    width: `${width}px`,
+    "--width": `${width}px`,
   } as React.CSSProperties;
 
   return (

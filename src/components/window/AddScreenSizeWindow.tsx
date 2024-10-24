@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { defaultScreenSizes } from "../../context";
 import { RootState } from "../../state/store";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { ScreenSize } from "../../state/screenSize/screenSizeSlice";
 
 function compareScreenSizes(screenSize1: ScreenSize, screenSize2: ScreenSize) {
@@ -28,6 +28,53 @@ function AddScreenSizeWindow() {
       }
     }
   });
+  const [screenChoice, setScreenChoice] = useState(0);
+  const [customScreen, setCustomScreen] = useState({
+    name: "",
+    width: "",
+    height: "",
+  });
+
+  // Finding the selected screen, or if a custom screen is selected
+  let chosenScreen = null;
+  if (screenChoice < availableScreenSizes.length) {
+    chosenScreen = availableScreenSizes[screenChoice];
+  } else {
+    chosenScreen = { ...customScreen };
+  }
+
+  // Creating the CSS for the preview
+  let previewCss = {
+    "--aspect-ratio": 1,
+    display: "none",
+  };
+  // Only allowing the CSS if the dimensions are valid
+  let widthInt =
+    typeof chosenScreen.width === "string"
+      ? parseInt(chosenScreen.width)
+      : chosenScreen.width;
+  let heightInt =
+    typeof chosenScreen.height === "string"
+      ? parseInt(chosenScreen.height)
+      : chosenScreen.height;
+  if (widthInt && heightInt) {
+    previewCss = {
+      "--aspect-ratio": widthInt / heightInt,
+      display: "block",
+    };
+  }
+
+  // Updates the custom screen inputs
+  function handleCustomInput(event: ChangeEvent<HTMLInputElement>) {
+    let updateInput = event.target;
+    let previousCustomSize = { ...customScreen };
+    if (updateInput.id === "dimension-x") {
+      previousCustomSize.width = `${parseInt(updateInput.value)}`;
+    } else {
+      previousCustomSize.height = `${parseInt(updateInput.value)}`;
+    }
+    setCustomScreen(previousCustomSize);
+  }
 
   return (
     <div className="window-divided half">
@@ -44,7 +91,8 @@ function AddScreenSizeWindow() {
                       name="select-screen-option"
                       className="with-gap"
                       value={count}
-                      defaultChecked={count === 0}
+                      defaultChecked={count === screenChoice}
+                      onChange={() => setScreenChoice(count)}
                     />
                     <span className="screen-size-radio-text">
                       <div>
@@ -71,6 +119,7 @@ function AddScreenSizeWindow() {
                 className="with-gap"
                 value="Custom"
                 defaultChecked={availableScreenSizes.length === 0}
+                onChange={() => setScreenChoice(availableScreenSizes.length)}
               />
               <span>Custom</span>
             </label>
@@ -88,11 +137,21 @@ function AddScreenSizeWindow() {
               <label>Dimensions</label>
               <div id="dimensions-container">
                 <div>
-                  <input id="dimension-x" type="number" placeholder="1920" />
+                  <input
+                    id="dimension-x"
+                    type="number"
+                    value={customScreen.width}
+                    onChange={(event) => handleCustomInput(event)}
+                  />
                 </div>
                 <div className="multiplier">&times;</div>
                 <div>
-                  <input id="dimension-y" type="number" placeholder="1080" />
+                  <input
+                    id="dimension-y"
+                    type="number"
+                    value={customScreen.height}
+                    onChange={(event) => handleCustomInput(event)}
+                  />
                 </div>
                 <div id="screen-size-units">Pixels</div>
               </div>
@@ -103,7 +162,7 @@ function AddScreenSizeWindow() {
       <div>
         <fieldset id="screen-size-preview">
           <legend>Preview</legend>
-          <div></div>
+          <div style={previewCss}></div>
         </fieldset>
       </div>
     </div>
