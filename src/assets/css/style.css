@@ -22,6 +22,19 @@ label {
     color: inherit;
 }
 
+a[role="button"] {
+    color: inherit;
+    cursor: pointer;
+}
+
+.max-height-square {
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 /* Navigation Bar */
 
 #nav-bar {
@@ -40,6 +53,13 @@ label {
     border-right: 1px solid rgba(0,0,0,0.5);
 }
 
+#page-select {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    margin-bottom: 12px;
+}
+
 #selected-page {
     border: 1px solid black;
     background: linear-gradient(0deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 100%);
@@ -48,7 +68,7 @@ label {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 0 4px 12px 4px;
+    margin: 0 4px;
 }
 
 .side-panel-label {
