@@ -5,6 +5,7 @@ import { ChangeEvent, useState } from "react";
 import {
   addScreenSize,
   ScreenSize,
+  selectScreenSize,
 } from "../../state/screenSize/screenSizeSlice";
 import { WindowActionButtons } from "./Window";
 import { closeWindow } from "../../state/window/windowSlice";
@@ -47,6 +48,7 @@ function AddScreenSizeWindow(props: AddScreenSizeWindowProps) {
     height: number;
   }) {
     dispatch(addScreenSize(props));
+    dispatch(selectScreenSize(activeScreenSizes.length));
     dispatch(closeWindow());
   }
 
