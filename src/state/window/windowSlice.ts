@@ -4,6 +4,7 @@ interface WindowState {
   active: boolean;
   label: string;
   width: number;
+  collapsedWidth?: number;
 };
 
 const initialState: WindowState = {
@@ -15,7 +16,8 @@ const initialState: WindowState = {
 const windowProperties = {
   addScreenSize: {
     label: "Add Screen Size",
-    width: 800,
+    width: 600,
+    collapsedWidth: 400
   }
 }
 

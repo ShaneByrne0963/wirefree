@@ -2,9 +2,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { defaultScreenSizes } from "../../context";
 import { RootState } from "../../state/store";
 import { ChangeEvent, useState } from "react";
-import { ScreenSize } from "../../state/screenSize/screenSizeSlice";
-import { closeWindow } from "../../state/window/windowSlice";
+import {
+  addScreenSize,
+  ScreenSize,
+} from "../../state/screenSize/screenSizeSlice";
 import { WindowActionButtons } from "./Window";
+import { closeWindow } from "../../state/window/windowSlice";
 
 function compareScreenSizes(screenSize1: ScreenSize, screenSize2: ScreenSize) {
   return (
@@ -38,6 +41,14 @@ function AddScreenSizeWindow(props: AddScreenSizeWindowProps) {
 
   // Redux values
   const dispatch = useDispatch();
+  function handleAddScreen(props: {
+    name: string;
+    width: number;
+    height: number;
+  }) {
+    dispatch(addScreenSize(props));
+    dispatch(closeWindow());
+  }
 
   // State declarations
   const [screenChoice, setScreenChoice] = useState(0);
@@ -61,6 +72,7 @@ function AddScreenSizeWindow(props: AddScreenSizeWindowProps) {
     display: "none",
   };
   // Only allowing the CSS if the dimensions are valid
+  let name = chosenScreen.name;
   let widthInt =
     typeof chosenScreen.width === "string"
       ? parseInt(chosenScreen.width)
@@ -80,7 +92,9 @@ function AddScreenSizeWindow(props: AddScreenSizeWindowProps) {
   function handleCustomInput(event: ChangeEvent<HTMLInputElement>) {
     let updateInput = event.target;
     let previousCustomSize = { ...customScreen };
-    if (updateInput.id === "dimension-x") {
+    if (updateInput.id === "screen-size-name") {
+      previousCustomSize.name = updateInput.value;
+    } else if (updateInput.id === "dimension-x") {
       previousCustomSize.width = `${parseInt(updateInput.value)}`;
     } else {
       previousCustomSize.height = `${parseInt(updateInput.value)}`;
@@ -143,6 +157,8 @@ function AddScreenSizeWindow(props: AddScreenSizeWindowProps) {
                   id="screen-size-name"
                   type="text"
                   placeholder="Name"
+                  value={customScreen.name}
+                  onChange={(event) => handleCustomInput(event)}
                   required
                 />
               </div>
@@ -152,6 +168,7 @@ function AddScreenSizeWindow(props: AddScreenSizeWindowProps) {
                   <input
                     id="dimension-x"
                     type="number"
+                    placeholder="Width"
                     value={customScreen.width}
                     onChange={(event) => handleCustomInput(event)}
                   />
@@ -161,6 +178,7 @@ function AddScreenSizeWindow(props: AddScreenSizeWindowProps) {
                   <input
                     id="dimension-y"
                     type="number"
+                    placeholder="Height"
                     value={customScreen.height}
                     onChange={(event) => handleCustomInput(event)}
                   />
@@ -180,7 +198,13 @@ function AddScreenSizeWindow(props: AddScreenSizeWindowProps) {
         <WindowActionButtons
           text="Add"
           icon="add"
-          action={() => console.log("Hello World")}
+          action={() =>
+            handleAddScreen({
+              name: name,
+              width: widthInt,
+              height: heightInt,
+            })
+          }
         ></WindowActionButtons>
       </div>
     </div>

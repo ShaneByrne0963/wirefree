@@ -18,6 +18,9 @@ const screenSizeSlice = createSlice({
     selectScreenSize(state, action: PayloadAction<number>) {
       state.selectedScreen = action.payload;
     },
+    addScreenSize(state, action: PayloadAction<{name: string, width: number, height: number}>) {
+      state.activeScreens.push(action.payload);
+    },
     addDefaultScreenSize: (state, action: PayloadAction<string>) => {
       for (let defaultScreen of defaultScreenSizes) {
         if (action.payload === defaultScreen.name) {
@@ -34,5 +37,5 @@ export type ScreenSize = {
   width: number;
   height: number;
 }
-export const { selectScreenSize, addDefaultScreenSize } = screenSizeSlice.actions;
+export const { selectScreenSize, addScreenSize, addDefaultScreenSize } = screenSizeSlice.actions;
 export default screenSizeSlice.reducer;
