@@ -76,6 +76,10 @@ function AddScreenSizeWindow(props: AddScreenSizeWindowProps) {
 
   // Only allowing the CSS if the dimensions are valid
   let isValid = true;
+  let nameFeedback = "";
+  let widthFeedback = "";
+  let heightFeedback = "";
+  let dimensionFeedback = "";
   let name = chosenScreen.name;
   if (!name) {
     isValid = false;
@@ -96,21 +100,33 @@ function AddScreenSizeWindow(props: AddScreenSizeWindowProps) {
       "--aspect-ratio": widthInt / heightInt,
       display: "block",
     };
-    // Cannot allow negative numbers
-    if (widthInt <= 0 || heightInt <= 0) {
+    // Cannot allow negative numbers or numbers above 9999
+    if (widthInt <= 0) {
       isValid = false;
+      widthFeedback = "Value must be greater than 0";
+    } else if (widthInt >= 10000) {
+      isValid = false;
+      widthFeedback = "Value must be less than 10000";
+    }
+    if (heightInt <= 0) {
+      isValid = false;
+      heightFeedback = "Value must be greater than 0";
+    } else if (heightInt >= 10000) {
+      isValid = false;
+      heightFeedback = "Value must be less than 10000";
     }
     // Ensuring the custom screen does not share either name or dimensions with any other active screen
     else if (isCustomScreen) {
       activeScreenSizes.map((activeScreen) => {
-        if (
-          compareScreenSizes(activeScreen, {
-            name: name,
-            width: widthInt,
-            height: heightInt,
-          })
+        if (activeScreen.name === name) {
+          isValid = false;
+          nameFeedback = "A screen size with that name already exists";
+        } else if (
+          activeScreen.width === widthInt &&
+          activeScreen.height === heightInt
         ) {
           isValid = false;
+          dimensionFeedback = `Screen size ${activeScreen.name} already has these dimensions`;
         }
       });
     }
@@ -188,9 +204,13 @@ function AddScreenSizeWindow(props: AddScreenSizeWindowProps) {
                   type="text"
                   placeholder="Name"
                   value={customScreen.name}
+                  maxLength={20}
                   onChange={(event) => handleCustomInput(event)}
                   required
                 />
+                {nameFeedback && (
+                  <div className="window-feedback">{nameFeedback}</div>
+                )}
               </div>
               <label>Dimensions</label>
               <div id="dimensions-container">
@@ -200,8 +220,13 @@ function AddScreenSizeWindow(props: AddScreenSizeWindowProps) {
                     type="number"
                     placeholder="Width"
                     value={customScreen.width}
+                    min={0}
+                    max={9999}
                     onChange={(event) => handleCustomInput(event)}
                   />
+                  {widthFeedback && (
+                    <div className="window-feedback">{widthFeedback}</div>
+                  )}
                 </div>
                 <div className="multiplier">&times;</div>
                 <div>
@@ -210,11 +235,19 @@ function AddScreenSizeWindow(props: AddScreenSizeWindowProps) {
                     type="number"
                     placeholder="Height"
                     value={customScreen.height}
+                    min={0}
+                    max={9999}
                     onChange={(event) => handleCustomInput(event)}
                   />
+                  {heightFeedback && (
+                    <div className="window-feedback">{heightFeedback}</div>
+                  )}
                 </div>
                 <div id="screen-size-units">Pixels</div>
               </div>
+              {dimensionFeedback && (
+                <div className="window-feedback">{dimensionFeedback}</div>
+              )}
             </div>
           </div>
         </fieldset>

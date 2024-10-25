@@ -105,6 +105,13 @@
   margin-bottom: 16px;
 }
 
+.window-feedback {
+  position: relative;
+  top: -6px;
+  font-size: 0.8rem;
+  color: rgb(206, 25, 25);
+}
+
 /* Makes the text appear faded when the checkbox is not checked */
 #add-custom-screen-size:not(:has(input:checked))>#custom-screen-size-inputs {
   color: #AEAEAE;
