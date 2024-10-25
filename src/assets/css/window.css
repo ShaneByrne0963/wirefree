@@ -125,6 +125,13 @@
 
 #screen-size-preview>div {
   width: min(calc(220px * var(--aspect-ratio)), 100%);
-  height: min(calc(((min(var(--width), calc(100vw - 32px)) / 2) - 24px) / var(--aspect-ratio)), 100%);
+  height: min(calc((100vw - 48px) / var(--aspect-ratio)), 100%);
+
   background-color: rgba(0, 0, 0, 0.3);
+  transition: width 0.3s ease-in-out,
+              height 0.3s ease-in-out;
+}
+
+.window-divided #screen-size-preview>div {
+  height: min(calc(((var(--width) / 2) - 24px) / var(--aspect-ratio)), 100%);
 }

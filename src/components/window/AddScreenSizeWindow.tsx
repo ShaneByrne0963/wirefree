@@ -12,13 +12,18 @@ function compareScreenSizes(screenSize1: ScreenSize, screenSize2: ScreenSize) {
   );
 }
 
-function AddScreenSizeWindow() {
+interface AddScreenSizeWindowProps {
+  divided: boolean;
+}
+
+function AddScreenSizeWindow(props: AddScreenSizeWindowProps) {
   // Finding the available default screen sizes to add
   let availableScreenSizes = [...defaultScreenSizes];
   const activeScreenSizes = useSelector(
     (state: RootState) => state.screenSize.activeScreens
   );
 
+  // Finding the default screen sizes that can be added
   activeScreenSizes.map((activeScreen) => {
     for (let i = 0; i < availableScreenSizes.length; i++) {
       let defaultScreen = availableScreenSizes[i];
@@ -28,6 +33,8 @@ function AddScreenSizeWindow() {
       }
     }
   });
+
+  // State declarations
   const [screenChoice, setScreenChoice] = useState(0);
   const [customScreen, setCustomScreen] = useState({
     name: "",
@@ -77,7 +84,7 @@ function AddScreenSizeWindow() {
   }
 
   return (
-    <div className="window-divided half">
+    <div className={(props.divided ? "window-divided " : "") + "half"}>
       <div>
         {availableScreenSizes.length > 0 && (
           <fieldset id="default-screen-sizes">
