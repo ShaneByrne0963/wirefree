@@ -1,8 +1,10 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { defaultScreenSizes } from "../../context";
 import { RootState } from "../../state/store";
 import { ChangeEvent, useState } from "react";
 import { ScreenSize } from "../../state/screenSize/screenSizeSlice";
+import { closeWindow } from "../../state/window/windowSlice";
+import { WindowActionButtons } from "./Window";
 
 function compareScreenSizes(screenSize1: ScreenSize, screenSize2: ScreenSize) {
   return (
@@ -33,6 +35,9 @@ function AddScreenSizeWindow(props: AddScreenSizeWindowProps) {
       }
     }
   });
+
+  // Redux values
+  const dispatch = useDispatch();
 
   // State declarations
   const [screenChoice, setScreenChoice] = useState(0);
@@ -166,11 +171,17 @@ function AddScreenSizeWindow(props: AddScreenSizeWindowProps) {
           </div>
         </fieldset>
       </div>
-      <div>
+      <div id="screen-size-final">
         <fieldset id="screen-size-preview">
           <legend>Preview</legend>
           <div style={previewCss}></div>
         </fieldset>
+        <br />
+        <WindowActionButtons
+          text="Add"
+          icon="add"
+          action={() => console.log("Hello World")}
+        ></WindowActionButtons>
       </div>
     </div>
   );

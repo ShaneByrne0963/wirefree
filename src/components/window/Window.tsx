@@ -5,17 +5,21 @@ import { ThemeContext } from "../../context";
 import { closeWindow } from "../../state/window/windowSlice";
 import AddScreenSizeWindow from "./AddScreenSizeWindow";
 
-function useWindowSize() {
-  const [windowSize, setWindowSize] = useState([0, 0]);
+/**
+ * Updates the window size on window resize
+ * @returns The width of the window
+ */
+function useWindowWidth() {
+  const [windowWidth, setWindowWidth] = useState(0);
   useLayoutEffect(() => {
     function updateSize() {
-      setWindowSize([window.innerWidth, window.innerHeight]);
+      setWindowWidth(window.innerWidth);
     }
     window.addEventListener("resize", updateSize);
     updateSize();
     return () => window.removeEventListener("resize", updateSize);
   }, []);
-  return windowSize;
+  return windowWidth;
 }
 
 function WindowContainer() {
@@ -33,7 +37,7 @@ function Window() {
   const dispatch = useDispatch();
   const label = useSelector((state: RootState) => state.window.label);
   const width = useSelector((state: RootState) => state.window.width);
-  const [windowWidth, windowHeight] = useWindowSize();
+  const windowWidth = useWindowWidth();
 
   const divided = width < windowWidth - 32;
 
@@ -54,6 +58,34 @@ function Window() {
           <AddScreenSizeWindow divided={divided}></AddScreenSizeWindow>
         )}
       </div>
+    </div>
+  );
+}
+
+interface WindowActionButtonProps {
+  text: string;
+  icon?: string;
+  action: () => void;
+}
+
+export function WindowActionButtons(props: WindowActionButtonProps) {
+  const dispatch = useDispatch();
+
+  return (
+    <div className="window-buttons">
+      <button
+        className="btn waves-effect waves-light btn-small"
+        onClick={props.action}
+      >
+        {props.text}
+        {props.icon && <i className="material-icons right">{props.icon}</i>}
+      </button>
+      <button
+        className="btn btn-cancel waves-effect waves-light btn-small"
+        onClick={() => dispatch(closeWindow())}
+      >
+        Cancel
+      </button>
     </div>
   );
 }
