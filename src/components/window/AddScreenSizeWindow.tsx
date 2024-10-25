@@ -59,11 +59,13 @@ function AddScreenSizeWindow(props: AddScreenSizeWindowProps) {
   });
 
   // Finding the selected screen, or if a custom screen is selected
+  let isCustomScreen = false;
   let chosenScreen = null;
   if (screenChoice < availableScreenSizes.length) {
     chosenScreen = availableScreenSizes[screenChoice];
   } else {
     chosenScreen = { ...customScreen };
+    isCustomScreen = true;
   }
 
   // Creating the CSS for the preview
@@ -71,21 +73,49 @@ function AddScreenSizeWindow(props: AddScreenSizeWindowProps) {
     "--aspect-ratio": 1,
     display: "none",
   };
+
   // Only allowing the CSS if the dimensions are valid
+  let isValid = true;
   let name = chosenScreen.name;
+  if (!name) {
+    isValid = false;
+  }
+
   let widthInt =
     typeof chosenScreen.width === "string"
       ? parseInt(chosenScreen.width)
       : chosenScreen.width;
+
   let heightInt =
     typeof chosenScreen.height === "string"
       ? parseInt(chosenScreen.height)
       : chosenScreen.height;
+
   if (widthInt && heightInt) {
     previewCss = {
       "--aspect-ratio": widthInt / heightInt,
       display: "block",
     };
+    // Cannot allow negative numbers
+    if (widthInt <= 0 || heightInt <= 0) {
+      isValid = false;
+    }
+    // Ensuring the custom screen does not share either name or dimensions with any other active screen
+    else if (isCustomScreen) {
+      activeScreenSizes.map((activeScreen) => {
+        if (
+          compareScreenSizes(activeScreen, {
+            name: name,
+            width: widthInt,
+            height: heightInt,
+          })
+        ) {
+          isValid = false;
+        }
+      });
+    }
+  } else {
+    isValid = false;
   }
 
   // Updates the custom screen inputs
@@ -198,6 +228,7 @@ function AddScreenSizeWindow(props: AddScreenSizeWindowProps) {
         <WindowActionButtons
           text="Add"
           icon="add"
+          canSubmit={isValid}
           action={() =>
             handleAddScreen({
               name: name,

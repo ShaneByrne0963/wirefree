@@ -65,6 +65,7 @@ function Window() {
 interface WindowActionButtonProps {
   text: string;
   icon?: string;
+  canSubmit: boolean;
   action: () => void;
 }
 
@@ -76,6 +77,7 @@ export function WindowActionButtons(props: WindowActionButtonProps) {
       <button
         className="btn waves-effect waves-light btn-small"
         onClick={props.action}
+        disabled={!props.canSubmit}
       >
         {props.text}
         {props.icon && <i className="material-icons right">{props.icon}</i>}
