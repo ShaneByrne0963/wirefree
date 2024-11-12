@@ -165,7 +165,7 @@ function AddScreenSizeWindow(props: AddScreenSizeWindowProps) {
                       name="select-screen-option"
                       className="with-gap"
                       value={count}
-                      defaultChecked={count === screenChoice}
+                      checked={count === screenChoice}
                       onChange={() => setScreenChoice(count)}
                     />
                     <span className="screen-size-radio-text">
@@ -192,10 +192,10 @@ function AddScreenSizeWindow(props: AddScreenSizeWindowProps) {
                 name="select-screen-option"
                 className="with-gap"
                 value="Custom"
-                defaultChecked={availableScreenSizes.length === 0}
+                checked={availableScreenSizes.length === 0}
                 onChange={() => setScreenChoice(availableScreenSizes.length)}
               />
-              <span>Custom</span>
+              <span>Custom {availableScreenSizes.length === 0}</span>
             </label>
 
             <div id="custom-screen-size-inputs">
