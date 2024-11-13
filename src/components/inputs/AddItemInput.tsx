@@ -30,7 +30,7 @@ function AddItemInput(props: AddItemInputProps) {
         onInput={handleValueChange}
         maxLength={props.maxLength}
       />
-      <button className="btn" onClick={submitItem}>
+      <button className="btn" onClick={submitItem} disabled={val === ""}>
         <i className="material-icons">add</i>
       </button>
     </div>
