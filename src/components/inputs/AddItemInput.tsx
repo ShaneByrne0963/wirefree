@@ -3,7 +3,7 @@ import { ChangeEvent, useState } from "react";
 interface AddItemInputProps {
   inputId: string;
   placeholder: string;
-  maxChars?: number;
+  maxLength?: number;
   onSuccess: (result: string) => any;
 }
 
@@ -28,6 +28,7 @@ function AddItemInput(props: AddItemInputProps) {
         placeholder={props.placeholder}
         value={val}
         onInput={handleValueChange}
+        maxLength={props.maxLength}
       />
       <button className="btn" onClick={submitItem}>
         <i className="material-icons">add</i>
