@@ -192,7 +192,7 @@ function AddScreenSizeWindow(props: AddScreenSizeWindowProps) {
                 name="select-screen-option"
                 className="with-gap"
                 value="Custom"
-                checked={availableScreenSizes.length === 0}
+                checked={screenChoice === availableScreenSizes.length}
                 onChange={() => setScreenChoice(availableScreenSizes.length)}
               />
               <span>Custom {availableScreenSizes.length === 0}</span>
