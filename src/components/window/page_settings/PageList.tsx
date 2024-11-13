@@ -9,7 +9,10 @@ function PageList() {
       <div className="heading">Pages</div>
       <div id="page-container">
         {pages.map((item) => (
-          <PageListItem name={item.name}></PageListItem>
+          <PageListItem
+            name={item.name}
+            canDelete={pages.length > 1}
+          ></PageListItem>
         ))}
       </div>
     </div>

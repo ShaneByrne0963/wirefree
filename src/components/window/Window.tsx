@@ -79,27 +79,36 @@ interface WindowActionButtonProps {
   text: string;
   icon?: string;
   canSubmit: boolean;
+  closeOnly?: boolean;
   action: () => void;
 }
 
-export function WindowActionButtons(props: WindowActionButtonProps) {
+interface WindowCloseProps {
+  close: true;
+}
+
+export function WindowActionButtons(
+  props: WindowActionButtonProps | WindowCloseProps
+) {
   const dispatch = useDispatch();
 
   return (
     <div className="window-buttons">
-      <button
-        className="btn waves-effect waves-light btn-small"
-        onClick={props.action}
-        disabled={!props.canSubmit}
-      >
-        {props.text}
-        {props.icon && <i className="material-icons right">{props.icon}</i>}
-      </button>
+      {!("close" in props) && (
+        <button
+          className="btn waves-effect waves-light btn-small"
+          onClick={props.action}
+          disabled={!props.canSubmit}
+        >
+          {props.text}
+          {props.icon && <i className="material-icons right">{props.icon}</i>}
+        </button>
+      )}
       <button
         className="btn btn-cancel waves-effect waves-light btn-small"
         onClick={() => dispatch(closeWindow())}
       >
-        Cancel
+        {"close" in props ? "Close" : "Cancel"}
       </button>
     </div>
   );
