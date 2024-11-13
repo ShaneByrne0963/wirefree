@@ -151,7 +151,11 @@ function AddScreenSizeWindow(props: AddScreenSizeWindowProps) {
   }
 
   return (
-    <div className={(props.divided ? "window-divided " : "") + "half"}>
+    <div
+      className={
+        (props.divided ? "window-divided" : "window-collapsed") + " half"
+      }
+    >
       <div>
         {availableScreenSizes.length > 0 && (
           <fieldset id="default-screen-sizes">

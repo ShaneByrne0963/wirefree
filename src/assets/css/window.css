@@ -31,6 +31,10 @@
               opacity 0.3s ease-out;
 }
 
+#window:has(.window-collapsed) {
+  width: var(--collapsed-width);
+}
+
 #window-top {
   height: 32px;
   display: flex;
@@ -159,16 +163,19 @@
 }
 
 #screen-size-preview>div {
-  width: min(calc(220px * var(--aspect-ratio)), 100%);
-  height: min(calc((100vw - 48px) / var(--aspect-ratio)), 100%);
+  width: min(220px * var(--aspect-ratio), 100%);
+  height: min((min(100vw, var(--width)) - 48px) / var(--aspect-ratio), 100%);
 
   background-color: rgba(0, 0, 0, 0.3);
-  transition: width 0.3s ease-in-out,
-              height 0.3s ease-in-out;
 }
 
 .window-divided #screen-size-preview>div {
-  height: min(calc(((var(--width) / 2) - 24px) / var(--aspect-ratio)), 100%);
+  /* (((*window_width* - *spacing_between_fieldsets*) / 2) - *border_and_padding_of_fieldset*) / *aspect_ratio* */
+  height: min((((var(--width) - 24px) / 2) - 22px) / var(--aspect-ratio), 100%);
+}
+
+.window-collapsed #screen-size-preview>div {
+  height: min((min(var(--collapsed-width), 100vw) - 48px) / var(--aspect-ratio), 100%);
 }
 
 #screen-size-final {
