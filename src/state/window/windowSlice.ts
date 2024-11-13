@@ -18,6 +18,10 @@ const windowProperties = {
     label: "Add Screen Size",
     width: 600,
     collapsedWidth: 400
+  },
+  pageSettings: {
+    label: "Page Settings",
+    width: 400
   }
 }
 
@@ -30,7 +34,7 @@ const windowSlice = createSlice({
       state.label = newWindowProps.label;
       state.width = newWindowProps.width;
       state.active = true;
-      if (newWindowProps.collapsedWidth) {
+      if ("collapsedWidth" in newWindowProps) {
         state.collapsedWidth = newWindowProps.collapsedWidth;
       }
     },

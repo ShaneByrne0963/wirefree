@@ -3,7 +3,8 @@ import { RootState } from "../../state/store";
 import { useContext, useLayoutEffect, useState } from "react";
 import { ThemeContext } from "../../context";
 import { closeWindow } from "../../state/window/windowSlice";
-import AddScreenSizeWindow from "./AddScreenSizeWindow";
+import AddScreenSizeWindow from "./add_screen_size/AddScreenSizeWindow";
+import PageSettingsWindow from "./page_settings/PageSettingsWindow";
 
 /**
  * Updates the window size on window resize
@@ -68,6 +69,7 @@ function Window() {
         {label === "Add Screen Size" && (
           <AddScreenSizeWindow divided={divided}></AddScreenSizeWindow>
         )}
+        {label === "Page Settings" && <PageSettingsWindow></PageSettingsWindow>}
       </div>
     </div>
   );

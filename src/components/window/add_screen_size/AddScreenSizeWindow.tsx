@@ -1,14 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
-import { defaultScreenSizes } from "../../context";
-import { RootState } from "../../state/store";
+import { defaultScreenSizes } from "../../../context";
+import { RootState } from "../../../state/store";
 import { ChangeEvent, useState } from "react";
 import {
   addScreenSize,
   ScreenSize,
   selectScreenSize,
-} from "../../state/screenSize/screenSizeSlice";
-import { WindowActionButtons } from "./Window";
-import { closeWindow } from "../../state/window/windowSlice";
+} from "../../../state/screen_size/screenSizeSlice";
+import { WindowActionButtons } from "../Window";
+import { closeWindow } from "../../../state/window/windowSlice";
 
 function compareScreenSizes(screenSize1: ScreenSize, screenSize2: ScreenSize) {
   return (

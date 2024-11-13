@@ -5,7 +5,7 @@ import { ThemeContext } from "../../context";
 import ScreenSizeButton from "./ScreenSizeButton";
 import AddScreenSize from "./AddScreenSize";
 import { useDispatch, useSelector } from "react-redux";
-import { selectScreenSize } from "../../state/screenSize/screenSizeSlice";
+import { selectScreenSize } from "../../state/screen_size/screenSizeSlice";
 
 ///////// Configuration
 
