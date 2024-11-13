@@ -1,9 +1,10 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import AddItemInput from "../../inputs/AddItemInput";
 import { WindowActionButtons } from "../Window";
 import PageList from "./PageList";
 import { createPage } from "../../../state/page/pageSlice";
 import { closeWindow } from "../../../state/window/windowSlice";
+import { RootState } from "../../../state/store";
 
 function PageSettingsWindow() {
   const dispatch = useDispatch();
@@ -13,6 +14,9 @@ function PageSettingsWindow() {
     dispatch(closeWindow());
   }
 
+  const pages = useSelector((state: RootState) => state.pages.pages);
+  const pageNames = pages.map((item) => item.name);
+
   return (
     <>
       <PageList></PageList>
@@ -21,6 +25,7 @@ function PageSettingsWindow() {
         inputId="add-page"
         placeholder="Page Name"
         maxLength={20}
+        existingVals={pageNames}
         onSuccess={addPage}
       ></AddItemInput>
       <WindowActionButtons close></WindowActionButtons>

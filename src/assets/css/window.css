@@ -119,8 +119,7 @@
 }
 
 .window-feedback {
-  position: relative;
-  top: -6px;
+  margin-bottom: 4px;
   font-size: 0.8rem;
   color: rgb(206, 25, 25);
 }
