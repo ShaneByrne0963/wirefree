@@ -164,7 +164,7 @@
 
 #screen-size-preview>div {
   width: min(220px * var(--aspect-ratio), 100%);
-  height: min((min(100vw, var(--width)) - 48px) / var(--aspect-ratio), 100%);
+  height: min((min(100vw - 32px, var(--width)) - 16px) / var(--aspect-ratio), 100%);
 
   background-color: rgba(0, 0, 0, 0.3);
 }
@@ -175,7 +175,7 @@
 }
 
 .window-collapsed #screen-size-preview>div {
-  height: min((min(var(--collapsed-width), 100vw) - 48px) / var(--aspect-ratio), 100%);
+  height: min((min(var(--collapsed-width), 100vw - 32px) - 16px) / var(--aspect-ratio), 100%);
 }
 
 #screen-size-final {
