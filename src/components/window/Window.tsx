@@ -37,13 +37,24 @@ function Window() {
   const dispatch = useDispatch();
   const label = useSelector((state: RootState) => state.window.label);
   const width = useSelector((state: RootState) => state.window.width);
+  const collapsedWidth = useSelector(
+    (state: RootState) => state.window.collapsedWidth
+  );
   const windowWidth = useWindowWidth();
 
   const divided = width < windowWidth - 32;
 
-  const windowCss = {
+  type CssProperties = {
+    "--width": string;
+    "--collapsed-width"?: string;
+  };
+  let cssObject: CssProperties = {
     "--width": `${width}px`,
-  } as React.CSSProperties;
+  };
+  if (collapsedWidth) {
+    cssObject["--collapsed-width"] = `${collapsedWidth}px`;
+  }
+  const windowCss = cssObject as React.CSSProperties;
 
   return (
     <div id="window" className="z-depth-2" style={windowCss}>

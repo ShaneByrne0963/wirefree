@@ -30,6 +30,9 @@ const windowSlice = createSlice({
       state.label = newWindowProps.label;
       state.width = newWindowProps.width;
       state.active = true;
+      if (newWindowProps.collapsedWidth) {
+        state.collapsedWidth = newWindowProps.collapsedWidth;
+      }
     },
     closeWindow: (state) => {
       state.active = false;
