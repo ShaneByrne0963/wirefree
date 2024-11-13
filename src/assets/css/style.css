@@ -16,6 +16,7 @@ button.plain:focus,
 button.plain:active {
     border: none;
     background: none;
+    padding: 0;
 }
 
 label {
