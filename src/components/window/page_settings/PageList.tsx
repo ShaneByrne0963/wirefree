@@ -11,6 +11,7 @@ function PageList() {
         {pages.map((item) => (
           <PageListItem
             name={item.name}
+            key={item.name}
             canDelete={pages.length > 1}
           ></PageListItem>
         ))}

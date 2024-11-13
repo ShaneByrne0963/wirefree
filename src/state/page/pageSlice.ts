@@ -2,10 +2,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface PageState {
   pages: Page[];
+  selectedPage: number;
 }
 
 const initialState:PageState = {
-  pages: [{name: "index"}]
+  pages: [{name: "index"}],
+  selectedPage: 0
 }
 
 const pageSlice = createSlice({
@@ -14,6 +16,10 @@ const pageSlice = createSlice({
   reducers: {
     createPage(state, action: PayloadAction<{name: string}>) {
       state.pages.push(action.payload);
+      state.selectedPage = state.pages.length - 1;
+    },
+    setPage(state, action: PayloadAction<number>) {
+      state.selectedPage = action.payload;
     }
   }
 })
@@ -21,5 +27,5 @@ const pageSlice = createSlice({
 export type Page = {
   name: string;
 }
-export const { createPage } = pageSlice.actions;
+export const { createPage, setPage } = pageSlice.actions;
 export default pageSlice.reducer;

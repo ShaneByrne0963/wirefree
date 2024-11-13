@@ -36,6 +36,19 @@ a[role="button"] {
     justify-content: center;
 }
 
+/* Inputs */
+
+input[type="text"]:not(.browser-default) {
+    height: 36px;
+    margin-bottom: 0;
+}
+
+.add-item-input {
+    display: flex;
+    align-items: top;
+    gap: 4px;
+}
+
 /* Navigation Bar */
 
 #nav-bar {
