@@ -1,4 +1,4 @@
-import PageName from "./PageName";
+import PageName from "./pages/PageName";
 import SidePanelWindow from "./SidePanelWindow";
 import ShapePalette from "./ShapePalette";
 import { useContext } from "react";

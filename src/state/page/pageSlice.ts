@@ -3,11 +3,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 interface PageState {
   pages: Page[];
   selectedPage: number;
+  dropdown: boolean;
 }
 
 const initialState:PageState = {
   pages: [{name: "index"}],
-  selectedPage: 0
+  selectedPage: 0,
+  dropdown: false
 }
 
 const pageSlice = createSlice({
@@ -21,6 +23,7 @@ const pageSlice = createSlice({
     setPage(state, action: PayloadAction<number>) {
       state.selectedPage = action.payload;
     }
+    
   }
 })
 

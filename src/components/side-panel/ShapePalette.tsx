@@ -1,3 +1,4 @@
+import useOutsideClick from "../hooks/useOutsideClick";
 import SidePanelLabel from "./SidePanelLabel";
 
 type ShapePaletteProps = {

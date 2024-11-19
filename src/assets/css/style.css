@@ -50,6 +50,10 @@ input[type="text"]:not(.browser-default) {
     gap: 4px;
 }
 
+.clickable {
+    cursor: pointer;
+}
+
 /* Navigation Bar */
 
 #nav-bar {
@@ -76,14 +80,29 @@ input[type="text"]:not(.browser-default) {
 }
 
 #selected-page {
-    border: 1px solid black;
-    background: linear-gradient(0deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 100%);
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    background-color: #DFDFDF;
     border-radius: 8px;
     padding-left: 4px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin: 0 4px;
+    position: relative;
+}
+
+#selected-page:has(#page-list-dropdown) {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+#page-list-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 32px;
+    background-color: white;
 }
 
 .side-panel-label {
@@ -142,6 +161,7 @@ input[type="text"]:not(.browser-default) {
 
 .screen-size-select-button.selected {
     cursor: default;
+    pointer-events: none;
     background-color: #D5D5FC;
 }
 
