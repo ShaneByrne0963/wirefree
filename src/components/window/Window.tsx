@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../state/store";
-import { useContext, useLayoutEffect, useState } from "react";
+import { MouseEvent, useContext, useLayoutEffect, useState } from "react";
 import { ThemeContext } from "../../context";
 import { closeWindow } from "../../state/window/windowSlice";
 import AddScreenSizeWindow from "./add_screen_size/AddScreenSizeWindow";
@@ -25,9 +25,21 @@ function useWindowWidth() {
 
 function WindowContainer() {
   const isActive = useSelector((state: RootState) => state.window.active);
+  const dispatch = useDispatch();
+
+  const handleOutsideClick = (event: MouseEvent<HTMLDivElement>) => {
+    const target = event.target as HTMLElement;
+    if (target.id === "window-container") {
+      dispatch(closeWindow());
+    }
+  };
 
   return (
-    <div id="window-container" className={isActive ? "active" : ""}>
+    <div
+      id="window-container"
+      className={isActive ? "active" : ""}
+      onMouseDown={(event) => handleOutsideClick(event)}
+    >
       <Window></Window>
     </div>
   );
