@@ -13,7 +13,9 @@ function useOutsideClick(initialState: boolean = false): UseOutsideClickReturn {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (ref.current && !ref.current.contains(event.target as Node)) {
+      const target = event.target as HTMLElement;
+      if ((ref.current && !ref.current.contains(event.target as Node))
+        || (target && target.classList.contains('trigger-clickaway'))) {
         // Disable if click is outside
         setIsActive(false);
       }

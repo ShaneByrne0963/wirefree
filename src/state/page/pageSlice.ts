@@ -7,7 +7,7 @@ interface PageState {
 }
 
 const initialState:PageState = {
-  pages: [{name: "index"}],
+  pages: [{name: "Index"}],
   selectedPage: 0,
   dropdown: false
 }

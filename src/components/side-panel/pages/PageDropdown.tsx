@@ -1,8 +1,10 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../state/store";
+import { setPage } from "../../../state/page/pageSlice";
 
 interface PageDropdownItemProps {
   name: string;
+  index: number;
 }
 
 function PageDropdown() {
@@ -10,14 +12,28 @@ function PageDropdown() {
   return (
     <div id="page-list-dropdown">
       {pageData.pages.map((page, index) => (
-        <PageDropdownItem key={index} name={page.name}></PageDropdownItem>
+        <PageDropdownItem
+          key={index}
+          name={page.name}
+          index={index}
+        ></PageDropdownItem>
       ))}
     </div>
   );
 }
 
 function PageDropdownItem(props: PageDropdownItemProps) {
-  return <div className="page-dropdown-item">{props.name}</div>;
+  const dispatch = useDispatch();
+  return (
+    <div
+      className="page-dropdown-item trigger-clickaway"
+      onClick={() => {
+        dispatch(setPage(props.index));
+      }}
+    >
+      {props.name}
+    </div>
+  );
 }
 
 export default PageDropdown;

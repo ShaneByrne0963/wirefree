@@ -113,6 +113,7 @@ input[type="text"]:not(.browser-default) {
     left: 0;
     width: 100%;
     max-height: 320px;
+    overflow-y: auto;
     background-color: white;
     z-index: 10;
 }
@@ -120,6 +121,10 @@ input[type="text"]:not(.browser-default) {
 .page-dropdown-item {
     font-size: 1.1rem;
     padding: 4px 8px;
+}
+
+.page-dropdown-item:hover {
+    background-color: #eeeeee;
 }
 
 .page-dropdown-item:not(:last-child) {
