@@ -212,3 +212,14 @@
     margin-right: 8px;
   }
 }
+
+#window .edit-page-item,
+#window .edit-page-item:focus,
+#window .edit-page-item:active {
+  height: auto;
+  border: none;
+  outline: none;
+  margin: 0;
+  padding: 0;
+  font-size: 1rem;
+}
