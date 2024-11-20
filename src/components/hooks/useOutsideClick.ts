@@ -26,8 +26,9 @@ function useOutsideClick(initialState: boolean = false): UseOutsideClickReturn {
     };
   }, []);
 
+  // Enables the element if clicked inside
   const handleClickInside = () => {
-    setIsActive(true); // Enable if clicked inside
+    setIsActive(true);
   };
 
   return { ref, isActive, handleClickInside };
