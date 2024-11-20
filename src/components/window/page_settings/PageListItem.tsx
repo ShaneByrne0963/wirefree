@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../state/store";
-import { renamePage } from "../../../state/page/pageSlice";
+import { renamePage, setPage } from "../../../state/page/pageSlice";
 
 interface PageListItemProps {
   name: string;
@@ -27,7 +27,11 @@ function PageListItem(props: PageListItemProps) {
   const isValid = val.length > 0 && feedback.length === 0;
 
   return (
-    <div className="page-item">
+    <div
+      className={
+        pages.selectedPage === props.index ? "page-item selected" : "page-item"
+      }
+    >
       {editMode ? (
         <>
           <input
@@ -63,7 +67,12 @@ function PageListItem(props: PageListItemProps) {
         </>
       ) : (
         <>
-          <div className="page-name">{props.name}</div>
+          <div
+            className="page-name"
+            onClick={() => dispatch(setPage(props.index))}
+          >
+            {props.name}
+          </div>
           <button
             className="plain max-height-square material-icons clickable"
             onClick={() => setEditMode(true)}
