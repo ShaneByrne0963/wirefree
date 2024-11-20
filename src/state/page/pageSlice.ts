@@ -22,13 +22,16 @@ const pageSlice = createSlice({
     },
     setPage(state, action: PayloadAction<number>) {
       state.selectedPage = action.payload;
+    },
+    renamePage(state, action: PayloadAction<[index: number, value:string]>) {
+      const payload = action.payload;
+      state.pages[payload[0]].name = payload[1];
     }
-    
   }
 })
 
 export type Page = {
   name: string;
 }
-export const { createPage, setPage } = pageSlice.actions;
+export const { createPage, setPage, renamePage } = pageSlice.actions;
 export default pageSlice.reducer;
