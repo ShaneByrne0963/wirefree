@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { confirmActions } from "../../components/window/ConfirmAction";
 
 export interface WindowState {
   active?: boolean;
@@ -13,19 +14,21 @@ interface WindowListState {
 
 export interface ConfirmActionState {
   active?: boolean;
-  label: string,
-  width: number,
+  label: string;
+  width: number;
   collapsedWidth?: number;
-  bodyText: string,
-  buttonText: string,
-  action: () => void
+  bodyText: string;
+  buttonText: string;
+  action: keyof typeof confirmActions;
+  parameter?: any;
 };
 
 export interface ConfirmActionProps {
-  label: string,
-  bodyText: string,
-  buttonText: string,
-  action: () => void
+  label: string;
+  bodyText: string;
+  buttonText: string;
+  action: keyof typeof confirmActions;
+  parameter?: any;
 };
 
 const windowProperties = {
@@ -44,7 +47,7 @@ const windowProperties = {
     collapsedWidth: 300,
     bodyText: "",
     buttonText: "",
-    action: () => {return}
+    action: "deletePage"
   }
 };
 

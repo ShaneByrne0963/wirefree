@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../state/store";
-import { deletePage, renamePage, setPage } from "../../../state/page/pageSlice";
+import { renamePage, setPage } from "../../../state/page/pageSlice";
 import {
   confirmAction,
   ConfirmActionProps,
-  setWindowActive,
 } from "../../../state/window/windowSlice";
 
 interface PageListItemProps {
@@ -24,15 +23,12 @@ function PageListItem(props: PageListItemProps) {
   const dispatch = useDispatch();
   let feedback = "";
 
-  function confirmPageDelete() {
-    dispatch(deletePage(props.index));
-  }
-
   const deleteWindowProps: ConfirmActionProps = {
     label: "Confirm Page Delete",
     bodyText: deletePageBody,
     buttonText: "Delete",
-    action: confirmPageDelete,
+    action: "deletePage",
+    parameter: props.index,
   };
 
   if (props.isEdit && val.length > 0 && val !== props.name) {

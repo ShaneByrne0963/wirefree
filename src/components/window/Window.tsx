@@ -126,6 +126,7 @@ function Window(props: WindowProps) {
               bodyText={props.window.bodyText}
               buttonText={props.window.buttonText}
               action={props.window.action}
+              parameter={props.window.parameter}
             ></ConfirmAction>
           )}
         </div>

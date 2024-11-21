@@ -28,7 +28,10 @@ const pageSlice = createSlice({
       state.pages[payload[0]].name = payload[1];
     },
     deletePage(state, action: PayloadAction<number>) {
-      state.pages.slice(action.payload, 1);
+      state.pages.splice(action.payload, 1);
+      if (state.selectedPage === state.pages.length) {
+        state.selectedPage--;
+      }
     }
   }
 })
