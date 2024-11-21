@@ -20,6 +20,7 @@ const windowSizes = {
 type SidePanelWindowProps = {
   windowType: string;
   label?: string;
+  labelButton?: string;
   canOverflow?: boolean;
 };
 
@@ -32,11 +33,25 @@ type WindowComponentProps = {
 
 function SidePanelWindow(props: SidePanelWindowProps) {
   const color = useContext(ThemeContext);
+  let labelHtml = null;
+  if (props.label) {
+    labelHtml = (
+      <SidePanelLabel color={color} text={props.label}></SidePanelLabel>
+    );
+    if (props.labelButton) {
+      labelHtml = (
+        <div className="label-with-button">
+          {labelHtml}
+          <a role="button" className="plain max-height-square material-icons">
+            {props.labelButton}
+          </a>
+        </div>
+      );
+    }
+  }
   let panelWindowHtml = (
     <>
-      {props.label && (
-        <SidePanelLabel color={color} text={props.label}></SidePanelLabel>
-      )}
+      {labelHtml}
       <WindowComponent
         windowType={props.windowType}
         canOverflow={props.canOverflow === true}

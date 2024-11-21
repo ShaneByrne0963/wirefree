@@ -137,6 +137,16 @@ input[type="text"]:not(.browser-default) {
     margin-left: 4px;
 }
 
+.label-with-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.label-with-button a {
+    margin-right: 4px;
+}
+
 .side-panel-window {
     background-color: white;
     width: 100%;

@@ -14,7 +14,11 @@ function SidePanel() {
         label="Screen"
         canOverflow={true}
       ></SidePanelWindow>
-      <SidePanelWindow windowType="layers" label="Layers"></SidePanelWindow>
+      <SidePanelWindow
+        windowType="layers"
+        label="Layers"
+        labelButton="add"
+      ></SidePanelWindow>
       <ShapePalette color={color}></ShapePalette>
     </div>
   );

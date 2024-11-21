@@ -38,6 +38,7 @@ function AddItemInput(props: AddItemInputProps) {
           value={val}
           onInput={handleValueChange}
           maxLength={props.maxLength}
+          autoComplete="off"
         />
         <button
           className="btn"
