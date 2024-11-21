@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../state/store";
-import { renamePage, setPage } from "../../../state/page/pageSlice";
+import { createPage, renamePage, setPage } from "../../../state/page/pageSlice";
 import {
   confirmAction,
   ConfirmActionProps,
@@ -47,6 +47,54 @@ function PageListItem(props: PageListItemProps) {
   }
   if (props.isEdit) {
     pageClassName += " edit-mode";
+  }
+
+  // Duplication of a page
+  function handleDuplicatePage() {
+    let pageName = props.name;
+
+    // Remove an identifier if one exists
+    if (pageName.includes(" (") && pageName.includes(")")) {
+      let charString = "";
+      let isInBrackets = false;
+      for (let i = 0; i < pageName.length; i++) {
+        let char = pageName[i];
+        // Is redundant if anything exists past the closing bracket
+        if (!isInBrackets) {
+          charString = "";
+          if (char === "(" && i > 0 && pageName[i - 1] === " ") {
+            isInBrackets = true;
+          }
+        } else {
+          if (char === ")") {
+            isInBrackets = false;
+          } else {
+            charString += char;
+          }
+        }
+      }
+      if (charString) {
+        // Ensures whatever is in the brackets is a number, or doesn't delete it
+        pageName = pageName.replace(` (${parseInt(charString)})`, "");
+      }
+    }
+
+    // Add a number to the end to differentiate from the original
+    let identifier = 1;
+    let uniquePage = false;
+    while (!uniquePage) {
+      uniquePage = true;
+      let newPageName = `${pageName} (${identifier})`;
+      for (let page of pages.pages) {
+        if (page.name === newPageName) {
+          uniquePage = false;
+          identifier++;
+          break;
+        }
+      }
+    }
+    pageName += ` (${identifier})`;
+    dispatch(createPage({ name: pageName }));
   }
 
   return (
@@ -100,7 +148,7 @@ function PageListItem(props: PageListItemProps) {
           </button>
           <button
             className="plain max-height-square material-icons clickable"
-            onClick={() => props.setEdit(props.index)}
+            onClick={handleDuplicatePage}
           >
             content_copy
           </button>
