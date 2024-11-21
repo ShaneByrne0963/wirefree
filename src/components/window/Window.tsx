@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../state/store";
 import {
+  MouseEvent,
   TransitionEvent,
   useContext,
   useEffect,
@@ -40,15 +41,6 @@ function useWindowWidth() {
 
 function WindowContainer() {
   const windows = useSelector((state: RootState) => state.window.windows);
-  // const dispatch = useDispatch();
-
-  // const handleOutsideClick = (event: MouseEvent<HTMLDivElement>) => {
-  //   const target = event.target as HTMLElement;
-  //   if (target.id === "window-container") {
-  //     dispatch(closeWindow());
-  //   }
-  // };
-
   return (
     <div id="window-container">
       {windows.map((window, index) => (
@@ -71,6 +63,14 @@ function Window(props: WindowProps) {
   useEffect(() => {
     setTimeout(() => dispatch(setWindowActive([label, true])));
   }, []);
+
+  // Allows for outside clicks to close the window
+  const handleOutsideClick = (event: MouseEvent<HTMLDivElement>) => {
+    const target = event.target as HTMLElement;
+    if (target.classList.contains("window-screen-overlay")) {
+      dispatch(setWindowActive([label, false]));
+    }
+  };
 
   // Deletes the window when it fades out
   const handleTransitionEnd = (event: TransitionEvent<HTMLDivElement>) => {
@@ -96,7 +96,7 @@ function Window(props: WindowProps) {
   const windowCss = cssObject as React.CSSProperties;
 
   return (
-    <div className="window-screen-overlay">
+    <div className="window-screen-overlay" onMouseDown={handleOutsideClick}>
       <div
         className={(active ? "active " : "") + "window z-depth-2"}
         style={windowCss}
