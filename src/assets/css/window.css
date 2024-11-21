@@ -207,7 +207,7 @@
 .window .page-item {
   padding: 4px 8px;
   display: grid;
-  grid-template-columns: 1fr auto auto;
+  grid-template-columns: 1fr auto auto auto;
 
   &:not(:last-child) {
     border-bottom: 1px solid rgba(0, 0, 0, 0.5);
@@ -215,6 +215,10 @@
 
   button {
     margin-left: 8px;
+  }
+
+  &.edit-mode {
+    grid-template-columns: 1fr auto auto;
   }
 }
 

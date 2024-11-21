@@ -41,12 +41,16 @@ function PageListItem(props: PageListItemProps) {
   }
   const isValid = val.length > 0 && feedback.length === 0;
 
+  let pageClassName = "page-item";
+  if (pages.selectedPage === props.index) {
+    pageClassName += " selected";
+  }
+  if (props.isEdit) {
+    pageClassName += " edit-mode";
+  }
+
   return (
-    <div
-      className={
-        pages.selectedPage === props.index ? "page-item selected" : "page-item"
-      }
-    >
+    <div className={pageClassName}>
       {props.isEdit ? (
         <>
           <input
@@ -93,6 +97,12 @@ function PageListItem(props: PageListItemProps) {
             onClick={() => props.setEdit(props.index)}
           >
             create
+          </button>
+          <button
+            className="plain max-height-square material-icons clickable"
+            onClick={() => props.setEdit(props.index)}
+          >
+            content_copy
           </button>
           {props.canDelete && (
             <button
