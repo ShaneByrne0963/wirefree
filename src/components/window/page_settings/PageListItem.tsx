@@ -31,15 +31,15 @@ function PageListItem(props: PageListItemProps) {
     parameter: props.index,
   };
 
-  if (props.isEdit && val.length > 0 && val !== props.name) {
+  if (props.isEdit && val.trim().length > 0 && val !== props.name) {
     for (let page of pages.pages) {
-      if (page.name === val) {
+      if (page.name === val.trim()) {
         feedback = "That page name already exists";
         break;
       }
     }
   }
-  const isValid = val.length > 0 && feedback.length === 0;
+  const isValid = val.trim().length > 0 && feedback.length === 0;
 
   let pageClassName = "page-item";
   if (pages.selectedPage === props.index) {
@@ -113,7 +113,7 @@ function PageListItem(props: PageListItemProps) {
             className="plain max-height-square material-icons clickable"
             disabled={!isValid}
             onClick={() => {
-              dispatch(renamePage([props.index, val]));
+              dispatch(renamePage([props.index, val.trim()]));
               props.setEdit(-1);
             }}
           >
