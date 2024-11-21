@@ -7,16 +7,17 @@ interface PageListItemProps {
   name: string;
   index: number;
   canDelete: boolean;
+  isEdit: boolean;
+  setEdit: (index: number) => void;
 }
 
 function PageListItem(props: PageListItemProps) {
-  const [editMode, setEditMode] = useState(false);
   const [val, setVal] = useState(props.name);
   const pages = useSelector((state: RootState) => state.pages);
   const dispatch = useDispatch();
   let feedback = "";
 
-  if (editMode && val.length > 0 && val !== props.name) {
+  if (props.isEdit && val.length > 0 && val !== props.name) {
     for (let page of pages.pages) {
       if (page.name === val) {
         feedback = "That page name already exists";
@@ -32,7 +33,7 @@ function PageListItem(props: PageListItemProps) {
         pages.selectedPage === props.index ? "page-item selected" : "page-item"
       }
     >
-      {editMode ? (
+      {props.isEdit ? (
         <>
           <input
             type="text"
@@ -47,7 +48,7 @@ function PageListItem(props: PageListItemProps) {
             disabled={!isValid}
             onClick={() => {
               dispatch(renamePage([props.index, val]));
-              setEditMode(false);
+              props.setEdit(-1);
             }}
           >
             check
@@ -55,7 +56,7 @@ function PageListItem(props: PageListItemProps) {
           <button
             className="plain max-height-square material-icons clickable"
             onClick={() => {
-              setEditMode(false);
+              props.setEdit(-1);
               setVal(props.name);
             }}
           >
@@ -75,7 +76,7 @@ function PageListItem(props: PageListItemProps) {
           </div>
           <button
             className="plain max-height-square material-icons clickable"
-            onClick={() => setEditMode(true)}
+            onClick={() => props.setEdit(props.index)}
           >
             create
           </button>
