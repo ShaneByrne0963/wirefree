@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { setWindow } from "../../../state/window/windowSlice";
+import { addWindow } from "../../../state/window/windowSlice";
 
 function PageSettings() {
   const dispatch = useDispatch();
@@ -8,7 +8,7 @@ function PageSettings() {
     <a
       role="button"
       className="max-height-square"
-      onClick={() => dispatch(setWindow("pageSettings"))}
+      onClick={() => dispatch(addWindow("pageSettings"))}
     >
       <i className="material-icons">menu</i>
     </a>

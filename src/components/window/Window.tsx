@@ -1,10 +1,25 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../state/store";
-import { MouseEvent, useContext, useLayoutEffect, useState } from "react";
+import {
+  TransitionEvent,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from "react";
 import { ThemeContext } from "../../context";
-import { closeWindow } from "../../state/window/windowSlice";
+import {
+  WindowState,
+  closeWindow,
+  setWindowActive,
+} from "../../state/window/windowSlice";
 import AddScreenSizeWindow from "./add_screen_size/AddScreenSizeWindow";
 import PageSettingsWindow from "./page_settings/PageSettingsWindow";
+
+interface WindowProps {
+  window: WindowState;
+  index: number;
+}
 
 /**
  * Updates the window size on window resize
@@ -24,36 +39,47 @@ function useWindowWidth() {
 }
 
 function WindowContainer() {
-  const isActive = useSelector((state: RootState) => state.window.active);
-  const dispatch = useDispatch();
+  const windows = useSelector((state: RootState) => state.window.windows);
+  // const dispatch = useDispatch();
 
-  const handleOutsideClick = (event: MouseEvent<HTMLDivElement>) => {
-    const target = event.target as HTMLElement;
-    if (target.id === "window-container") {
-      dispatch(closeWindow());
-    }
-  };
+  // const handleOutsideClick = (event: MouseEvent<HTMLDivElement>) => {
+  //   const target = event.target as HTMLElement;
+  //   if (target.id === "window-container") {
+  //     dispatch(closeWindow());
+  //   }
+  // };
 
   return (
-    <div
-      id="window-container"
-      className={isActive ? "active" : ""}
-      onMouseDown={(event) => handleOutsideClick(event)}
-    >
-      <Window></Window>
+    <div id="window-container">
+      {windows.map((window, index) => (
+        <Window key={index} window={window} index={index}></Window>
+      ))}
     </div>
   );
 }
 
-function Window() {
+function Window(props: WindowProps) {
   const color = useContext(ThemeContext);
   const dispatch = useDispatch();
-  const label = useSelector((state: RootState) => state.window.label);
-  const width = useSelector((state: RootState) => state.window.width);
-  const collapsedWidth = useSelector(
-    (state: RootState) => state.window.collapsedWidth
-  );
+  const active = props.window.active;
+  const label = props.window.label;
+  const width = props.window.width;
+  const collapsedWidth = props.window.collapsedWidth;
   const windowWidth = useWindowWidth();
+
+  // Begin the fade in animation
+  useEffect(() => {
+    setTimeout(() => dispatch(setWindowActive([label, true])));
+  }, []);
+
+  // Deletes the window when it fades out
+  const handleTransitionEnd = (event: TransitionEvent<HTMLDivElement>) => {
+    // Make sure the animation is coming from the window
+    const target = event.target as HTMLElement;
+    if (target.classList.contains("window") && !active) {
+      dispatch(closeWindow(label));
+    }
+  };
 
   const divided = width < windowWidth - 32;
 
@@ -70,18 +96,29 @@ function Window() {
   const windowCss = cssObject as React.CSSProperties;
 
   return (
-    <div id="window" className="z-depth-2" style={windowCss}>
-      <div id="window-top" className={color + " lighten-2 z-depth-1"}>
-        <span>{label}</span>
-        <button className="close plain" onClick={() => dispatch(closeWindow())}>
-          &times;
-        </button>
-      </div>
-      <div id="window-body">
-        {label === "Add Screen Size" && (
-          <AddScreenSizeWindow divided={divided}></AddScreenSizeWindow>
-        )}
-        {label === "Page Settings" && <PageSettingsWindow></PageSettingsWindow>}
+    <div className="window-screen-overlay">
+      <div
+        className={(active ? "active " : "") + "window z-depth-2"}
+        style={windowCss}
+        onTransitionEnd={handleTransitionEnd}
+      >
+        <div className={color + " window-top lighten-2 z-depth-1"}>
+          <span>{label}</span>
+          <button
+            className="close plain"
+            onClick={() => dispatch(setWindowActive([label, false]))}
+          >
+            &times;
+          </button>
+        </div>
+        <div className="window-body">
+          {label === "Add Screen Size" && (
+            <AddScreenSizeWindow divided={divided}></AddScreenSizeWindow>
+          )}
+          {label === "Page Settings" && (
+            <PageSettingsWindow></PageSettingsWindow>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -92,10 +129,12 @@ interface WindowActionButtonProps {
   icon?: string;
   canSubmit: boolean;
   closeOnly?: boolean;
+  windowLabel: string;
   action: () => void;
 }
 
 interface WindowCloseProps {
+  windowLabel: string;
   close: true;
 }
 
@@ -118,7 +157,7 @@ export function WindowActionButtons(
       )}
       <button
         className="btn btn-cancel waves-effect waves-light btn-small"
-        onClick={() => dispatch(closeWindow())}
+        onClick={() => dispatch(setWindowActive([props.windowLabel, false]))}
       >
         {"close" in props ? "Close" : "Cancel"}
       </button>

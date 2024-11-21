@@ -8,7 +8,9 @@ import {
   selectScreenSize,
 } from "../../../state/screen_size/screenSizeSlice";
 import { WindowActionButtons } from "../Window";
-import { closeWindow } from "../../../state/window/windowSlice";
+import { setWindowActive } from "../../../state/window/windowSlice";
+
+const windowLabel = "Add Screen Size";
 
 function compareScreenSizes(screenSize1: ScreenSize, screenSize2: ScreenSize) {
   return (
@@ -49,7 +51,7 @@ function AddScreenSizeWindow(props: AddScreenSizeWindowProps) {
   }) {
     dispatch(addScreenSize(props));
     dispatch(selectScreenSize(activeScreenSizes.length));
-    dispatch(closeWindow());
+    dispatch(setWindowActive([windowLabel, false]));
   }
 
   // State declarations
@@ -268,6 +270,7 @@ function AddScreenSizeWindow(props: AddScreenSizeWindowProps) {
           text="Add"
           icon="add"
           canSubmit={isValid}
+          windowLabel={windowLabel}
           action={() =>
             handleAddScreen({
               name: name,

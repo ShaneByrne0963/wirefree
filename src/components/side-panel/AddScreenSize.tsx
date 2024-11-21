@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { setWindow } from "../../state/window/windowSlice";
+import { addWindow } from "../../state/window/windowSlice";
 
 function AddScreenSize() {
   const dispatch = useDispatch();
@@ -7,7 +7,7 @@ function AddScreenSize() {
     <button
       id="add-screen-size"
       className="plain"
-      onClick={() => dispatch(setWindow("addScreenSize"))}
+      onClick={() => dispatch(addWindow("addScreenSize"))}
     >
       <i className="small material-icons">add</i>
     </button>

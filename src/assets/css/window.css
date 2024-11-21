@@ -1,23 +1,21 @@
-#window-container {
+.window-screen-overlay {
   position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   inset: 0;
   z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
-  pointer-events: none;
 }
 
 #window-container.active {
   pointer-events: all;
 }
 
-#window-container.active>#window {
-  opacity: 1;
-  scale: 1;
-}
-
-#window {
+.window {
   width: var(--width);
   scale: 0.9;
   max-width: calc(100vw - 32px);
@@ -31,51 +29,59 @@
               opacity 0.3s ease-out;
 }
 
-#window:has(.window-collapsed) {
+.window.active {
+  scale: 1;
+  opacity: 1;
+}
+
+.window:has(.window-collapsed) {
   width: var(--collapsed-width);
 }
 
-#window-top {
+.window-top {
   height: 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-#window-top>span {
+.window-top>span {
   margin-left: 8px;
 }
 
-#window-top>.close {
+.window-top>.close,
+.window-top>.close:hover,
+.window-top>.close:focus,
+.window-top>.close:active {
   font-size: 2em;
   margin-bottom: 4px;
   cursor: pointer;
   padding: 0 6px;
 }
 
-#window-body {
+.window-body {
   overflow-x: hidden;
   overflow-y: auto;
   height: 100%;
   padding: 8px;
 }
 
-#window-body fieldset {
+.window-body fieldset {
   margin-left: 0;
   margin-right: 0;
 }
 
-#window-body legend,
-#window-body .heading {
+.window-body legend,
+.window-body .heading {
   font-weight: bold;
 }
 
-#window-body>.window-divided {
+.window-body>.window-divided {
   display: grid;
   gap: 8px;
 }
 
-#window-body>.window-divided.half {
+.window-body>.window-divided.half {
   grid-template-columns: 1fr 1fr;
 }
 
@@ -188,7 +194,7 @@
 
 /* Page Settings */
 
-#window #page-container {
+.window #page-container {
   width: 100%;
   max-height: 160px;
   box-sizing: border-box;
@@ -198,7 +204,7 @@
   margin-bottom: 20px;
 }
 
-#window .page-item {
+.window .page-item {
   padding: 4px 8px;
   display: grid;
   grid-template-columns: 1fr auto auto;
@@ -229,9 +235,9 @@
   grid-column-end: 4;
 }
 
-#window .edit-page-item,
-#window .edit-page-item:focus,
-#window .edit-page-item:active {
+.window .edit-page-item,
+.window .edit-page-item:focus,
+.window .edit-page-item:active {
   height: auto;
   border: none;
   outline: none;

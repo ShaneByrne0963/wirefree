@@ -1,49 +1,66 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface WindowState {
-  active: boolean;
+export interface WindowState {
+  active?: boolean;
   label: string;
   width: number;
   collapsedWidth?: number;
 };
 
-const initialState: WindowState = {
-  active: false,
-  label: "",
-  width: 600,
-};
+interface WindowListState {
+  windows: WindowState[];
+}
 
 const windowProperties = {
-  addScreenSize: {
+  addScreenSize: <WindowState> {
     label: "Add Screen Size",
     width: 600,
     collapsedWidth: 400
   },
-  pageSettings: {
+  pageSettings: <WindowState> {
     label: "Page Settings",
     width: 400
   }
+}
+
+const initialState: WindowListState = {
+  windows: []
+}
+
+function findWindowIndexFromLabel(windows: WindowState[], label: string) {
+  for (let i = 0; i < windows.length; i++) {
+    const window = windows[i];
+    if (window.label === label) {
+      return i;
+    }
+  }
+  return -1;
 }
 
 const windowSlice = createSlice({
   name: "window",
   initialState,
   reducers: {
-    setWindow: (state, action: PayloadAction<string>) => {
-      const newWindowProps = windowProperties[action.payload as keyof typeof windowProperties];
-      state.label = newWindowProps.label;
-      state.width = newWindowProps.width;
-      state.active = true;
-      if ("collapsedWidth" in newWindowProps) {
-        state.collapsedWidth = newWindowProps.collapsedWidth;
+    addWindow: (state, action: PayloadAction<string>) => {
+      let newWindowProps = {...windowProperties[action.payload as keyof typeof windowProperties]};
+      newWindowProps.active = false;
+      state.windows.push(newWindowProps);
+    },
+    setWindowActive(state, action: PayloadAction<[string, boolean]>) {
+      const foundIndex = findWindowIndexFromLabel(state.windows, action.payload[0]);
+      if (foundIndex >= 0) {
+        state.windows[foundIndex].active = action.payload[1];
       }
     },
-    closeWindow: (state) => {
-      state.active = false;
+    closeWindow: (state, action: PayloadAction<string>) => {
+      const foundIndex = findWindowIndexFromLabel(state.windows, action.payload);
+      if (foundIndex >= 0) {
+        state.windows.splice(foundIndex, 1);
+      }
     },
   }
 });
 
-export const { setWindow, closeWindow } = windowSlice.actions;
+export const { addWindow, setWindowActive, closeWindow } = windowSlice.actions;
 
 export default windowSlice.reducer;
