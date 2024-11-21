@@ -9,6 +9,7 @@ import {
 } from "../../../state/screen_size/screenSizeSlice";
 import { WindowActionButtons } from "../Window";
 import { setWindowActive } from "../../../state/window/windowSlice";
+import { addScreenSizeToPages } from "../../../state/page/pageSlice";
 
 const windowLabel = "Add Screen Size";
 
@@ -50,6 +51,7 @@ function AddScreenSizeWindow(props: AddScreenSizeWindowProps) {
     height: number;
   }) {
     dispatch(addScreenSize(props));
+    dispatch(addScreenSizeToPages(props.name));
     dispatch(selectScreenSize(activeScreenSizes.length));
     dispatch(setWindowActive([windowLabel, false]));
   }

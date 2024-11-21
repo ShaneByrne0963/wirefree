@@ -11,7 +11,7 @@ function PageSettingsWindow() {
   const dispatch = useDispatch();
 
   function addPage(name: string) {
-    dispatch(createPage({ name: name }));
+    dispatch(createPage(name));
     dispatch(setWindowActive([windowLabel, false]));
   }
 

@@ -94,7 +94,7 @@ function PageListItem(props: PageListItemProps) {
       }
     }
     pageName += ` (${identifier})`;
-    dispatch(createPage({ name: pageName }));
+    dispatch(createPage(pageName));
   }
 
   return (
