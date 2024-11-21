@@ -8,8 +8,25 @@ export interface WindowState {
 };
 
 interface WindowListState {
-  windows: WindowState[];
-}
+  windows: (WindowState | ConfirmActionState)[];
+};
+
+export interface ConfirmActionState {
+  active?: boolean;
+  label: string,
+  width: number,
+  collapsedWidth?: number;
+  bodyText: string,
+  buttonText: string,
+  action: () => void
+};
+
+export interface ConfirmActionProps {
+  label: string,
+  bodyText: string,
+  buttonText: string,
+  action: () => void
+};
 
 const windowProperties = {
   addScreenSize: <WindowState> {
@@ -20,14 +37,22 @@ const windowProperties = {
   pageSettings: <WindowState> {
     label: "Page Settings",
     width: 400
+  },
+  confirmAction: <ConfirmActionState> {
+    label: "Confirm Action",
+    width: 600,
+    collapsedWidth: 300,
+    bodyText: "",
+    buttonText: "",
+    action: () => {return}
   }
-}
+};
 
 const initialState: WindowListState = {
   windows: []
-}
+};
 
-function findWindowIndexFromLabel(windows: WindowState[], label: string) {
+function findWindowIndexFromLabel(windows: (WindowState | ConfirmActionState)[], label: string) {
   for (let i = 0; i < windows.length; i++) {
     const window = windows[i];
     if (window.label === label) {
@@ -58,9 +83,13 @@ const windowSlice = createSlice({
         state.windows.splice(foundIndex, 1);
       }
     },
+    confirmAction(state, action: PayloadAction<ConfirmActionProps>) {
+      let newWindowProps = {...windowProperties.confirmAction, ...action.payload};
+      state.windows.push(newWindowProps);
+    }
   }
 });
 
-export const { addWindow, setWindowActive, closeWindow } = windowSlice.actions;
+export const { addWindow, setWindowActive, closeWindow, confirmAction } = windowSlice.actions;
 
 export default windowSlice.reducer;

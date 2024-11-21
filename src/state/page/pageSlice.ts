@@ -26,6 +26,9 @@ const pageSlice = createSlice({
     renamePage(state, action: PayloadAction<[index: number, value:string]>) {
       const payload = action.payload;
       state.pages[payload[0]].name = payload[1];
+    },
+    deletePage(state, action: PayloadAction<number>) {
+      state.pages.slice(action.payload, 1);
     }
   }
 })
@@ -33,5 +36,5 @@ const pageSlice = createSlice({
 export type Page = {
   name: string;
 }
-export const { createPage, setPage, renamePage } = pageSlice.actions;
+export const { createPage, setPage, renamePage, deletePage } = pageSlice.actions;
 export default pageSlice.reducer;

@@ -10,15 +10,17 @@ import {
 } from "react";
 import { ThemeContext } from "../../context";
 import {
+  ConfirmActionState,
   WindowState,
   closeWindow,
   setWindowActive,
 } from "../../state/window/windowSlice";
 import AddScreenSizeWindow from "./add_screen_size/AddScreenSizeWindow";
 import PageSettingsWindow from "./page_settings/PageSettingsWindow";
+import ConfirmAction from "./ConfirmAction";
 
 interface WindowProps {
-  window: WindowState;
+  window: WindowState | ConfirmActionState;
   index: number;
 }
 
@@ -117,6 +119,14 @@ function Window(props: WindowProps) {
           )}
           {label === "Page Settings" && (
             <PageSettingsWindow></PageSettingsWindow>
+          )}
+          {"bodyText" in props.window && (
+            <ConfirmAction
+              label={props.window.label}
+              bodyText={props.window.bodyText}
+              buttonText={props.window.buttonText}
+              action={props.window.action}
+            ></ConfirmAction>
           )}
         </div>
       </div>

@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../state/store";
-import { renamePage, setPage } from "../../../state/page/pageSlice";
+import { deletePage, renamePage, setPage } from "../../../state/page/pageSlice";
+import {
+  confirmAction,
+  ConfirmActionProps,
+  setWindowActive,
+} from "../../../state/window/windowSlice";
 
 interface PageListItemProps {
   name: string;
@@ -11,11 +16,24 @@ interface PageListItemProps {
   setEdit: (index: number) => void;
 }
 
+const deletePageBody = `Are you sure you want to delete this page?`;
+
 function PageListItem(props: PageListItemProps) {
   const [val, setVal] = useState(props.name);
   const pages = useSelector((state: RootState) => state.pages);
   const dispatch = useDispatch();
   let feedback = "";
+
+  function confirmPageDelete() {
+    dispatch(deletePage(props.index));
+  }
+
+  const deleteWindowProps: ConfirmActionProps = {
+    label: "Confirm Page Delete",
+    bodyText: deletePageBody,
+    buttonText: "Delete",
+    action: confirmPageDelete,
+  };
 
   if (props.isEdit && val.length > 0 && val !== props.name) {
     for (let page of pages.pages) {
@@ -81,7 +99,10 @@ function PageListItem(props: PageListItemProps) {
             create
           </button>
           {props.canDelete && (
-            <button className="plain max-height-square material-icons clickable">
+            <button
+              className="plain max-height-square material-icons clickable"
+              onClick={() => dispatch(confirmAction(deleteWindowProps))}
+            >
               delete
             </button>
           )}
