@@ -85,7 +85,7 @@ function AddScreenSizeWindow(props: AddScreenSizeWindowProps) {
   let heightFeedback = "";
   let dimensionFeedback = "";
   let name = chosenScreen.name;
-  if (!name) {
+  if (!name.trim()) {
     isValid = false;
   }
 
@@ -122,7 +122,7 @@ function AddScreenSizeWindow(props: AddScreenSizeWindowProps) {
     // Ensuring the custom screen does not share either name or dimensions with any other active screen
     else if (isCustomScreen) {
       activeScreenSizes.map((activeScreen) => {
-        if (activeScreen.name === name) {
+        if (activeScreen.name === name.trim()) {
           isValid = false;
           nameFeedback = "A screen size with that name already exists";
         } else if (
