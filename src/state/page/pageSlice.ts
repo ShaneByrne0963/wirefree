@@ -71,6 +71,8 @@ const pageSlice = createSlice({
       for (let page of state.pages) {
         page.data[action.payload] = {...defaultLayerData};
       }
+      // Adding the base layer to the new screen
+      state.persistentLayers[action.payload] = {"*Base Layer": {}};
       state.selectedScreen = action.payload;
     },
     updatePageSelectedScreen(state, action: PayloadAction<string>) {
