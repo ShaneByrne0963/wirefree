@@ -1,3 +1,10 @@
+import VectorGraphic, {
+  pathComponents,
+  pathEmojis,
+  pathIcons,
+  pathShapes,
+} from "../../VectorGraphic";
+
 const shapeGroupNames = ["shapes", "components", "icons", "emojis"];
 
 interface ShapeGroupButtonProps {
@@ -21,13 +28,25 @@ function ShapeGroups() {
 }
 
 function ShapeGroupButton(props: ShapeGroupButtonProps) {
+  const iconColor = "rgba(0, 0, 0, 0.6)";
   return (
     <a
       role="button"
       id={"shape-group-" + props.type}
       className={"shape-group-button" + (props.selected ? " selected" : "")}
     >
-      {props.type === "shapes" && <div></div>}
+      {props.type === "shapes" && (
+        <VectorGraphic color={iconColor} path={pathShapes}></VectorGraphic>
+      )}
+      {props.type === "components" && (
+        <VectorGraphic color={iconColor} path={pathComponents}></VectorGraphic>
+      )}
+      {props.type === "icons" && (
+        <VectorGraphic color={iconColor} path={pathIcons}></VectorGraphic>
+      )}
+      {props.type === "emojis" && (
+        <VectorGraphic color={iconColor} path={pathEmojis}></VectorGraphic>
+      )}
     </a>
   );
 }

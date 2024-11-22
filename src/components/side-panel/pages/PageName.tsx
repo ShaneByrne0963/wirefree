@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import PageSettings from "./PageSettings";
 import { RootState } from "../../../state/store";
 import PageDropdown from "./PageDropdown";
-import useOutsideClick from "../../hooks/useOutsideClick";
+import useOutsideClick from "../../../hooks/useOutsideClick";
 
 function PageName() {
   const pageData = useSelector((state: RootState) => state.pages);
