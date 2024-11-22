@@ -9,6 +9,7 @@ interface LayerListItemProps {
   index: number;
   selected: boolean;
   visible: boolean;
+  isBase: boolean;
 }
 
 function LayerListItem(props: LayerListItemProps) {
@@ -23,7 +24,7 @@ function LayerListItem(props: LayerListItemProps) {
   return (
     <div className={className}>
       <div
-        className={"clickable"}
+        className={"clickable" + (props.isBase ? " base-layer" : "")}
         onClick={() => dispatch(selectLayer(props.index))}
       >
         {props.name}

@@ -9,11 +9,21 @@ function LayerList() {
     screenSizeData.activeScreens[screenSizeData.selectedScreen].name;
   const currentPage =
     pageData.pages[pageData.selectedPage].data[currentScreenSize];
+
+  // Getting the information of each object
   let renderLayers = currentPage.layers.map((layer: string) => {
-    return {
-      name: layer,
-      visible: currentPage[`_${layer}`].visible,
-    };
+    const displayName = layer.slice(1);
+    return layer[0] === "_"
+      ? {
+          name: displayName,
+          visible: currentPage[layer].visible,
+          isBaseLayer: false,
+        }
+      : {
+          name: layer.slice(1),
+          visible: pageData.persistentLayers[currentScreenSize][layer].visible,
+          isBaseLayer: true,
+        };
   });
 
   return (
@@ -25,6 +35,7 @@ function LayerList() {
             key={index}
             index={index}
             visible={data.visible}
+            isBase={data.isBaseLayer}
             selected={currentPage.selected === index}
           ></LayerListItem>
         );

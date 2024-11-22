@@ -36,14 +36,8 @@ a[role="button"] {
     justify-content: center;
 }
 
-.clickable:not([disabled]),
-.clickable-always {
+.clickable:not([disabled]):not(.selected) {
     cursor: pointer;
-}
-
-.clickable:not([disabled]).selected,
-.selected .clickable:not([disabled]) {
-    cursor: default;
 }
 
 .invisible {
@@ -271,6 +265,10 @@ input[type="text"]:not(.browser-default) {
 
     &.selected {
         background-color: #D5D5FC;
+    }
+
+    & .base-layer {
+        font-weight: bold;
     }
 
     &:not(:last-child) {

@@ -4,6 +4,7 @@ import { defaultScreenSizes } from "../../context";
 interface PageState {
   screenSizes: string[];
   pages: Page[];
+  persistentLayers: Record<string, any>;
   selectedPage: number;
   selectedScreen: string;
   dropdown: boolean;
@@ -11,7 +12,7 @@ interface PageState {
 
 // Every page starts with one layer
 const defaultLayerData = {
-  "layers": ["Layer 1"], // We also store the layer names in an array to allow for custom ordering
+  "layers": ["*Base Layer", "_Layer 1"], // We also store the layer names in an array to allow for custom ordering
   "selected": 0,
   "_Layer 1": {
     visible: true
@@ -20,7 +21,10 @@ const defaultLayerData = {
 
 const initialState:PageState = {
   screenSizes: [defaultScreenSizes[0].name],
-  pages: [{name: "Index", data: { [defaultScreenSizes[0].name]: {...defaultLayerData} }}],
+  pages: [{name: "Index", data: {[defaultScreenSizes[0].name]: {...defaultLayerData}}}],
+  persistentLayers: {
+    [defaultScreenSizes[0].name]: {"*Base Layer": {visible: true}}
+  },
   selectedPage: 0,
   selectedScreen: defaultScreenSizes[0].name,
   dropdown: false
@@ -74,7 +78,7 @@ const pageSlice = createSlice({
     addLayerToPage(state, action: PayloadAction<string>) {
       let pageData = state.pages[state.selectedPage].data[state.selectedScreen];
       pageData.layers.push(action.payload);
-      pageData[`_${action.payload}`] = { visible: true };
+      pageData[action.payload] = { visible: true };
       pageData.selected = pageData.layers.length - 1;
     },
     selectLayer(state, action: PayloadAction<number>) {
@@ -84,7 +88,7 @@ const pageSlice = createSlice({
     toggleLayerVisibility(state, action: PayloadAction<number>) {
       let pageData = state.pages[state.selectedPage].data[state.selectedScreen];
       let layerName = pageData.layers[action.payload];
-      let layerObject = pageData[`_${layerName}`];
+      let layerObject = pageData[layerName];
       layerObject.visible = !layerObject.visible;
     },
     deletePage(state, action: PayloadAction<number>) {

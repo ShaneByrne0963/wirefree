@@ -23,12 +23,15 @@ function SidePanel() {
       let layerCount = 1;
       while (
         currentPageData[selectedScreenName].layers.includes(
-          `Layer ${layerCount}`
+          `_Layer ${layerCount}`
+        ) ||
+        currentPageData[selectedScreenName].layers.includes(
+          `*Layer ${layerCount}`
         )
       ) {
         layerCount++;
       }
-      dispatch(addLayerToPage(`Layer ${layerCount}`));
+      dispatch(addLayerToPage(`_Layer ${layerCount}`));
     }
   }
 
