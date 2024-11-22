@@ -20,7 +20,7 @@ function LayerList() {
           isBaseLayer: false,
         }
       : {
-          name: layer.slice(1),
+          name: displayName + ` (${currentScreenSize})`,
           visible: currentPage[`${layer}_visible`],
           isBaseLayer: true,
         };
