@@ -14,7 +14,14 @@ function LayerList() {
   return (
     <div id="layer-list">
       {renderLayers.map((layer: string, index: number) => {
-        return <LayerListItem name={layer} key={index}></LayerListItem>;
+        return (
+          <LayerListItem
+            name={layer}
+            key={index}
+            index={index}
+            selected={currentPage.selected === index}
+          ></LayerListItem>
+        );
       })}
     </div>
   );

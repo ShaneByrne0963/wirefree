@@ -5,12 +5,14 @@ interface PageState {
   screenSizes: string[];
   pages: Page[];
   selectedPage: number;
+  selectedScreen: string;
   dropdown: boolean;
 }
 
 // Every page starts with one layer
 const defaultLayerData = {
-  "layers": ["Layer 1"],
+  "layers": ["Layer 1"], // We also store the layer names in an array to allow for custom ordering
+  "selected": 0,
   "_Layer 1": {}
 }
 
@@ -18,6 +20,7 @@ const initialState:PageState = {
   screenSizes: [defaultScreenSizes[0].name],
   pages: [{name: "Index", data: { [defaultScreenSizes[0].name]: {...defaultLayerData} }}],
   selectedPage: 0,
+  selectedScreen: defaultScreenSizes[0].name,
   dropdown: false
 }
 
@@ -61,12 +64,20 @@ const pageSlice = createSlice({
       for (let page of state.pages) {
         page.data[action.payload] = {...defaultLayerData};
       }
+      state.selectedScreen = action.payload;
     },
-    addLayerToPage(state, action: PayloadAction<{index: number, selectedScreen: string, layer: string}>) {
-      const {index, selectedScreen, layer} = action.payload;
-      let pageData = state.pages[index].data[selectedScreen];
-      pageData.layers.push(layer);
-      pageData[`_${layer}`] = {};
+    updatePageSelectedScreen(state, action: PayloadAction<string>) {
+      state.selectedScreen = action.payload;
+    },
+    addLayerToPage(state, action: PayloadAction<string>) {
+      let pageData = state.pages[state.selectedPage].data[state.selectedScreen];
+      pageData.layers.push(action.payload);
+      pageData[`_${action.payload}`] = {};
+      pageData.selected = pageData.layers.length - 1;
+    },
+    selectLayer(state, action: PayloadAction<number>) {
+      let pageData = state.pages[state.selectedPage].data[state.selectedScreen];
+      pageData.selected = action.payload;
     },
     deletePage(state, action: PayloadAction<number>) {
       state.pages.splice(action.payload, 1);
@@ -87,7 +98,9 @@ export const {
   renamePage,
   duplicatePage,
   addScreenSizeToPages,
+  updatePageSelectedScreen,
   addLayerToPage,
+  selectLayer,
   deletePage
 } = pageSlice.actions;
 export default pageSlice.reducer;

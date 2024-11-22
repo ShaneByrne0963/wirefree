@@ -7,6 +7,7 @@ import AddScreenSize from "./AddScreenSize";
 import { useDispatch, useSelector } from "react-redux";
 import { selectScreenSize } from "../../state/screen_size/screenSizeSlice";
 import LayerList from "./layers/LayerList";
+import { updatePageSelectedScreen } from "../../state/page/pageSlice";
 
 ///////// Configuration
 
@@ -105,6 +106,7 @@ function SectionComponent(props: SectionComponentProps) {
                 selected={selectedIndex === index}
                 handler={() => {
                   dispatch(selectScreenSize(index));
+                  dispatch(updatePageSelectedScreen(item.name));
                 }}
               ></ScreenSizeButton>
             );

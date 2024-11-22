@@ -40,6 +40,11 @@ a[role="button"] {
     cursor: pointer;
 }
 
+.clickable:not([disabled]).selected,
+.selected .clickable:not([disabled]) {
+    cursor: default;
+}
+
 .invisible {
     visibility: hidden;
 }
@@ -259,6 +264,10 @@ input[type="text"]:not(.browser-default) {
 
 .layer-list-item {
     padding: 4px;
+
+    &.selected {
+        background-color: #D5D5FC;
+    }
 
     &:not(:last-child) {
         border-top: 1px solid rgba(0, 0, 0, 0.2);

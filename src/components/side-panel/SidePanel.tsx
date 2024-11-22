@@ -28,13 +28,7 @@ function SidePanel() {
       ) {
         layerCount++;
       }
-      dispatch(
-        addLayerToPage({
-          index: pageData.selectedPage,
-          selectedScreen: selectedScreenName,
-          layer: `Layer ${layerCount}`,
-        })
-      );
+      dispatch(addLayerToPage(`Layer ${layerCount}`));
     }
   }
 
