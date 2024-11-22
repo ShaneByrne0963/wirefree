@@ -21,7 +21,7 @@ function LayerList() {
         }
       : {
           name: layer.slice(1),
-          visible: pageData.persistentLayers[currentScreenSize][layer].visible,
+          visible: currentPage[`${layer}_visible`],
           isBaseLayer: true,
         };
   });

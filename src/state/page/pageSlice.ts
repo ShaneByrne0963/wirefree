@@ -14,6 +14,7 @@ interface PageState {
 const defaultLayerData = {
   "layers": ["*Base Layer", "_Layer 1"], // We also store the layer names in an array to allow for custom ordering
   "selected": 1,
+  "*Base Layer_visible": true,
   "_Layer 1": {
     visible: true
   }
@@ -23,7 +24,7 @@ const initialState:PageState = {
   screenSizes: [defaultScreenSizes[0].name],
   pages: [{name: "Index", data: {[defaultScreenSizes[0].name]: {...defaultLayerData}}}],
   persistentLayers: {
-    [defaultScreenSizes[0].name]: {"*Base Layer": {visible: true}}
+    [defaultScreenSizes[0].name]: {"*Base Layer": {}}
   },
   selectedPage: 0,
   selectedScreen: defaultScreenSizes[0].name,
@@ -88,8 +89,14 @@ const pageSlice = createSlice({
     toggleLayerVisibility(state, action: PayloadAction<number>) {
       let pageData = state.pages[state.selectedPage].data[state.selectedScreen];
       let layerName = pageData.layers[action.payload];
-      let layerObject = (layerName[0] === "_" ? pageData[layerName] : state.persistentLayers[state.selectedScreen][layerName]);
-      layerObject.visible = !layerObject.visible;
+
+      // Determine if the layer is regular or persistent
+      if (layerName[0] === "_") {
+        pageData[layerName].visible = !pageData[layerName].visible;
+      }
+      else {
+        pageData[`${layerName}_visible`] = !pageData[`${layerName}_visible`];
+      }
     },
     deletePage(state, action: PayloadAction<number>) {
       state.pages.splice(action.payload, 1);
