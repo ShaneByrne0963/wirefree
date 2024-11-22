@@ -6,6 +6,7 @@ import ScreenSizeButton from "./ScreenSizeButton";
 import AddScreenSize from "./AddScreenSize";
 import { useDispatch, useSelector } from "react-redux";
 import { selectScreenSize } from "../../state/screen_size/screenSizeSlice";
+import LayerList from "./layers/LayerList";
 
 ///////// Configuration
 
@@ -21,6 +22,7 @@ type SidePanelWindowProps = {
   windowType: string;
   label?: string;
   labelButton?: string;
+  labelButtonAction?: (...args: any[]) => any;
   canOverflow?: boolean;
 };
 
@@ -42,7 +44,11 @@ function SidePanelWindow(props: SidePanelWindowProps) {
       labelHtml = (
         <div className="label-with-button">
           {labelHtml}
-          <a role="button" className="plain max-height-square material-icons">
+          <a
+            role="button"
+            className="plain max-height-square material-icons"
+            onClick={props.labelButtonAction}
+          >
             {props.labelButton}
           </a>
         </div>
@@ -86,7 +92,7 @@ function WindowComponent(props: WindowComponentProps) {
       id={"window-" + props.windowType}
       className={"side-panel-window " + windowSize}
     >
-      {props.canOverflow && (
+      {props.windowType === "screen" && (
         <div className="window-content-container">
           {activeScreenSizes.map((item, index) => {
             return (
@@ -105,6 +111,7 @@ function WindowComponent(props: WindowComponentProps) {
           <AddScreenSize></AddScreenSize>
         </div>
       )}
+      {props.windowType === "layers" && <LayerList></LayerList>}
     </div>
   );
 }
