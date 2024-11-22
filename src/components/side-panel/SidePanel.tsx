@@ -1,5 +1,5 @@
 import PageName from "./pages/PageName";
-import SidePanelWindow from "./SidePanelWindow";
+import SidePanelSection from "./SidePanelSection";
 import ShapePalette from "./ShapePalette";
 import { useContext } from "react";
 import { ThemeContext } from "../../context";
@@ -42,17 +42,17 @@ function SidePanel() {
   return (
     <div id="side-panel" className={color + " lighten-3"}>
       <PageName></PageName>
-      <SidePanelWindow
-        windowType="screen"
+      <SidePanelSection
+        sectionType="screen"
         label="Screen"
         canOverflow={true}
-      ></SidePanelWindow>
-      <SidePanelWindow
-        windowType="layers"
+      ></SidePanelSection>
+      <SidePanelSection
+        sectionType="layers"
         label="Layers"
         labelButton="add"
         labelButtonAction={handleAddLayer}
-      ></SidePanelWindow>
+      ></SidePanelSection>
       <ShapePalette color={color}></ShapePalette>
     </div>
   );

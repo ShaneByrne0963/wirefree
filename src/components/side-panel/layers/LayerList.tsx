@@ -9,10 +9,11 @@ function LayerList() {
     screenSizeData.activeScreens[screenSizeData.selectedScreen].name;
   const currentPage =
     pageData.pages[pageData.selectedPage].data[currentScreenSize];
+  let renderLayers = [...currentPage.layers].reverse();
 
   return (
     <div id="layer-list">
-      {currentPage.layers.map((layer: string, index: number) => {
+      {renderLayers.map((layer: string, index: number) => {
         return <LayerListItem name={layer} key={index}></LayerListItem>;
       })}
     </div>

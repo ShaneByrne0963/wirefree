@@ -10,30 +10,30 @@ import LayerList from "./layers/LayerList";
 
 ///////// Configuration
 
-// The size of the window depending on the type
-const windowSizes = {
+// The size of the section depending on the type
+const sectionSizes = {
   screen: "sm",
   layers: "lg",
 };
 
 ///////// Property Types
 
-type SidePanelWindowProps = {
-  windowType: string;
+type SidePanelSectionProps = {
+  sectionType: string;
   label?: string;
   labelButton?: string;
   labelButtonAction?: (...args: any[]) => any;
   canOverflow?: boolean;
 };
 
-type WindowComponentProps = {
-  windowType: string;
+type SectionComponentProps = {
+  sectionType: string;
   canOverflow: boolean;
 };
 
 ///////// Components
 
-function SidePanelWindow(props: SidePanelWindowProps) {
+function SidePanelSection(props: SidePanelSectionProps) {
   const color = useContext(ThemeContext);
   let labelHtml = null;
   if (props.label) {
@@ -55,30 +55,31 @@ function SidePanelWindow(props: SidePanelWindowProps) {
       );
     }
   }
-  let panelWindowHtml = (
+  let panelSectionHtml = (
     <>
       {labelHtml}
-      <WindowComponent
-        windowType={props.windowType}
+      <SectionComponent
+        sectionType={props.sectionType}
         canOverflow={props.canOverflow === true}
-      ></WindowComponent>
+      ></SectionComponent>
     </>
   );
 
-  // If the window is accompanied by a label, then wrap the HTML in a div
+  // If the section is accompanied by a label, then wrap the HTML in a div
   if (props.label) {
     return (
-      <div id={"window-" + props.windowType + "-container"}>
-        {panelWindowHtml}
+      <div id={"section-" + props.sectionType + "-container"}>
+        {panelSectionHtml}
       </div>
     );
   }
-  return panelWindowHtml;
+  return panelSectionHtml;
 }
 
-function WindowComponent(props: WindowComponentProps) {
-  // Get the size of the window based on the type
-  const windowSize = windowSizes[props.windowType as keyof typeof windowSizes];
+function SectionComponent(props: SectionComponentProps) {
+  // Get the size of the section based on the type
+  const sectionSize =
+    sectionSizes[props.sectionType as keyof typeof sectionSizes];
   const activeScreenSizes = useSelector(
     (state: RootState) => state.screenSize.activeScreens
   );
@@ -89,11 +90,11 @@ function WindowComponent(props: WindowComponentProps) {
 
   return (
     <div
-      id={"window-" + props.windowType}
-      className={"side-panel-window " + windowSize}
+      id={"section-" + props.sectionType}
+      className={"side-panel-section " + sectionSize}
     >
-      {props.windowType === "screen" && (
-        <div className="window-content-container">
+      {props.sectionType === "screen" && (
+        <div className="section-content-container">
           {activeScreenSizes.map((item, index) => {
             return (
               <ScreenSizeButton
@@ -111,9 +112,9 @@ function WindowComponent(props: WindowComponentProps) {
           <AddScreenSize></AddScreenSize>
         </div>
       )}
-      {props.windowType === "layers" && <LayerList></LayerList>}
+      {props.sectionType === "layers" && <LayerList></LayerList>}
     </div>
   );
 }
 
-export default SidePanelWindow;
+export default SidePanelSection;

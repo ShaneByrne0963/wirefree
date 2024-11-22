@@ -147,7 +147,7 @@ input[type="text"]:not(.browser-default) {
     margin-right: 4px;
 }
 
-.side-panel-window {
+.side-panel-section {
     background-color: white;
     width: 100%;
     border-top: 1px solid rgba(0,0,0,0.5);
@@ -155,28 +155,28 @@ input[type="text"]:not(.browser-default) {
     margin-bottom: 8px;
 }
 
-.side-panel-window.sm {
+.side-panel-section.sm {
     height: 96px;
 }
 
-.side-panel-window.md {
+.side-panel-section.md {
     height: 128px;
 }
 
-.side-panel-window.lg {
+.side-panel-section.lg {
     height: 160px;
 }
 
-.window-content-container {
+.section-content-container {
     height: 100%;
 }
 
-#window-screen {
+#section-screen {
     position: relative;
     overflow-x: auto;
 }
 
-#window-screen>.window-content-container {
+#section-screen>.section-content-container {
     position: absolute;
     top: 0;
     left: 0;
