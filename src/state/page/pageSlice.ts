@@ -47,6 +47,15 @@ const pageSlice = createSlice({
       const payload = action.payload;
       state.pages[payload[0]].name = payload[1];
     },
+    duplicatePage(state, action: PayloadAction<[number, string]>) {
+      const copiedData = {...state.pages[action.payload[0]].data};
+      const newPage = {
+        name: action.payload[1],
+        data: copiedData
+      };
+      state.pages.push(newPage);
+      state.selectedPage = state.pages.length - 1;
+    },
     addScreenSizeToPages(state, action: PayloadAction<string>) {
       state.screenSizes.push(action.payload);
       for (let page of state.pages) {
@@ -76,6 +85,7 @@ export const {
   createPage,
   setPage,
   renamePage,
+  duplicatePage,
   addScreenSizeToPages,
   addLayerToPage,
   deletePage

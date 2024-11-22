@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../state/store";
-import { createPage, renamePage, setPage } from "../../../state/page/pageSlice";
+import {
+  createPage,
+  duplicatePage,
+  renamePage,
+  setPage,
+} from "../../../state/page/pageSlice";
 import {
   confirmAction,
   ConfirmActionProps,
@@ -94,7 +99,7 @@ function PageListItem(props: PageListItemProps) {
       }
     }
     pageName += ` (${identifier})`;
-    dispatch(createPage(pageName));
+    dispatch(duplicatePage([props.index, pageName]));
   }
 
   return (
