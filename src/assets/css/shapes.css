@@ -22,15 +22,15 @@
 
 .shape-group-button {
   height: 32px;
-  background-color: white;
   border: 1px solid rgba(0, 0, 0, 0.5);
   border-top: none;
-  border-bottom-left-radius: 6px;
-  border-bottom-right-radius: 6px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
   padding: 4px;
   text-align: center;
 
   &.selected {
+    background-color: white;
     position: relative;
     z-index: 3;
   }

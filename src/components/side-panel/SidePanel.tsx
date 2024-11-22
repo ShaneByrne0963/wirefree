@@ -1,6 +1,6 @@
 import PageName from "./pages/PageName";
 import SidePanelSection from "./SidePanelSection";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ThemeContext } from "../../context";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../state/store";
@@ -10,6 +10,7 @@ import ShapeGroups from "./shapes/ShapeGroups";
 function SidePanel() {
   const screenSizeData = useSelector((state: RootState) => state.screenSize);
   const pageData = useSelector((state: RootState) => state.pages);
+  const [shapeGroup, setShapeGroup] = useState(0);
   const dispatch = useDispatch();
 
   // Function for adding layers to the selected page
@@ -51,7 +52,10 @@ function SidePanel() {
         labelButtonAction={handleAddLayer}
       ></SidePanelSection>
       <SidePanelSection sectionType="shapes" label="Shapes"></SidePanelSection>
-      <ShapeGroups></ShapeGroups>
+      <ShapeGroups
+        selectedGroup={shapeGroup}
+        handleChangeGroup={setShapeGroup}
+      ></ShapeGroups>
     </div>
   );
 }

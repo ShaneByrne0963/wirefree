@@ -7,20 +7,28 @@ import VectorGraphic, {
 
 const shapeGroupNames = ["shapes", "components", "icons", "emojis"];
 
-interface ShapeGroupButtonProps {
-  type: string;
-  selected: boolean;
+interface ShapeGroupProps {
+  selectedGroup: number;
+  handleChangeGroup: (index: number) => void;
 }
 
-function ShapeGroups() {
-  const selectedGroup = 0;
+interface ShapeGroupButtonProps {
+  type: string;
+  index: number;
+  selected: boolean;
+  handleClick: (index: number) => void;
+}
+
+function ShapeGroups(props: ShapeGroupProps) {
   return (
     <div id="shape-groups">
       {shapeGroupNames.map((shape, index) => (
         <ShapeGroupButton
           key={index}
+          index={index}
           type={shape}
-          selected={index === selectedGroup}
+          selected={index === props.selectedGroup}
+          handleClick={props.handleChangeGroup}
         ></ShapeGroupButton>
       ))}
     </div>
@@ -34,6 +42,7 @@ function ShapeGroupButton(props: ShapeGroupButtonProps) {
       role="button"
       id={"shape-group-" + props.type}
       className={"shape-group-button" + (props.selected ? " selected" : "")}
+      onClick={() => props.handleClick(props.index)}
     >
       {props.type === "shapes" && (
         <VectorGraphic color={iconColor} path={pathShapes}></VectorGraphic>
