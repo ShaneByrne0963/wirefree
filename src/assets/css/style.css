@@ -36,7 +36,8 @@ a[role="button"] {
     justify-content: center;
 }
 
-.clickable:not([disabled]) {
+.clickable:not([disabled]),
+.clickable-always {
     cursor: pointer;
 }
 

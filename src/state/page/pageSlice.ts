@@ -74,12 +74,18 @@ const pageSlice = createSlice({
     addLayerToPage(state, action: PayloadAction<string>) {
       let pageData = state.pages[state.selectedPage].data[state.selectedScreen];
       pageData.layers.push(action.payload);
-      pageData[`_${action.payload}`] = {};
+      pageData[`_${action.payload}`] = { visible: true };
       pageData.selected = pageData.layers.length - 1;
     },
     selectLayer(state, action: PayloadAction<number>) {
       let pageData = state.pages[state.selectedPage].data[state.selectedScreen];
       pageData.selected = action.payload;
+    },
+    toggleLayerVisibility(state, action: PayloadAction<number>) {
+      let pageData = state.pages[state.selectedPage].data[state.selectedScreen];
+      let layerName = pageData.layers[action.payload];
+      let layerObject = pageData[`_${layerName}`];
+      layerObject.visible = !layerObject.visible;
     },
     deletePage(state, action: PayloadAction<number>) {
       state.pages.splice(action.payload, 1);
@@ -103,6 +109,7 @@ export const {
   updatePageSelectedScreen,
   addLayerToPage,
   selectLayer,
+  toggleLayerVisibility,
   deletePage
 } = pageSlice.actions;
 export default pageSlice.reducer;

@@ -1,5 +1,8 @@
 import { useDispatch } from "react-redux";
-import { selectLayer } from "../../../state/page/pageSlice";
+import {
+  selectLayer,
+  toggleLayerVisibility,
+} from "../../../state/page/pageSlice";
 
 interface LayerListItemProps {
   name: string;
@@ -25,7 +28,10 @@ function LayerListItem(props: LayerListItemProps) {
       >
         {props.name}
       </div>
-      <button className={"plain max-height-square material-icons"}>
+      <button
+        className={"plain clickable-always max-height-square material-icons"}
+        onClick={() => dispatch(toggleLayerVisibility(props.index))}
+      >
         {props.visible ? "visibility" : "visibility_off"}
       </button>
     </div>
