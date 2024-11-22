@@ -3,7 +3,7 @@ interface LayerListItemProps {
 }
 
 function LayerListItem(props: LayerListItemProps) {
-  return <div>{props.name}</div>;
+  return <div className="layer-list-item">{props.name}</div>;
 }
 
 export default LayerListItem;
