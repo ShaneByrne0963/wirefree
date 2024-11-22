@@ -264,6 +264,9 @@ input[type="text"]:not(.browser-default) {
 
 .layer-list-item {
     padding: 4px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
 
     &.selected {
         background-color: #D5D5FC;
@@ -272,6 +275,10 @@ input[type="text"]:not(.browser-default) {
     &:not(:last-child) {
         border-top: 1px solid rgba(0, 0, 0, 0.2);
     }
+}
+
+.layer-invisible * {
+    color: rgba(0, 0, 0, 0.6);
 }
 
 /* Shapes */

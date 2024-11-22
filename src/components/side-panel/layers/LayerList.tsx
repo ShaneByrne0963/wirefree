@@ -9,16 +9,22 @@ function LayerList() {
     screenSizeData.activeScreens[screenSizeData.selectedScreen].name;
   const currentPage =
     pageData.pages[pageData.selectedPage].data[currentScreenSize];
-  let renderLayers = [...currentPage.layers];
+  let renderLayers = currentPage.layers.map((layer: string) => {
+    return {
+      name: layer,
+      visible: currentPage[`_${layer}`].visible,
+    };
+  });
 
   return (
     <div id="layer-list">
-      {renderLayers.map((layer: string, index: number) => {
+      {renderLayers.map((data: typeof renderLayers, index: number) => {
         return (
           <LayerListItem
-            name={layer}
+            name={data.name}
             key={index}
             index={index}
+            visible={data.visible}
             selected={currentPage.selected === index}
           ></LayerListItem>
         );

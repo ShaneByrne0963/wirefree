@@ -13,7 +13,9 @@ interface PageState {
 const defaultLayerData = {
   "layers": ["Layer 1"], // We also store the layer names in an array to allow for custom ordering
   "selected": 0,
-  "_Layer 1": {}
+  "_Layer 1": {
+    visible: true
+  }
 }
 
 const initialState:PageState = {
