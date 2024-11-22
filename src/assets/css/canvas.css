@@ -16,7 +16,7 @@
     background-color: white;
 
     width: min(calc((100vh - var(--nav-height) - (var(--canvas-margin) * 2)) * var(--aspect-ratio)), 100%);
-    height: min(calc(((100vw * 0.75) - (var(--canvas-margin) * 2)) / var(--aspect-ratio)), 100%);
+    height: min(calc(((100vw - var(--side-panel-width)) - (var(--canvas-margin) * 2)) / var(--aspect-ratio)), 100%);
 }
 
 @media screen and (max-width: 1000px) {

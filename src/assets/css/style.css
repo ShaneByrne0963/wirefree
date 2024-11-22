@@ -1,12 +1,13 @@
 :root {
     --nav-height: 32px;
+    --side-panel-width: 320px;
 }
 
 #root {
     height: 100vh;
     display: grid;
     grid-template-rows: 32px calc(100vh - var(--nav-height));
-    grid-template-columns: 25vw 1fr;
+    grid-template-columns: var(--side-panel-width) 1fr;
     background-color: #DFDFDF;
 }
 
@@ -152,7 +153,10 @@ input[type="text"]:not(.browser-default) {
     width: 100%;
     border-top: 1px solid rgba(0,0,0,0.5);
     border-bottom: 1px solid rgba(0,0,0,0.5);
-    margin-bottom: 8px;
+
+    &:not(#section-shapes) {
+        margin-bottom: 8px;
+    }
 }
 
 .side-panel-section.sm {
@@ -280,17 +284,7 @@ input[type="text"]:not(.browser-default) {
     color: rgba(0, 0, 0, 0.6);
 }
 
-/* Shapes */
-
-#shape-palette {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(30px, 1fr));
-    padding: 0 4px;
-}
-
-.shape-button {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    border: 1px solid rgba(0, 0, 0, 0.5);
-    background-color: rgba(0,0,0,0.1);
+#section-shapes {
+    position: relative;
+    z-index: 1;
 }

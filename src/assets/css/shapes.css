@@ -1,0 +1,43 @@
+#shape-list {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+}
+
+.shape-button {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border: 1px solid black;
+}
+
+/* Shape Groups */
+
+#shape-groups {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  position: relative;
+  top: -1px;
+  margin-right: 24px;
+  margin-left: 4px;
+}
+
+.shape-group-button {
+  height: 32px;
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-top: none;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  padding: 4px;
+  text-align: center;
+
+  &.selected {
+    position: relative;
+    z-index: 3;
+  }
+
+  >svg {
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    fill: red;
+  }
+}

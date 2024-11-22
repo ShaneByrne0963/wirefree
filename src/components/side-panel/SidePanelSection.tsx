@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectScreenSize } from "../../state/screen_size/screenSizeSlice";
 import LayerList from "./layers/LayerList";
 import { updatePageSelectedScreen } from "../../state/page/pageSlice";
+import ShapeList from "./shapes/ShapeList";
 
 ///////// Configuration
 
@@ -15,6 +16,7 @@ import { updatePageSelectedScreen } from "../../state/page/pageSlice";
 const sectionSizes = {
   screen: "sm",
   layers: "lg",
+  shapes: "lg",
 };
 
 ///////// Property Types
@@ -115,6 +117,7 @@ function SectionComponent(props: SectionComponentProps) {
         </div>
       )}
       {props.sectionType === "layers" && <LayerList></LayerList>}
+      {props.sectionType === "shapes" && <ShapeList></ShapeList>}
     </div>
   );
 }
