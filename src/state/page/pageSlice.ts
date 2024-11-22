@@ -13,7 +13,7 @@ interface PageState {
 // Every page starts with one layer
 const defaultLayerData = {
   "layers": ["*Base Layer", "_Layer 1"], // We also store the layer names in an array to allow for custom ordering
-  "selected": 0,
+  "selected": 1,
   "_Layer 1": {
     visible: true
   }
@@ -88,7 +88,7 @@ const pageSlice = createSlice({
     toggleLayerVisibility(state, action: PayloadAction<number>) {
       let pageData = state.pages[state.selectedPage].data[state.selectedScreen];
       let layerName = pageData.layers[action.payload];
-      let layerObject = pageData[layerName];
+      let layerObject = (layerName[0] === "_" ? pageData[layerName] : state.persistentLayers[state.selectedScreen][layerName]);
       layerObject.visible = !layerObject.visible;
     },
     deletePage(state, action: PayloadAction<number>) {

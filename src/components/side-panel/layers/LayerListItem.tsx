@@ -30,7 +30,7 @@ function LayerListItem(props: LayerListItemProps) {
         {props.name}
       </div>
       <button
-        className={"plain clickable-always max-height-square material-icons"}
+        className={"plain clickable max-height-square material-icons"}
         onClick={() => dispatch(toggleLayerVisibility(props.index))}
       >
         {props.visible ? "visibility" : "visibility_off"}
