@@ -9,7 +9,7 @@ function LayerList() {
     screenSizeData.activeScreens[screenSizeData.selectedScreen].name;
   const currentPage =
     pageData.pages[pageData.selectedPage].data[currentScreenSize];
-  let renderLayers = [...currentPage.layers].reverse();
+  let renderLayers = [...currentPage.layers];
 
   return (
     <div id="layer-list">

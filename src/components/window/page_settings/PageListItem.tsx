@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../state/store";
 import {
-  createPage,
   duplicatePage,
   renamePage,
   setPage,
