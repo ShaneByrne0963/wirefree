@@ -7,7 +7,7 @@ import VectorGraphic, {
 } from "../../VectorGraphic";
 
 // The type of shape group tabs
-const shapeGroupNames = [
+export const shapeGroupNames = [
   "favorites",
   "shapes",
   "components",

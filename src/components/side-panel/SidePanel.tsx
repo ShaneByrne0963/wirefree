@@ -51,7 +51,11 @@ function SidePanel() {
         labelButton="add"
         labelButtonAction={handleAddLayer}
       ></SidePanelSection>
-      <SidePanelSection sectionType="shapes" label="Shapes"></SidePanelSection>
+      <SidePanelSection
+        sectionType="shapes"
+        label="Shapes"
+        selectedIndex={shapeGroup}
+      ></SidePanelSection>
       <ShapeGroups
         selectedGroup={shapeGroup}
         handleChangeGroup={setShapeGroup}

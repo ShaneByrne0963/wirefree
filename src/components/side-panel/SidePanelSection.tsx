@@ -27,11 +27,13 @@ type SidePanelSectionProps = {
   labelButton?: string;
   labelButtonAction?: (...args: any[]) => any;
   canOverflow?: boolean;
+  selectedIndex?: number;
 };
 
 type SectionComponentProps = {
   sectionType: string;
   canOverflow: boolean;
+  selectedIndex?: number;
 };
 
 ///////// Components
@@ -64,6 +66,7 @@ function SidePanelSection(props: SidePanelSectionProps) {
       <SectionComponent
         sectionType={props.sectionType}
         canOverflow={props.canOverflow === true}
+        selectedIndex={props.selectedIndex}
       ></SectionComponent>
     </>
   );
@@ -117,7 +120,9 @@ function SectionComponent(props: SectionComponentProps) {
         </div>
       )}
       {props.sectionType === "layers" && <LayerList></LayerList>}
-      {props.sectionType === "shapes" && <ShapeList></ShapeList>}
+      {props.sectionType === "shapes" && (
+        <ShapeList tab={props.selectedIndex}></ShapeList>
+      )}
     </div>
   );
 }

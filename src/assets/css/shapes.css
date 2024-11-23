@@ -1,8 +1,11 @@
 #shape-list {
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
   max-height: 100%;
   overflow-y: auto;
+}
+
+.shape-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
 }
 
 .shape-button {
