@@ -1,5 +1,8 @@
+import { useDispatch, useSelector } from "react-redux";
 import { convertDisplayToClassName } from "../../../helpers";
 import VectorGraphic, { pathMicrophone } from "../../VectorGraphic";
+import { RootState } from "../../../state/store";
+import { selectShape } from "../../../state/slices/shapeSlice";
 
 interface ShapeButtonProps {
   buttonType: string;
@@ -17,6 +20,10 @@ const buttonHtml = {
 };
 
 function ShapeButton(props: ShapeButtonProps) {
+  const selectedButton = useSelector(
+    (state: RootState) => state.shapes.selected
+  );
+  const dispatch = useDispatch();
   const insideHtml =
     props.buttonType in buttonHtml ? (
       buttonHtml[props.buttonType as keyof typeof buttonHtml]
@@ -27,8 +34,10 @@ function ShapeButton(props: ShapeButtonProps) {
     <div
       className={
         "shape-button clickable shape-" +
-        convertDisplayToClassName(props.buttonType)
+        convertDisplayToClassName(props.buttonType) +
+        (props.buttonType === selectedButton ? " selected" : "")
       }
+      onClick={() => dispatch(selectShape(props.buttonType))}
     >
       {insideHtml}
     </div>

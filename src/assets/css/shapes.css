@@ -51,7 +51,11 @@
   align-items: center;
   justify-content: center;
 
-  &>* {
+  &.selected {
+    background-color: #D5D5FC;
+  }
+
+  >* {
     color:rgba(0, 0, 0, 0.5);
   }
 
