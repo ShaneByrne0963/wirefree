@@ -5,13 +5,7 @@
 
 .shape-grid {
   display: grid;
-  grid-template-columns: repeat(8, 1fr);
-}
-
-.shape-button {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  border: 1px solid black;
+  grid-template-columns: repeat(9, 1fr);
 }
 
 /* Shape Groups */
@@ -44,4 +38,45 @@
     height: 100%;
     aspect-ratio: 1 / 1;
   }
+}
+
+/* Shape Buttons */
+
+.shape-button {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &>* {
+    color:rgba(0, 0, 0, 0.5);
+  }
+
+  .background-icon {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  .icon-tall {
+    height: 100%;
+  }
+  .icon-wide {
+    width: 100%;
+  }
+}
+
+.shape-rectangle>.background-icon {
+  height: 70%;
+}
+
+.shape-round-rectangle>.background-icon {
+  height: 70%;
+  border-radius: 6px;
+}
+
+.shape-circle>.background-icon {
+  height: 100%;
+  border-radius: 50%;
 }

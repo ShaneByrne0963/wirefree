@@ -4,20 +4,33 @@ interface VectorGraphicProps {
   path: string;
   color?: string;
   styles?: CSSProperties;
+  className?: string;
 }
 
 function VectorGraphic(props: VectorGraphicProps) {
   let path = props.path;
   let customSize;
   let size = "0, 0, 512, 512";
+  let sizeClass = "";
 
   // Checking for custom dimensions to allow centering
   if (path.includes("|")) {
     [customSize, path] = path.split("|");
     size = "0, 0, " + customSize;
+    let [width, height] = customSize.split(", ").map((item) => parseInt(item));
+    if (width > height) {
+      sizeClass = " icon-wide";
+    } else if (width < height) {
+      sizeClass = " icon-tall";
+    }
   }
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox={size} style={props.styles}>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox={size}
+      style={props.styles}
+      className={props.className + sizeClass}
+    >
       <path fill={props.color} d={path}></path>
     </svg>
   );
