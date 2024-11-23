@@ -26,7 +26,7 @@ const initialState:PageState = {
   screenSizes: [defaultScreenSizes[0].name],
   pages: [{name: "Index", data: {[defaultScreenSizes[0].name]: {...defaultLayerData}}}],
   persistentLayers: {
-    [defaultScreenSizes[0].name]: {"*Base Layer": {}}
+    [defaultScreenSizes[0].name]: {"*Base Layer": []}
   },
   selectedPage: 0,
   selectedScreen: defaultScreenSizes[0].name,
@@ -74,7 +74,7 @@ const pageSlice = createSlice({
         page.data[action.payload] = {...defaultLayerData};
       }
       // Adding the base layer to the new screen
-      state.persistentLayers[action.payload] = {"*Base Layer": {}};
+      state.persistentLayers[action.payload] = {"*Base Layer": []};
       state.selectedScreen = action.payload;
     },
     updatePageSelectedScreen(state, action: PayloadAction<string>) {
@@ -103,9 +103,13 @@ const pageSlice = createSlice({
       }
     },
     addShape(state, action: PayloadAction<ShapeProps>) {
+      // Find the layer to add the shape to
       let pageData = state.pages[state.selectedPage].data[state.selectedScreen];
-      let currentLayer = pageData[pageData.layers[pageData.selected]];
-      currentLayer.shapes.push(action.payload);
+      const layerName = pageData.layers[pageData.selected];
+
+      // Determine where the layer stores their shapes. Persistent layers store them at a higher level
+      let shapeData = layerName[0] === "_" ? pageData[layerName].shapes : state.persistentLayers[state.selectedScreen][layerName];
+      shapeData.push(action.payload);
     },
     deletePage(state, action: PayloadAction<number>) {
       state.pages.splice(action.payload, 1);

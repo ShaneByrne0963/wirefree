@@ -32,9 +32,19 @@ function Canvas(props: CanvasProps) {
       if (currentPage[layer].visible) {
         renderElements.push(...currentPage[layer].shapes);
       }
+    } else {
+      // Persistent Layers
+      if (
+        pageData.pages[pageData.selectedPage].data[selectedScreenSize.name][
+          `${layer}_visible`
+        ]
+      ) {
+        renderElements.push(
+          ...pageData.persistentLayers[selectedScreenSize.name][layer]
+        );
+      }
     }
   });
-  console.log(renderElements);
 
   return (
     <div id="canvas" style={canvasCss} className="z-depth-2">
