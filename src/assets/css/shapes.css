@@ -1,6 +1,7 @@
 #shape-list {
   max-height: 100%;
   overflow-y: auto;
+  padding: 4px;
 }
 
 .shape-grid {
@@ -73,7 +74,7 @@
 
 .shape-round-rectangle>.background-icon {
   height: 70%;
-  border-radius: 6px;
+  border-radius: 7px;
 }
 
 .shape-circle>.background-icon {

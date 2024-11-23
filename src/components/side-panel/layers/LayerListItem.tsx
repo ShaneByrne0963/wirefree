@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import {
   selectLayer,
   toggleLayerVisibility,
-} from "../../../state/page/pageSlice";
+} from "../../../state/slices/pageSlice";
 
 interface LayerListItemProps {
   name: string;

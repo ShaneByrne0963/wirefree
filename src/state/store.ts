@@ -1,13 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
-import windowReducer from './window/windowSlice.ts'
-import screenSizeReducer from './screen_size/screenSizeSlice.ts'
-import pageReducer from './page/pageSlice.ts'
+import windowReducer from './slices/windowSlice.ts';
+import screenSizeReducer from './slices/screenSizeSlice.ts';
+import pageReducer from './slices/pageSlice.ts';
+import shapeReducer from './slices/shapeSlice.ts';
 
 export const store = configureStore({
   reducer: {
     screenSize: screenSizeReducer,
     window: windowReducer,
     pages: pageReducer,
+    shapes: shapeReducer,
   },
 });
 

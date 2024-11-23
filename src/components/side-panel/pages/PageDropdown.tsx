@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../state/store";
-import { setPage } from "../../../state/page/pageSlice";
+import { setPage } from "../../../state/slices/pageSlice";
 
 interface PageDropdownItemProps {
   name: string;

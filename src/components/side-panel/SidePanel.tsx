@@ -4,7 +4,7 @@ import { useContext, useState } from "react";
 import { ThemeContext } from "../../context";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../state/store";
-import { addLayerToPage } from "../../state/page/pageSlice";
+import { addLayerToPage } from "../../state/slices/pageSlice";
 import ShapeGroups from "./shapes/ShapeGroups";
 
 function SidePanel() {

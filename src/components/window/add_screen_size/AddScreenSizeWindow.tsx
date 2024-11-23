@@ -6,10 +6,10 @@ import {
   addScreenSize,
   ScreenSize,
   selectScreenSize,
-} from "../../../state/screen_size/screenSizeSlice";
+} from "../../../state/slices/screenSizeSlice";
 import { WindowActionButtons } from "../Window";
-import { setWindowActive } from "../../../state/window/windowSlice";
-import { addScreenSizeToPages } from "../../../state/page/pageSlice";
+import { setWindowActive } from "../../../state/slices/windowSlice";
+import { addScreenSizeToPages } from "../../../state/slices/pageSlice";
 
 const windowLabel = "Add Screen Size";
 

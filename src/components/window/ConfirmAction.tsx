@@ -2,9 +2,9 @@ import { useDispatch } from "react-redux";
 import {
   ConfirmActionProps,
   setWindowActive,
-} from "../../state/window/windowSlice";
+} from "../../state/slices/windowSlice";
 import { WindowActionButtons } from "./Window";
-import { deletePage } from "../../state/page/pageSlice";
+import { deletePage } from "../../state/slices/pageSlice";
 
 // All the functions that need confirmation should be stored here
 export const confirmActions = {

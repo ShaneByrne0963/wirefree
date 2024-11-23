@@ -26,7 +26,8 @@ function ShapeButton(props: ShapeButtonProps) {
   return (
     <div
       className={
-        "shape-button shape-" + convertDisplayToClassName(props.buttonType)
+        "shape-button clickable shape-" +
+        convertDisplayToClassName(props.buttonType)
       }
     >
       {insideHtml}

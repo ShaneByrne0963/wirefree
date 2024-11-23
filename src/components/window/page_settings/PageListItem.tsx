@@ -5,11 +5,11 @@ import {
   duplicatePage,
   renamePage,
   setPage,
-} from "../../../state/page/pageSlice";
+} from "../../../state/slices/pageSlice";
 import {
   confirmAction,
   ConfirmActionProps,
-} from "../../../state/window/windowSlice";
+} from "../../../state/slices/windowSlice";
 
 interface PageListItemProps {
   name: string;

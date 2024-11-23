@@ -14,7 +14,7 @@ import {
   WindowState,
   closeWindow,
   setWindowActive,
-} from "../../state/window/windowSlice";
+} from "../../state/slices/windowSlice";
 import AddScreenSizeWindow from "./add_screen_size/AddScreenSizeWindow";
 import PageSettingsWindow from "./page_settings/PageSettingsWindow";
 import ConfirmAction from "./ConfirmAction";

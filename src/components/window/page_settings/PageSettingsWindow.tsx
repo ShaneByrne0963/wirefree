@@ -2,8 +2,8 @@ import { useDispatch, useSelector } from "react-redux";
 import AddItemInput from "../../inputs/AddItemInput";
 import { WindowActionButtons } from "../Window";
 import PageList from "./PageList";
-import { createPage } from "../../../state/page/pageSlice";
-import { setWindowActive } from "../../../state/window/windowSlice";
+import { createPage } from "../../../state/slices/pageSlice";
+import { setWindowActive } from "../../../state/slices/windowSlice";
 import { RootState } from "../../../state/store";
 
 const windowLabel = "Page Settings";

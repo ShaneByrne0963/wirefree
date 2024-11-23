@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { addWindow } from "../../../state/window/windowSlice";
+import { addWindow } from "../../../state/slices/windowSlice";
 
 function PageSettings() {
   const dispatch = useDispatch();
