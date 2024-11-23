@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { defaultScreenSizes } from "../../context";
+import { ShapeProps } from "../../components/canvas/CanvasShape";
 
 interface PageState {
   screenSizes: string[];
@@ -16,7 +17,8 @@ const defaultLayerData = {
   "selected": 1,
   "*Base Layer_visible": true,
   "_Layer 1": {
-    visible: true
+    visible: true,
+    shapes: [],
   }
 }
 
@@ -81,7 +83,7 @@ const pageSlice = createSlice({
     addLayerToPage(state, action: PayloadAction<string>) {
       let pageData = state.pages[state.selectedPage].data[state.selectedScreen];
       pageData.layers.push(action.payload);
-      pageData[action.payload] = { visible: true };
+      pageData[action.payload] = { visible: true, shapes: [] };
       pageData.selected = pageData.layers.length - 1;
     },
     selectLayer(state, action: PayloadAction<number>) {
@@ -99,6 +101,11 @@ const pageSlice = createSlice({
       else {
         pageData[`${layerName}_visible`] = !pageData[`${layerName}_visible`];
       }
+    },
+    addShape(state, action: PayloadAction<ShapeProps>) {
+      let pageData = state.pages[state.selectedPage].data[state.selectedScreen];
+      let currentLayer = pageData[pageData.layers[pageData.selected]];
+      currentLayer.shapes.push(action.payload);
     },
     deletePage(state, action: PayloadAction<number>) {
       state.pages.splice(action.payload, 1);
@@ -123,6 +130,7 @@ export const {
   addLayerToPage,
   selectLayer,
   toggleLayerVisibility,
+  addShape,
   deletePage
 } = pageSlice.actions;
 export default pageSlice.reducer;

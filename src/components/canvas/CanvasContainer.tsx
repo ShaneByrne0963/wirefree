@@ -1,10 +1,14 @@
 import { MouseEvent, useRef, useState } from "react";
 import Canvas from "./Canvas";
 import { clamp } from "../../helpers";
+import { useDispatch } from "react-redux";
+import { addShape } from "../../state/slices/pageSlice";
+import { ShapeProps } from "./CanvasShape";
 
 const minShapeSize = 2;
 
 function CanvasContainer() {
+  const dispatch = useDispatch();
   let [shapeCreatePoint, setShapeCreatePoint] = useState([-1, -1]);
   let shapeCurrentPoint = useRef([-1, -1]);
   let isCreatingShape = useRef(false);
@@ -69,11 +73,24 @@ function CanvasContainer() {
         const shapeProperties = shapeStyle
           .split("px; ")
           .map((prop) => prop.replace("px;", "").split(": "));
-        let shapeObject: Record<string, any> = {};
+        let shapeObject: ShapeProps = {
+          left: 0,
+          top: 0,
+          width: 0,
+          height: 0,
+        };
         shapeProperties.map((item) => {
           const [key, value] = item;
-          shapeObject[key] = parseFloat(value);
+          shapeObject[key as keyof ShapeProps] = parseFloat(value);
         });
+
+        // Make sure the new element isn't too small for the canvas
+        if (
+          shapeObject.width > minShapeSize &&
+          shapeObject.height > minShapeSize
+        ) {
+          dispatch(addShape(shapeObject));
+        }
       }
     }
     // Finally, reset the state of the start and end points
