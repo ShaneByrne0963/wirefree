@@ -3,7 +3,6 @@ import AddItemInput from "../../inputs/AddItemInput";
 import { WindowActionButtons } from "../Window";
 import PageList from "./PageList";
 import { createPage } from "../../../state/slices/pageSlice";
-import { setWindowActive } from "../../../state/slices/windowSlice";
 import { RootState } from "../../../state/store";
 
 const windowLabel = "Page Settings";
@@ -12,7 +11,6 @@ function PageSettingsWindow() {
 
   function addPage(name: string) {
     dispatch(createPage(name));
-    dispatch(setWindowActive([windowLabel, false]));
   }
 
   const pages = useSelector((state: RootState) => state.pages.pages);
