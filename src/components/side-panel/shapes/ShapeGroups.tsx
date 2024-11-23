@@ -1,11 +1,19 @@
 import VectorGraphic, {
   pathComponents,
   pathEmojis,
-  pathIcons,
+  pathMicrophone,
   pathShapes,
+  pathStar,
 } from "../../VectorGraphic";
 
-const shapeGroupNames = ["shapes", "components", "icons", "emojis"];
+// The type of shape group tabs
+const shapeGroupNames = [
+  "favorites",
+  "shapes",
+  "components",
+  "icons",
+  "emojis",
+];
 
 interface ShapeGroupProps {
   selectedGroup: number;
@@ -44,6 +52,9 @@ function ShapeGroupButton(props: ShapeGroupButtonProps) {
       className={"shape-group-button" + (props.selected ? " selected" : "")}
       onClick={() => props.handleClick(props.index)}
     >
+      {props.type === "favorites" && (
+        <VectorGraphic color={iconColor} path={pathStar}></VectorGraphic>
+      )}
       {props.type === "shapes" && (
         <VectorGraphic color={iconColor} path={pathShapes}></VectorGraphic>
       )}
@@ -51,7 +62,7 @@ function ShapeGroupButton(props: ShapeGroupButtonProps) {
         <VectorGraphic color={iconColor} path={pathComponents}></VectorGraphic>
       )}
       {props.type === "icons" && (
-        <VectorGraphic color={iconColor} path={pathIcons}></VectorGraphic>
+        <VectorGraphic color={iconColor} path={pathMicrophone}></VectorGraphic>
       )}
       {props.type === "emojis" && (
         <VectorGraphic color={iconColor} path={pathEmojis}></VectorGraphic>

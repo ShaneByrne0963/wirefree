@@ -10,7 +10,7 @@ import ShapeGroups from "./shapes/ShapeGroups";
 function SidePanel() {
   const screenSizeData = useSelector((state: RootState) => state.screenSize);
   const pageData = useSelector((state: RootState) => state.pages);
-  const [shapeGroup, setShapeGroup] = useState(0);
+  const [shapeGroup, setShapeGroup] = useState(1);
   const dispatch = useDispatch();
 
   // Function for adding layers to the selected page
