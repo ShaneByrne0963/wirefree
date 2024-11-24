@@ -4,6 +4,7 @@ import VectorGraphic, { pathMicrophone } from "../../VectorGraphic";
 import { RootState } from "../../../state/store";
 import { deselectShape, selectShape } from "../../../state/slices/shapeSlice";
 import { useRef } from "react";
+import { getShapeHtml } from "../../../shapes";
 
 interface ShapeButtonProps {
   buttonType: string;
@@ -23,6 +24,13 @@ const buttonHtml = {
 const clickCooldown = 500;
 
 function ShapeButton(props: ShapeButtonProps) {
+  const buttonData = {
+    type: props.buttonType,
+    width: 100,
+    height: 100,
+    color: buttonColor,
+  };
+  const buttonHtml = getShapeHtml(buttonData);
   const selectedButton = useSelector(
     (state: RootState) => state.shapes.selected
   );
@@ -52,7 +60,7 @@ function ShapeButton(props: ShapeButtonProps) {
       className={"shape-button" + (selected ? " selected" : "")}
       onClick={handleClick}
     >
-      {insideHtml}
+      {buttonHtml}
     </div>
   );
 }

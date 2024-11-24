@@ -26,7 +26,13 @@ const shapeLists: shapeListsType = {
     Components: [],
   },
   icons: {
-    Icons: ["Microphone"],
+    "Web Icons": [
+      "File",
+      "Envelope",
+      "Phone",
+      "Magnifying Glass",
+      "Microphone",
+    ],
   },
   emojis: {
     Emojis: [],
