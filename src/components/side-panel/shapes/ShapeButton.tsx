@@ -2,7 +2,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { convertDisplayToClassName } from "../../../helpers";
 import VectorGraphic, { pathMicrophone } from "../../VectorGraphic";
 import { RootState } from "../../../state/store";
-import { selectShape } from "../../../state/slices/shapeSlice";
+import { deselectShape, selectShape } from "../../../state/slices/shapeSlice";
+import { useRef } from "react";
 
 interface ShapeButtonProps {
   buttonType: string;
@@ -18,11 +19,15 @@ const buttonHtml = {
     ></VectorGraphic>
   ),
 };
+// The amount of milliseconds that allows another click to add the shape to favorites
+const clickCooldown = 500;
 
 function ShapeButton(props: ShapeButtonProps) {
   const selectedButton = useSelector(
     (state: RootState) => state.shapes.selected
   );
+  const isClicked = useRef(false);
+  const selected = props.buttonType === selectedButton;
   const dispatch = useDispatch();
   const insideHtml =
     props.buttonType in buttonHtml ? (
@@ -30,14 +35,25 @@ function ShapeButton(props: ShapeButtonProps) {
     ) : (
       <div className="background-icon"></div>
     );
+
+  function handleClick() {
+    if (!isClicked.current) {
+      dispatch(selected ? deselectShape() : selectShape(props.buttonType));
+      isClicked.current = true;
+      setTimeout(() => (isClicked.current = false), clickCooldown);
+    } else {
+      // Add logic to add shape to favorites here
+    }
+  }
+
   return (
     <div
       className={
         "shape-button clickable shape-" +
         convertDisplayToClassName(props.buttonType) +
-        (props.buttonType === selectedButton ? " selected" : "")
+        (selected ? " selected" : "")
       }
-      onClick={() => dispatch(selectShape(props.buttonType))}
+      onClick={handleClick}
     >
       {insideHtml}
     </div>
