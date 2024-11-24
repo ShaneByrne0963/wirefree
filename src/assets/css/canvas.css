@@ -20,12 +20,6 @@
     height: min(calc(((100vw - var(--side-panel-width)) - (var(--canvas-margin) * 2)) / var(--aspect-ratio)), 100%);
 }
 
-#shape-create,
-.canvas-shape {
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.7);
-}
-
 @media screen and (max-width: 1000px) {
     :root {
         --canvas-margin: 16px;

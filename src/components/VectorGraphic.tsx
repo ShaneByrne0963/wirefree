@@ -5,31 +5,43 @@ interface VectorGraphicProps {
   color?: string;
   styles?: CSSProperties;
   className?: string;
+  containerRatio?: number;
 }
 
 function VectorGraphic(props: VectorGraphicProps) {
   let path = props.path;
   let customSize;
   let size = "0, 0, 512, 512";
-  let sizeClass = "";
+  let propClass = "icon " + (props.className ? props.className + " " : "");
+  let propStyles = props.styles;
+  const containerRatio = props.containerRatio || 1;
 
   // Checking for custom dimensions to allow centering
   if (path.includes("|")) {
     [customSize, path] = path.split("|");
-    size = "0, 0, " + customSize;
     let [width, height] = customSize.split(", ").map((item) => parseInt(item));
+    size = `0, 0, ${width}, ${height}`;
     if (width > height) {
-      sizeClass = " icon-wide";
+      propClass += "icon-wide";
     } else if (width < height) {
-      sizeClass = " icon-tall";
+      propClass += "icon-tall";
     }
+    propStyles = {
+      ...propStyles,
+      ...{
+        "--aspect-ratio": width / height,
+      },
+    };
+  } else {
+    propClass += "icon-square";
   }
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox={size}
-      style={props.styles}
-      className={props.className + sizeClass}
+      style={propStyles}
+      className={propClass}
+      preserveAspectRatio={containerRatio === 1 ? "all" : "none"}
     >
       <path fill={props.color} d={path}></path>
     </svg>

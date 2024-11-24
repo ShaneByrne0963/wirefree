@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addShape } from "../../state/slices/pageSlice";
 import { ShapeProps, ShapeStyles } from "./CanvasShape";
 import { RootState } from "../../state/store";
+import { ShapeHtmlProps } from "../../shapes";
 
 const minShapeSize = 2;
 
@@ -17,10 +18,12 @@ function CanvasContainer() {
   let shapeCurrentPoint = useRef([-1, -1]);
   let isCreatingShape = useRef(false);
 
-  const createShapeData = {
-    startPoint: shapeCreatePoint,
+  const createShapeData = useRef<ShapeHtmlProps>({
     type: selectedShape,
-  };
+    width: Math.abs(shapeCreatePoint[0] - shapeCurrentPoint.current[0]),
+    height: Math.abs(shapeCreatePoint[1] - shapeCurrentPoint.current[1]),
+    color: "rgba(0, 0, 0, 0.6)",
+  });
 
   // This mouse down event initialises a shape creation
   function handleMouseDown(event: MouseEvent<HTMLDivElement>) {
@@ -34,6 +37,12 @@ function CanvasContainer() {
         setShapeCreatePoint([createPointX, createPointY]);
         document.removeEventListener("mousemove", handleMouseMove);
         document.removeEventListener("mouseup", handleMouseUp);
+        createShapeData.current = {
+          type: selectedShape,
+          width: Math.abs(shapeCreatePoint[0] - shapeCurrentPoint.current[0]),
+          height: Math.abs(shapeCreatePoint[1] - shapeCurrentPoint.current[1]),
+          color: "rgba(0, 0, 0, 0.6)",
+        };
       }
     }
   }
@@ -64,6 +73,13 @@ function CanvasContainer() {
           shapeStyle += `${key}: ${value};`;
         }
         shapeCurrentPoint.current = [currentX, currentY];
+        createShapeData.current.width = Math.abs(
+          shapeCreatePoint[0] - shapeCurrentPoint.current[0]
+        );
+        createShapeData.current.height = Math.abs(
+          shapeCreatePoint[1] - shapeCurrentPoint.current[1]
+        );
+
         shapeCreateElement.setAttribute("style", shapeStyle);
       }
     }
@@ -85,7 +101,7 @@ function CanvasContainer() {
           .split("px; ")
           .map((prop) => prop.replace("px;", "").split(": "));
         let shapeObject: ShapeProps = {
-          type: selectedShape,
+          props: createShapeData.current,
           styles: {
             left: 0,
             top: 0,
@@ -121,7 +137,10 @@ function CanvasContainer() {
 
   return (
     <div id="canvas-container" onMouseDown={handleMouseDown}>
-      <Canvas createShape={createShapeData}></Canvas>
+      <Canvas
+        startPoint={shapeCreatePoint}
+        shapeProps={createShapeData.current}
+      ></Canvas>
     </div>
   );
 }

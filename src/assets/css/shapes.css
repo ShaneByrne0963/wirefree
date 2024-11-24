@@ -43,11 +43,44 @@
 
 /* Shapes */
 
-.shape-round-rectangle {
+#shape-create,
+.canvas-shape {
+  position: absolute;
+
+  >.shape {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+
+  &:has(.icon) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid black;
+  }
+
+  .icon-square {
+    width: 100%;
+    height: 100%;
+  }
+
+  .icon-tall {
+    width: calc(100% * var(--aspect-ratio));
+    height: 100%;
+  }
+
+  >.icon-wide {
+    width: 100%;
+    height: calc(100% / var(--aspect-ratio));
+  }
+}
+
+.shape.round-rectangle {
   border-radius: 32px;
 }
 
-.shape-circle {
+.shape.circle {
   border-radius: 50%;
 }
 
@@ -78,20 +111,21 @@
   .icon-tall {
     height: 100%;
   }
+
   .icon-wide {
     width: 100%;
   }
 
-  .shape-rectangle {
+  .shape.rectangle {
     height: 70%;
   }
 
-  .shape-round-rectangle {
+  .shape.round-rectangle {
     height: 70%;
     border-radius: 7px;
   }
 
-  .shape-circle {
+  .shape.circle {
     height: 100%;
   }
 }

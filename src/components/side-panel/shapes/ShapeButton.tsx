@@ -34,7 +34,7 @@ function ShapeButton(props: ShapeButtonProps) {
     props.buttonType in buttonHtml ? (
       buttonHtml[props.buttonType as keyof typeof buttonHtml]
     ) : (
-      <div className={"background-icon shape-" + typeClass}></div>
+      <div className={"background-icon shape " + typeClass}></div>
     );
 
   function handleClick() {

@@ -1,5 +1,5 @@
 import { CSSProperties } from "react";
-import { convertDisplayToClassName } from "../../helpers";
+import { getShapeHtml, ShapeHtmlProps } from "../../shapes";
 
 export interface ShapeStyles {
   left: number;
@@ -10,16 +10,15 @@ export interface ShapeStyles {
 
 export interface ShapeProps {
   styles: ShapeStyles;
-  type: string;
+  props: ShapeHtmlProps;
 }
 
 function CanvasShape(props: ShapeProps) {
-  const typeClass = convertDisplayToClassName(props.type);
+  const shapeHtml = getShapeHtml(props.props);
   return (
-    <div
-      className={"canvas-shape shape-" + typeClass}
-      style={props.styles as CSSProperties}
-    ></div>
+    <div className="canvas-shape" style={props.styles as CSSProperties}>
+      {shapeHtml}
+    </div>
   );
 }
 

@@ -2,9 +2,11 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../state/store";
 import CanvasCreateShape from "./CanvasCreateShape";
 import CanvasShape, { ShapeProps } from "./CanvasShape";
+import { ShapeHtmlProps } from "../../shapes";
 
 interface CanvasProps {
-  createShape: { startPoint: number[]; type: string };
+  startPoint: number[];
+  shapeProps: ShapeHtmlProps;
 }
 
 function Canvas(props: CanvasProps) {
@@ -51,12 +53,12 @@ function Canvas(props: CanvasProps) {
       {renderElements.map((element, index) => (
         <CanvasShape
           styles={element.styles}
-          type={element.type}
+          props={element.props}
           key={index}
         ></CanvasShape>
       ))}
-      {props.createShape.startPoint[0] >= 0 && (
-        <CanvasCreateShape type={props.createShape.type}></CanvasCreateShape>
+      {props.startPoint[0] >= 0 && (
+        <CanvasCreateShape props={props.shapeProps}></CanvasCreateShape>
       )}
     </div>
   );

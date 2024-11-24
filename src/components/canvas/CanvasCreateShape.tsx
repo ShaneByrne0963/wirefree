@@ -1,12 +1,12 @@
-import { convertDisplayToClassName } from "../../helpers";
+import { getShapeHtml, ShapeHtmlProps } from "../../shapes";
 
 interface CanvasCreateShapeProps {
-  type: string;
+  props: ShapeHtmlProps;
 }
 
 function CanvasCreateShape(props: CanvasCreateShapeProps) {
-  const classType = convertDisplayToClassName(props.type);
-  return <div id="shape-create" className={"shape-" + classType}></div>;
+  const shapeHtml = getShapeHtml(props.props);
+  return <div id="shape-create">{shapeHtml}</div>;
 }
 
 export default CanvasCreateShape;
