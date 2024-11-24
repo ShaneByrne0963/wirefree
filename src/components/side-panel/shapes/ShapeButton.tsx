@@ -1,6 +1,4 @@
 import { useDispatch, useSelector } from "react-redux";
-import { convertDisplayToClassName } from "../../../helpers";
-import VectorGraphic, { pathMicrophone } from "../../VectorGraphic";
 import { RootState } from "../../../state/store";
 import { deselectShape, selectShape } from "../../../state/slices/shapeSlice";
 import { useRef } from "react";
@@ -11,15 +9,7 @@ interface ShapeButtonProps {
 }
 
 const buttonColor = "rgba(0, 0, 0, 0.6)";
-const buttonHtml = {
-  Microphone: (
-    <VectorGraphic
-      path={pathMicrophone}
-      color={buttonColor}
-      className="icon"
-    ></VectorGraphic>
-  ),
-};
+
 // The amount of milliseconds that allows another click to add the shape to favorites
 const clickCooldown = 500;
 
@@ -37,13 +27,6 @@ function ShapeButton(props: ShapeButtonProps) {
   const isClicked = useRef(false);
   const selected = props.buttonType === selectedButton;
   const dispatch = useDispatch();
-  const typeClass = convertDisplayToClassName(props.buttonType);
-  const insideHtml =
-    props.buttonType in buttonHtml ? (
-      buttonHtml[props.buttonType as keyof typeof buttonHtml]
-    ) : (
-      <div className={"background-icon shape " + typeClass}></div>
-    );
 
   function handleClick() {
     if (!isClicked.current) {

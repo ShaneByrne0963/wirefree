@@ -17,8 +17,6 @@ const iconData = {
 
 export interface ShapeHtmlProps {
   type: string;
-  width: number;
-  height: number;
   color: string;
 }
 
