@@ -9,6 +9,10 @@
     justify-content: center;
     overflow: hidden;
     padding: var(--canvas-margin);
+
+    &.shape-selected {
+        cursor: crosshair;
+    }
 }
 
 #canvas {

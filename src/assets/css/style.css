@@ -156,7 +156,7 @@ input[type="text"]:not(.browser-default) {
     border-bottom: 1px solid rgba(0,0,0,0.5);
 
     &:not(#section-shapes) {
-        margin-bottom: 8px;
+        margin-bottom: 16px;
     }
 }
 
@@ -291,6 +291,10 @@ input[type="text"]:not(.browser-default) {
 }
 
 /* Control Panel */
+
+#control-panel-container {
+    min-height: 64px;
+}
 
 #control-panel {
     padding: 4px;

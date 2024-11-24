@@ -121,7 +121,11 @@ function CanvasContainer() {
   }
 
   return (
-    <div id="canvas-container" onMouseDown={handleMouseDown}>
+    <div
+      id="canvas-container"
+      onMouseDown={handleMouseDown}
+      className={selectedShape ? "shape-selected" : ""}
+    >
       <Canvas
         startPoint={shapeCreatePoint}
         shapeProps={{ type: selectedShape, color: defaultColor }}

@@ -1,18 +1,34 @@
-import VectorGraphic, {
-  pathEnvelope,
-  pathFile,
-  pathMagnifyingGlass,
-  pathMicrophone,
-  pathPhone,
-} from "./components/VectorGraphic";
+import VectorGraphic, * as vg from "./components/VectorGraphic";
 import { convertDisplayToClassName } from "./helpers";
 
 const iconData = {
-  File: pathFile,
-  Envelope: pathEnvelope,
-  Phone: pathPhone,
-  "Magnifying Glass": pathMagnifyingGlass,
-  Microphone: pathMicrophone,
+  // Web Icons
+  User: vg.pathUser,
+  File: vg.pathFile,
+  Envelope: vg.pathEnvelope,
+  Phone: vg.pathPhone,
+  "Magnifying Glass": vg.pathMagnifyingGlass,
+  Gear: vg.pathGear,
+  Image: vg.pathImage,
+  Bell: vg.pathBell,
+  "Bell Off": vg.pathBellOff,
+  Camera: vg.pathCamera,
+  Microphone: vg.pathMicrophone,
+  Trash: vg.pathTrash,
+
+  // Brands
+  Copyright: vg.pathCopyright,
+  Google: vg.pathGoogle,
+  "Apple (Brand)": vg.pathAppleBrand,
+  Windows: vg.pathWindows,
+  Facebook: vg.pathFacebook,
+  YouTube: vg.pathYouTube,
+  Instagram: vg.pathInstagram,
+  WhatsApp: vg.pathWhatsApp,
+  LinkedIn: vg.pathLinkedIn,
+  GitHub: vg.pathGitHub,
+  Slack: vg.pathSlack,
+  "Google Drive": vg.pathGoogleDrive,
 };
 
 export interface ShapeHtmlProps {
