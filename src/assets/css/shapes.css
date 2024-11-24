@@ -81,18 +81,17 @@
   .icon-wide {
     width: 100%;
   }
-}
 
-.shape-rectangle>.background-icon {
-  height: 70%;
-}
+  .shape-rectangle {
+    height: 70%;
+  }
 
-.shape-round-rectangle>.background-icon {
-  height: 70%;
-  border-radius: 7px;
-}
+  .shape-round-rectangle {
+    height: 70%;
+    border-radius: 7px;
+  }
 
-.shape-circle>.background-icon {
-  height: 100%;
-  border-radius: 50%;
+  .shape-circle {
+    height: 100%;
+  }
 }

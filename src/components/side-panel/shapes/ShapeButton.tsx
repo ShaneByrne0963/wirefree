@@ -29,11 +29,12 @@ function ShapeButton(props: ShapeButtonProps) {
   const isClicked = useRef(false);
   const selected = props.buttonType === selectedButton;
   const dispatch = useDispatch();
+  const typeClass = convertDisplayToClassName(props.buttonType);
   const insideHtml =
     props.buttonType in buttonHtml ? (
       buttonHtml[props.buttonType as keyof typeof buttonHtml]
     ) : (
-      <div className="background-icon"></div>
+      <div className={"background-icon shape-" + typeClass}></div>
     );
 
   function handleClick() {
@@ -48,11 +49,7 @@ function ShapeButton(props: ShapeButtonProps) {
 
   return (
     <div
-      className={
-        "shape-button shape-" +
-        convertDisplayToClassName(props.buttonType) +
-        (selected ? " selected" : "")
-      }
+      className={"shape-button" + (selected ? " selected" : "")}
       onClick={handleClick}
     >
       {insideHtml}
