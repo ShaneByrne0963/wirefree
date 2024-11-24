@@ -17,16 +17,12 @@ export function getShapeHtml(props: ShapeHtmlProps) {
   const typeClass = convertDisplayToClassName(props.type);
   if (props.type in iconData) {
     const data = iconData[props.type as keyof typeof iconData];
-    let containerRatio = 1;
-    if (props.width > 0 && props.height > 0) {
-      containerRatio = props.width / props.height;
-    }
+
     shapeHtml = (
       <VectorGraphic
         path={data.path}
         color={props.color}
         className={"icon " + typeClass}
-        containerRatio={containerRatio}
       ></VectorGraphic>
     );
   } else {

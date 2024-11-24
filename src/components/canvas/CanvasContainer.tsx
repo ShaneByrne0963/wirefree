@@ -58,12 +58,17 @@ function CanvasContainer() {
       if (canvasRect) {
         const currentX = clamp(mouseX - canvasRect.x, 0, canvasRect.width);
         const currentY = clamp(mouseY - canvasRect.y, 0, canvasRect.height);
+        const [width, height] = [
+          Math.abs(currentX - startX),
+          Math.abs(currentY - startY),
+        ];
 
+        // Updating the styles of the creating shape dynamically
         const shapeCss = {
           left: `${Math.min(startX, currentX)}px`,
           top: `${Math.min(startY, currentY)}px`,
-          width: `${Math.abs(currentX - startX)}px`,
-          height: `${Math.abs(currentY - startY)}px`,
+          width: `${width}px`,
+          height: `${height}px`,
         };
         let shapeStyle = "";
         for (let [key, value] of Object.entries(shapeCss)) {
@@ -79,7 +84,6 @@ function CanvasContainer() {
         createShapeData.current.height = Math.abs(
           shapeCreatePoint[1] - shapeCurrentPoint.current[1]
         );
-
         shapeCreateElement.setAttribute("style", shapeStyle);
       }
     }
