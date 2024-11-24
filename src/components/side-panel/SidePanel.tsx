@@ -41,6 +41,10 @@ function SidePanel() {
     <div id="side-panel" className={color + " lighten-3"}>
       <PageName></PageName>
       <SidePanelSection
+        sectionType="controls"
+        label="Controls"
+      ></SidePanelSection>
+      <SidePanelSection
         sectionType="shapes"
         label="Shapes"
         selectedIndex={shapeGroup}

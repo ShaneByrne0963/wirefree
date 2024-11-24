@@ -9,14 +9,15 @@ import { selectScreenSize } from "../../state/slices/screenSizeSlice";
 import LayerList from "./layers/LayerList";
 import { updatePageSelectedScreen } from "../../state/slices/pageSlice";
 import ShapeList from "./shapes/ShapeList";
+import ControlPanel from "./control-panel/ControlPanel";
 
 ///////// Configuration
 
 // The size of the section depending on the type
 const sectionSizes = {
-  screen: "sm",
-  layers: "lg",
   shapes: "lg",
+  layers: "lg",
+  screen: "sm",
 };
 
 ///////// Property Types
@@ -99,6 +100,11 @@ function SectionComponent(props: SectionComponentProps) {
       id={"section-" + props.sectionType}
       className={"side-panel-section " + sectionSize}
     >
+      {props.sectionType === "controls" && <ControlPanel></ControlPanel>}
+      {props.sectionType === "shapes" && (
+        <ShapeList tab={props.selectedIndex}></ShapeList>
+      )}
+      {props.sectionType === "layers" && <LayerList></LayerList>}
       {props.sectionType === "screen" && (
         <div className="section-content-container">
           {activeScreenSizes.map((item, index) => {
@@ -118,10 +124,6 @@ function SectionComponent(props: SectionComponentProps) {
           })}
           <AddScreenSize></AddScreenSize>
         </div>
-      )}
-      {props.sectionType === "layers" && <LayerList></LayerList>}
-      {props.sectionType === "shapes" && (
-        <ShapeList tab={props.selectedIndex}></ShapeList>
       )}
     </div>
   );
