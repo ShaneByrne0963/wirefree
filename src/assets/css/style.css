@@ -11,6 +11,10 @@
     background-color: #DFDFDF;
 }
 
+*:not(input) {
+    user-select: none;
+}
+
 button.plain,
 button.plain:hover,
 button.plain:focus,
