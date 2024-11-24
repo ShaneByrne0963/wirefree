@@ -41,6 +41,16 @@
   }
 }
 
+/* Shapes */
+
+.shape-round-rectangle {
+  border-radius: 32px;
+}
+
+.shape-circle {
+  border-radius: 50%;
+}
+
 /* Shape Buttons */
 
 .shape-button {

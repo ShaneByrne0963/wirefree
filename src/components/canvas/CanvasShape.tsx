@@ -1,19 +1,25 @@
 import { CSSProperties } from "react";
+import { convertDisplayToClassName } from "../../helpers";
 
-export interface ShapeProps {
+export interface ShapeStyles {
   left: number;
   top: number;
   width: number;
   height: number;
 }
 
-interface CanvasShapeProps {
-  props: ShapeProps;
+export interface ShapeProps {
+  styles: ShapeStyles;
+  type: string;
 }
 
-function CanvasShape(props: CanvasShapeProps) {
+function CanvasShape(props: ShapeProps) {
+  const typeClass = convertDisplayToClassName(props.type);
   return (
-    <div className="canvas-shape" style={props.props as CSSProperties}></div>
+    <div
+      className={"canvas-shape shape-" + typeClass}
+      style={props.styles as CSSProperties}
+    ></div>
   );
 }
 

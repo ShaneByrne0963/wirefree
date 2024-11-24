@@ -3,7 +3,7 @@ import Canvas from "./Canvas";
 import { clamp } from "../../helpers";
 import { useDispatch, useSelector } from "react-redux";
 import { addShape } from "../../state/slices/pageSlice";
-import { ShapeProps } from "./CanvasShape";
+import { ShapeProps, ShapeStyles } from "./CanvasShape";
 import { RootState } from "../../state/store";
 
 const minShapeSize = 2;
@@ -16,6 +16,11 @@ function CanvasContainer() {
   let [shapeCreatePoint, setShapeCreatePoint] = useState([-1, -1]);
   let shapeCurrentPoint = useRef([-1, -1]);
   let isCreatingShape = useRef(false);
+
+  const createShapeData = {
+    startPoint: shapeCreatePoint,
+    type: selectedShape,
+  };
 
   // This mouse down event initialises a shape creation
   function handleMouseDown(event: MouseEvent<HTMLDivElement>) {
@@ -80,20 +85,23 @@ function CanvasContainer() {
           .split("px; ")
           .map((prop) => prop.replace("px;", "").split(": "));
         let shapeObject: ShapeProps = {
-          left: 0,
-          top: 0,
-          width: 0,
-          height: 0,
+          type: selectedShape,
+          styles: {
+            left: 0,
+            top: 0,
+            width: 0,
+            height: 0,
+          },
         };
         shapeProperties.map((item) => {
           const [key, value] = item;
-          shapeObject[key as keyof ShapeProps] = parseFloat(value);
+          shapeObject.styles[key as keyof ShapeStyles] = parseFloat(value);
         });
 
         // Make sure the new element isn't too small for the canvas
         if (
-          shapeObject.width > minShapeSize &&
-          shapeObject.height > minShapeSize
+          shapeObject.styles.width > minShapeSize &&
+          shapeObject.styles.height > minShapeSize
         ) {
           dispatch(addShape(shapeObject));
         }
@@ -113,7 +121,7 @@ function CanvasContainer() {
 
   return (
     <div id="canvas-container" onMouseDown={handleMouseDown}>
-      <Canvas createPoint={shapeCreatePoint}></Canvas>
+      <Canvas createShape={createShapeData}></Canvas>
     </div>
   );
 }

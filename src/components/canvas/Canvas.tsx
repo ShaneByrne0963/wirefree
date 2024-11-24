@@ -4,7 +4,7 @@ import CanvasCreateShape from "./CanvasCreateShape";
 import CanvasShape, { ShapeProps } from "./CanvasShape";
 
 interface CanvasProps {
-  createPoint: number[];
+  createShape: { startPoint: number[]; type: string };
 }
 
 function Canvas(props: CanvasProps) {
@@ -49,9 +49,15 @@ function Canvas(props: CanvasProps) {
   return (
     <div id="canvas" style={canvasCss} className="z-depth-2">
       {renderElements.map((element, index) => (
-        <CanvasShape props={element} key={index}></CanvasShape>
+        <CanvasShape
+          styles={element.styles}
+          type={element.type}
+          key={index}
+        ></CanvasShape>
       ))}
-      {props.createPoint[0] >= 0 && <CanvasCreateShape></CanvasCreateShape>}
+      {props.createShape.startPoint[0] >= 0 && (
+        <CanvasCreateShape type={props.createShape.type}></CanvasCreateShape>
+      )}
     </div>
   );
 }
