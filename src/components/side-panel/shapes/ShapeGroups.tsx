@@ -46,10 +46,11 @@ function ShapeGroups(props: ShapeGroupProps) {
 function ShapeGroupButton(props: ShapeGroupButtonProps) {
   const iconColor = "rgba(0, 0, 0, 0.6)";
   return (
-    <a
-      role="button"
+    <div
       id={"shape-group-" + props.type}
-      className={"shape-group-button" + (props.selected ? " selected" : "")}
+      className={
+        "shape-group-button clickable" + (props.selected ? " selected" : "")
+      }
       onClick={() => props.handleClick(props.index)}
     >
       {props.type === "favorites" && (
@@ -67,7 +68,7 @@ function ShapeGroupButton(props: ShapeGroupButtonProps) {
       {props.type === "emojis" && (
         <VectorGraphic color={iconColor} path={pathEmojis}></VectorGraphic>
       )}
-    </a>
+    </div>
   );
 }
 

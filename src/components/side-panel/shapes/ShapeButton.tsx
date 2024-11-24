@@ -49,7 +49,7 @@ function ShapeButton(props: ShapeButtonProps) {
   return (
     <div
       className={
-        "shape-button clickable shape-" +
+        "shape-button shape-" +
         convertDisplayToClassName(props.buttonType) +
         (selected ? " selected" : "")
       }
