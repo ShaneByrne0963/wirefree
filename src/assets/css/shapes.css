@@ -16,8 +16,7 @@
   grid-template-columns: repeat(5, 1fr);
   position: relative;
   top: -1px;
-  margin-right: 24px;
-  margin-left: 4px;
+  margin: 0 24px 8px 4px;
 }
 
 .shape-group-button {
@@ -30,7 +29,7 @@
   text-align: center;
 
   &.selected {
-    background-color: white;
+    background-color: #fbfbfb;
     position: relative;
     z-index: 3;
   }
