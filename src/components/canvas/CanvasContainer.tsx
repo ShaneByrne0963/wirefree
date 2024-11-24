@@ -1,29 +1,35 @@
 import { MouseEvent, useRef, useState } from "react";
 import Canvas from "./Canvas";
 import { clamp } from "../../helpers";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addShape } from "../../state/slices/pageSlice";
 import { ShapeProps } from "./CanvasShape";
+import { RootState } from "../../state/store";
 
 const minShapeSize = 2;
 
 function CanvasContainer() {
   const dispatch = useDispatch();
+  const selectedShape = useSelector(
+    (state: RootState) => state.shapes.selected
+  );
   let [shapeCreatePoint, setShapeCreatePoint] = useState([-1, -1]);
   let shapeCurrentPoint = useRef([-1, -1]);
   let isCreatingShape = useRef(false);
 
   // This mouse down event initialises a shape creation
   function handleMouseDown(event: MouseEvent<HTMLDivElement>) {
-    const [mouseX, mouseY] = [event.clientX, event.clientY];
-    const canvasElement = document.querySelector("#canvas");
-    const canvasRect = canvasElement?.getBoundingClientRect();
-    if (canvasRect) {
-      const createPointX = clamp(mouseX - canvasRect.x, 0, canvasRect.width);
-      const createPointY = clamp(mouseY - canvasRect.y, 0, canvasRect.height);
-      setShapeCreatePoint([createPointX, createPointY]);
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
+    if (selectedShape) {
+      const [mouseX, mouseY] = [event.clientX, event.clientY];
+      const canvasElement = document.querySelector("#canvas");
+      const canvasRect = canvasElement?.getBoundingClientRect();
+      if (canvasRect) {
+        const createPointX = clamp(mouseX - canvasRect.x, 0, canvasRect.width);
+        const createPointY = clamp(mouseY - canvasRect.y, 0, canvasRect.height);
+        setShapeCreatePoint([createPointX, createPointY]);
+        document.removeEventListener("mousemove", handleMouseMove);
+        document.removeEventListener("mouseup", handleMouseUp);
+      }
     }
   }
 
