@@ -66,6 +66,11 @@ function CanvasContainer() {
         }
         shapeCurrentPoint.current = [currentX, currentY];
         shapeCreateElement.setAttribute("style", shapeStyle);
+
+        // Prevent the flash of an icon being visible upon creation
+        if (shapeCreateElement.classList.contains("invisible")) {
+          shapeCreateElement.classList.remove("invisible");
+        }
       }
     }
   }

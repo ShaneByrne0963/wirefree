@@ -95,6 +95,7 @@ const shapeLists: shapeListsType = {
       "Flag",
       "Earth",
       "Fire",
+      "Skull",
       "Palette",
       "Snowflake",
       "Light Bulb",
