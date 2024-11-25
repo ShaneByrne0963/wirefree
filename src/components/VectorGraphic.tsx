@@ -64,7 +64,7 @@ function VectorGraphic(props: VectorGraphicProps) {
       viewBox={size.join(", ")}
       style={propStyles}
       className={propClass}
-      preserveAspectRatio={props.preserveRatio ? "xMinyMin meet" : "none"}
+      preserveAspectRatio={props.preserveRatio ? "xMidYMid meet" : "none"}
     >
       <path fill={props.color} d={path}></path>
     </svg>
