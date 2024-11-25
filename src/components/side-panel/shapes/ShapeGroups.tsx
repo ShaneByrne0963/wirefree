@@ -1,10 +1,4 @@
-import VectorGraphic, {
-  pathComponents,
-  pathEmojis,
-  pathMicrophone,
-  pathShapes,
-  pathStar,
-} from "../../VectorGraphic";
+import VectorGraphic, { iconData } from "../../VectorGraphic";
 
 // The type of shape group tabs
 export const shapeGroupNames = [
@@ -54,19 +48,28 @@ function ShapeGroupButton(props: ShapeGroupButtonProps) {
       onClick={() => props.handleClick(props.index)}
     >
       {props.type === "favorites" && (
-        <VectorGraphic color={iconColor} path={pathStar}></VectorGraphic>
+        <VectorGraphic color={iconColor} path={iconData.Star}></VectorGraphic>
       )}
       {props.type === "shapes" && (
-        <VectorGraphic color={iconColor} path={pathShapes}></VectorGraphic>
+        <VectorGraphic color={iconColor} path={iconData.Shapes}></VectorGraphic>
       )}
       {props.type === "components" && (
-        <VectorGraphic color={iconColor} path={pathComponents}></VectorGraphic>
+        <VectorGraphic
+          color={iconColor}
+          path={iconData.Components}
+        ></VectorGraphic>
       )}
       {props.type === "icons" && (
-        <VectorGraphic color={iconColor} path={pathMicrophone}></VectorGraphic>
+        <VectorGraphic
+          color={iconColor}
+          path={iconData.Microphone}
+        ></VectorGraphic>
       )}
       {props.type === "emojis" && (
-        <VectorGraphic color={iconColor} path={pathEmojis}></VectorGraphic>
+        <VectorGraphic
+          color={iconColor}
+          path={iconData["Smiling Face"]}
+        ></VectorGraphic>
       )}
     </div>
   );
