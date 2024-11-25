@@ -5,6 +5,7 @@ interface VectorGraphicProps {
   color?: string;
   styles?: CSSProperties;
   className?: string;
+  preserveRatio?: boolean;
 }
 
 function VectorGraphic(props: VectorGraphicProps) {
@@ -63,7 +64,7 @@ function VectorGraphic(props: VectorGraphicProps) {
       viewBox={size.join(", ")}
       style={propStyles}
       className={propClass}
-      preserveAspectRatio="none"
+      preserveAspectRatio={props.preserveRatio ? "xMinyMin meet" : "none"}
     >
       <path fill={props.color} d={path}></path>
     </svg>

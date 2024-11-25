@@ -48,27 +48,38 @@ function ShapeGroupButton(props: ShapeGroupButtonProps) {
       onClick={() => props.handleClick(props.index)}
     >
       {props.type === "favorites" && (
-        <VectorGraphic color={iconColor} path={iconData.Star}></VectorGraphic>
+        <VectorGraphic
+          color={iconColor}
+          path={iconData.Star}
+          preserveRatio={true}
+        ></VectorGraphic>
       )}
       {props.type === "shapes" && (
-        <VectorGraphic color={iconColor} path={iconData.Shapes}></VectorGraphic>
+        <VectorGraphic
+          color={iconColor}
+          path={iconData.Shapes}
+          preserveRatio={true}
+        ></VectorGraphic>
       )}
       {props.type === "components" && (
         <VectorGraphic
           color={iconColor}
           path={iconData.Components}
+          preserveRatio={true}
         ></VectorGraphic>
       )}
       {props.type === "icons" && (
         <VectorGraphic
           color={iconColor}
           path={iconData.Microphone}
+          preserveRatio={true}
         ></VectorGraphic>
       )}
       {props.type === "emojis" && (
         <VectorGraphic
           color={iconColor}
           path={iconData.Smiling}
+          preserveRatio={true}
         ></VectorGraphic>
       )}
     </div>
