@@ -20,7 +20,7 @@ const shapeLists: shapeListsType = {
     Recent: [],
   },
   shapes: {
-    Shapes: ["Rectangle", "Round Rectangle", "Circle", "Star"],
+    Shapes: ["Rectangle", "Round Rectangle", "Circle", "Heart", "Star"],
   },
   components: {
     Components: [],
@@ -138,6 +138,7 @@ const shapeLists: shapeListsType = {
       "Crying",
       "Angry",
     ],
+    "Hand Gestures": [],
   },
 };
 

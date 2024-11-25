@@ -10,8 +10,7 @@ export function getShapeHtml(props: ShapeHtmlProps) {
   let shapeHtml = <></>;
   const typeClass = convertDisplayToClassName(props.type);
   if (props.type in iconData) {
-    const path = iconData[props.type as keyof typeof iconData];
-
+    let path = iconData[props.type as keyof typeof iconData];
     shapeHtml = (
       <VectorGraphic
         path={path}
