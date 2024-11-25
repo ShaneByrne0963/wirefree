@@ -68,7 +68,7 @@ function ShapeGroupButton(props: ShapeGroupButtonProps) {
       {props.type === "emojis" && (
         <VectorGraphic
           color={iconColor}
-          path={iconData["Smiling Face"]}
+          path={iconData.Smiling}
         ></VectorGraphic>
       )}
     </div>
