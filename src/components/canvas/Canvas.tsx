@@ -3,7 +3,7 @@ import { RootState } from "../../state/store";
 import CanvasCreateShape from "./CanvasCreateShape";
 import CanvasShape, { ShapeProps } from "./CanvasShape";
 import { ShapeHtmlProps } from "../../shapes";
-import { useEffect, useRef, useState } from "react";
+import updateCanvasScale from "../../hooks/updateCanvasScale";
 
 interface CanvasProps {
   startPoint: number[];
@@ -18,12 +18,7 @@ function Canvas(props: CanvasProps) {
     (state: RootState) => state.screenSize.selectedScreen
   );
   const selectedScreenSize = activeScreenSizes[selectedScreenIndex];
-  const ratio = selectedScreenSize.width / selectedScreenSize.height;
-  const [scale, setScale] = useState(1);
-  const canvasRef = useRef<HTMLDivElement | null>(null);
-  const canvasCss = {
-    "--aspect-ratio": ratio,
-  } as React.CSSProperties;
+  const canvasRef = updateCanvasScale(selectedScreenSize);
 
   // Rendering each shape
   const pageData = useSelector((state: RootState) => state.pages);
@@ -51,29 +46,12 @@ function Canvas(props: CanvasProps) {
     }
   });
 
-  function updateScale() {
-    if (canvasRef.current !== null) {
-      const canvasRect = canvasRef.current.getBoundingClientRect();
-      const scale = canvasRect.width / selectedScreenSize.width;
-      setScale(scale);
-    } else {
-      setTimeout(updateScale);
-    }
-  }
-
-  useEffect(() => {
-    window.addEventListener("resize", updateScale);
-    updateScale();
-    return () => window.removeEventListener("resize", updateScale);
-  }, []);
-
   return (
-    <div id="canvas" style={canvasCss} className="z-depth-2" ref={canvasRef}>
+    <div id="canvas" className="z-depth-2" ref={canvasRef}>
       {renderElements.map((element, index) => (
         <CanvasShape
           styles={element.styles}
           props={element.props}
-          scale={scale}
           key={index}
         ></CanvasShape>
       ))}

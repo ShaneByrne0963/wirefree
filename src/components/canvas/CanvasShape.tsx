@@ -13,17 +13,13 @@ export interface ShapeProps {
   props: ShapeHtmlProps;
 }
 
-interface CanvasShapeProps extends ShapeProps {
-  scale: number;
-}
-
-function CanvasShape(props: CanvasShapeProps) {
+function CanvasShape(props: ShapeProps) {
   const shapeHtml = getShapeHtml(props.props);
   const shapeStyles = {
-    left: `${props.styles.left * props.scale}px`,
-    top: `${props.styles.top * props.scale}px`,
-    width: `${props.styles.width * props.scale}px`,
-    height: `${props.styles.height * props.scale}px`,
+    "--left": `${props.styles.left}px`,
+    "--top": `${props.styles.top}px`,
+    "--width": `${props.styles.width}px`,
+    "--height": `${props.styles.height}px`,
   };
   return (
     <div className="canvas-shape" style={shapeStyles as CSSProperties}>

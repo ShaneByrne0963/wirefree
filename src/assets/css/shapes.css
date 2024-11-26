@@ -79,6 +79,13 @@
   }
 }
 
+.canvas-shape {
+  top: calc(var(--top) * var(--scale));
+  left: calc(var(--left) * var(--scale));
+  width: calc(var(--width) * var(--scale));
+  height: calc(var(--height) * var(--scale));
+}
+
 .shape.round-rectangle {
   border-radius: 32px;
 }
