@@ -14,9 +14,12 @@ function CanvasContainer() {
   const selectedShape = useSelector(
     (state: RootState) => state.shapes.selected
   );
-  let [shapeCreatePoint, setShapeCreatePoint] = useState([-1, -1]);
-  let shapeCurrentPoint = useRef([-1, -1]);
-  let isCreatingShape = useRef(false);
+  const screenSizeData = useSelector((state: RootState) => state.screenSize);
+  const selectedScreenSize =
+    screenSizeData.activeScreens[screenSizeData.selectedScreen];
+  const [shapeCreatePoint, setShapeCreatePoint] = useState([-1, -1]);
+  const shapeCurrentPoint = useRef([-1, -1]);
+  const isCreatingShape = useRef(false);
 
   // This mouse down event initialises a shape creation
   function handleMouseDown(event: MouseEvent<HTMLDivElement>) {
@@ -83,7 +86,12 @@ function CanvasContainer() {
     isCreatingShape.current = false;
 
     let shapeCreateElement = document.querySelector("#shape-create");
-    if (shapeCreateElement) {
+    let canvasElement = document.querySelector("#canvas");
+    if (shapeCreateElement && canvasElement) {
+      // Find the scale of the canvas to translate the shape onto
+      const canvasRect = canvasElement.getBoundingClientRect();
+      const scale = canvasRect.width / selectedScreenSize.width;
+
       // Extract the style properties from the shape create element into an object
       let shapeStyle = shapeCreateElement.getAttribute("style");
       if (shapeStyle) {
@@ -101,7 +109,8 @@ function CanvasContainer() {
         };
         shapeProperties.map((item) => {
           const [key, value] = item;
-          shapeObject.styles[key as keyof ShapeStyles] = parseFloat(value);
+          shapeObject.styles[key as keyof ShapeStyles] =
+            parseFloat(value) / scale;
         });
 
         // Make sure the new element isn't too small for the canvas
