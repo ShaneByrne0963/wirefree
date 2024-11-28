@@ -7,7 +7,6 @@ import { ShapeProps, ShapeStyles } from "./CanvasShape";
 import { RootState } from "../../state/store";
 
 const minShapeSize = 2;
-const defaultColor = "rgba(0, 0, 0, 0.7)";
 
 function CanvasContainer() {
   const dispatch = useDispatch();
@@ -15,6 +14,7 @@ function CanvasContainer() {
     (state: RootState) => state.shapes.selected
   );
   const screenSizeData = useSelector((state: RootState) => state.screenSize);
+  const shapeColor = useSelector((state: RootState) => state.shapes.color1);
   const selectedScreenSize =
     screenSizeData.activeScreens[screenSizeData.selectedScreen];
   const [shapeCreatePoint, setShapeCreatePoint] = useState([-1, -1]);
@@ -99,7 +99,7 @@ function CanvasContainer() {
           .split("px; ")
           .map((prop) => prop.replace("px;", "").split(": "));
         let shapeObject: ShapeProps = {
-          props: { type: selectedShape, color: defaultColor },
+          props: { type: selectedShape, color: shapeColor },
           styles: {
             left: 0,
             top: 0,
@@ -142,7 +142,7 @@ function CanvasContainer() {
     >
       <Canvas
         startPoint={shapeCreatePoint}
-        shapeProps={{ type: selectedShape, color: defaultColor }}
+        shapeProps={{ type: selectedShape, color: shapeColor }}
       ></Canvas>
     </div>
   );
