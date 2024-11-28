@@ -1,3 +1,7 @@
+import { useRef } from "react";
+import { useDispatch } from "react-redux";
+import { setColor } from "../../state/slices/shapeSlice";
+
 interface ColorButtonProps {
   hue?: string;
   accent: string;
@@ -70,6 +74,18 @@ function ColorPickerRow(props: ColorButtonProps) {
 }
 
 function ColorButton(props: ColorButtonProps) {
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
+  const dispatch = useDispatch();
+
+  function updateColor() {
+    if (buttonRef.current) {
+      // Find the background color of the button that was pressed
+      const buttonStyles = window.getComputedStyle(buttonRef.current);
+      const buttonColor = buttonStyles.getPropertyValue("background-color");
+      dispatch(setColor([1, buttonColor]));
+    }
+  }
+
   let className = "plain clickable trigger-clickaway";
   if (props.hue) {
     className += ` ${props.hue}`;
@@ -80,7 +96,13 @@ function ColorButton(props: ColorButtonProps) {
   if (props.topRow) {
     className += " top-row";
   }
-  return <button className={className}></button>;
+  return (
+    <button
+      className={className}
+      ref={buttonRef}
+      onClick={updateColor}
+    ></button>
+  );
 }
 
 export default ColorPickerWindow;
