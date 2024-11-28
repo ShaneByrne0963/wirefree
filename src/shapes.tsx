@@ -19,7 +19,12 @@ export function getShapeHtml(props: ShapeHtmlProps) {
       ></VectorGraphic>
     );
   } else {
-    shapeHtml = <div className={"shape " + typeClass}></div>;
+    const shapeStyles = {
+      backgroundColor: props.color,
+    };
+    shapeHtml = (
+      <div className={"shape " + typeClass} style={shapeStyles}></div>
+    );
   }
   return shapeHtml;
 }
