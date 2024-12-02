@@ -8,7 +8,7 @@ interface shapeState {
 
 const initialState:shapeState = {
   selected: "",
-  color1: "rgb(128, 128, 128)",
+  color1: "rgb(117, 117, 117)",
   color2: "rgb(255, 255, 255)",
 }
 

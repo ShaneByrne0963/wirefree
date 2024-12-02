@@ -1,6 +1,8 @@
 import { useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setColor } from "../../state/slices/shapeSlice";
+import { RootState } from "../../state/store";
+import { convertRgbToHex } from "../../helpers";
 
 interface ColorButtonProps {
   hue?: string;
@@ -43,9 +45,14 @@ const accents = [
 ];
 
 function ColorPickerWindow() {
+  const dispatch = useDispatch();
+  let selectedColor = useSelector((state: RootState) => state.shapes.color1);
+  if (selectedColor.includes("rgb")) {
+    selectedColor = convertRgbToHex(selectedColor);
+  }
   return (
     <div className="color-window z-depth-2">
-      <div>
+      <div className="color-grid">
         {accents.map((accent, index) => (
           <ColorPickerRow
             accent={accent}
@@ -53,6 +60,14 @@ function ColorPickerWindow() {
             key={accent}
           ></ColorPickerRow>
         ))}
+      </div>
+      <div className="custom-color">
+        <span>Custom:</span>
+        <input
+          type="color"
+          value={selectedColor}
+          onChange={(event) => dispatch(setColor([1, event.target.value]))}
+        />
       </div>
     </div>
   );

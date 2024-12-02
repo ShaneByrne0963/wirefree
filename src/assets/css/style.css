@@ -324,6 +324,7 @@ input[type="text"]:not(.browser-default) {
         top: 0;
         left: 100%;
         border-top-left-radius: 0;
+        cursor: default;
     }
 }
 
@@ -337,15 +338,25 @@ input[type="text"]:not(.browser-default) {
     border-radius: 12px;
     z-index: 20;
 
-    >div {
+    >.color-grid {
         display: grid;
         grid-template-columns: repeat(19, 1fr);
+    }
+
+    >.custom-color {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+        margin-top: 16px;
+
+        >input {
+            width: 100%;
+        }
     }
 
     button {
         width: 100%;
         aspect-ratio: 1 / 1;
-        border: #707070;
 
         &.top-row {
             margin-bottom: 4px;
