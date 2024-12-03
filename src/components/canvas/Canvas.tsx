@@ -4,6 +4,7 @@ import CanvasCreateShape from "./CanvasCreateShape";
 import CanvasShape, { ShapeProps } from "./CanvasShape";
 import { ShapeHtmlProps } from "../../shapes";
 import updateCanvasScale from "../../hooks/updateCanvasScale";
+import CanvasGrid from "./CanvasGrid";
 
 interface CanvasProps {
   startPoint: number[];
@@ -17,6 +18,7 @@ function Canvas(props: CanvasProps) {
   const selectedScreenIndex = useSelector(
     (state: RootState) => state.screenSize.selectedScreen
   );
+  const gridData = useSelector((state: RootState) => state.shapes.grid);
   const selectedScreenSize = activeScreenSizes[selectedScreenIndex];
   const canvasRef = updateCanvasScale(selectedScreenSize);
 
@@ -58,6 +60,7 @@ function Canvas(props: CanvasProps) {
       {props.startPoint[0] >= 0 && (
         <CanvasCreateShape props={props.shapeProps}></CanvasCreateShape>
       )}
+      {gridData.enabled && <CanvasGrid></CanvasGrid>}
     </div>
   );
 }
