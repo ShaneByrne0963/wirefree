@@ -9,6 +9,7 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    position: relative;
     padding: var(--canvas-margin);
 
     &.shape-selected {

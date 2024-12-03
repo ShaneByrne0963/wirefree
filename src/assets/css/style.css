@@ -363,3 +363,14 @@ input[type="text"]:not(.browser-default) {
         }
     }
 }
+
+#grid-controls {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 8px;
+}

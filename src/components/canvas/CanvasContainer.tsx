@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addShape } from "../../state/slices/pageSlice";
 import { ShapeProps, ShapeStyles } from "./CanvasShape";
 import { RootState } from "../../state/store";
+import GridControls from "./GridControls";
 
 const minShapeSize = 2;
 
@@ -144,6 +145,7 @@ function CanvasContainer() {
         startPoint={shapeCreatePoint}
         shapeProps={{ type: selectedShape, color: shapeColor }}
       ></Canvas>
+      <GridControls></GridControls>
     </div>
   );
 }
