@@ -50,13 +50,15 @@ function Canvas(props: CanvasProps) {
 
   return (
     <div id="canvas" className="z-depth-2" ref={canvasRef}>
-      {renderElements.map((element, index) => (
-        <CanvasShape
-          styles={element.styles}
-          props={element.props}
-          key={index}
-        ></CanvasShape>
-      ))}
+      <div id="canvas-elements">
+        {renderElements.map((element, index) => (
+          <CanvasShape
+            styles={element.styles}
+            props={element.props}
+            key={index}
+          ></CanvasShape>
+        ))}
+      </div>
       {props.startPoint[0] >= 0 && (
         <CanvasCreateShape props={props.shapeProps}></CanvasCreateShape>
       )}

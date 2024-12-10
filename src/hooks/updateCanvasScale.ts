@@ -5,38 +5,32 @@ function updateCanvasScale(screenSize: ScreenSize) {
   const canvasRef = useRef<HTMLDivElement | null>(null);
 
   // A reference to the old resize observer, allowing it to be removed in the next render
-  const scaleObserver = useRef<ResizeObserver | null>(null);
+  const resizeRef = useRef<(() => void) | null>(null);
 
   // Renew the event listener with the new screen size values
   useEffect(() => {
     function handleScale() {
-      if (canvasRef.current) {
-        const canvasRect = canvasRef.current.getBoundingClientRect();
-        const scale = screenSize.width > screenSize.height
-            ? canvasRect.width / screenSize.width
-            : canvasRect.height / screenSize.height;
+      const canvasContainer = document.getElementById("canvas-container");
+      if (canvasContainer && canvasRef.current) {
+        const containerStyles = window.getComputedStyle(canvasContainer);
+        const containerPadding = parseInt(containerStyles.getPropertyValue("padding").replace("px", "")) * 2;
+        const containerRect = canvasContainer.getBoundingClientRect();
+        const [containerWidth, containerHeight] = [containerRect.width - containerPadding, containerRect.height - containerPadding];
+
+        const scale = Math.min(containerWidth / screenSize.width, containerHeight / screenSize.height);
         const ratio = screenSize.width / screenSize.height;
-        const canvasCss = `--scale: ${scale}; --aspect-ratio: ${ratio};`;
+        const canvasCss = `scale: ${scale}; --aspect-ratio: ${ratio}; width: ${screenSize.width}px; height: ${screenSize.height}px`;
         canvasRef.current.setAttribute("style", canvasCss);
       }
     }
-    function addObserver() {
-      if (canvasRef.current) {
-        const resizeObserver = new ResizeObserver(handleScale);
-        scaleObserver.current = resizeObserver;
-        resizeObserver.observe(canvasRef.current);
-      }
+    if (resizeRef.current !== null) {
+      window.removeEventListener("resize", resizeRef.current);
     }
-    function unbindObserver() {
-      if (scaleObserver.current) {
-        scaleObserver.current.disconnect();
-      }
-    }
-    unbindObserver();
-    addObserver();
+    window.addEventListener("resize", handleScale);
+    resizeRef.current = handleScale;
     handleScale();
 
-    return unbindObserver;
+    return () => window.removeEventListener("resize", handleScale);
   }, [screenSize]);
 
   return canvasRef;

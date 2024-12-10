@@ -45,12 +45,14 @@
 }
 
 #canvas {
-    position: relative;
+    position: absolute;
     background-color: white;
     overflow: hidden;
+    transform-origin: center;
 
-    width: min(calc((100vh - var(--nav-height) - (var(--canvas-margin) * 2)) * var(--aspect-ratio)), 100%);
-    height: min(calc(((100vw - var(--side-panel-width)) - (var(--canvas-margin) * 2)) / var(--aspect-ratio)), 100%);
+    >#canvas-elements {
+        position: relative;
+    }
 }
 
 @media screen and (max-width: 1000px) {

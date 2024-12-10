@@ -15,10 +15,10 @@ const initialState:shapeState = {
   color2: "rgb(255, 255, 255)",
   grid: {
     enabled: true,
-    width: 3,
-    widthUnits: "cells",
-    height: 10,
-    heightUnits: "cells",
+    width: 32,
+    widthUnits: "px",
+    height: 32,
+    heightUnits: "px",
   }
 }
 
