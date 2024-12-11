@@ -373,4 +373,5 @@ input[type="text"]:not(.browser-default) {
     border-radius: 50%;
     cursor: pointer;
     padding: 8px;
+    z-index: 5;
 }

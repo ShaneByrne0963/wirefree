@@ -18,6 +18,7 @@ import {
 import AddScreenSizeWindow from "./add_screen_size/AddScreenSizeWindow";
 import PageSettingsWindow from "./page_settings/PageSettingsWindow";
 import ConfirmAction from "./ConfirmAction";
+import GridSettingsWindow from "./grid_settings/GridSettingsWindow";
 
 interface WindowProps {
   window: WindowState | ConfirmActionState;
@@ -119,6 +120,9 @@ function Window(props: WindowProps) {
           )}
           {label === "Page Settings" && (
             <PageSettingsWindow></PageSettingsWindow>
+          )}
+          {label === "Grid Settings" && (
+            <GridSettingsWindow></GridSettingsWindow>
           )}
           {"bodyText" in props.window && (
             <ConfirmAction

@@ -41,6 +41,10 @@ const windowProperties = {
     label: "Page Settings",
     width: 400
   },
+  gridSettings: <WindowState> {
+    label: "Grid Settings",
+    width: 400
+  },
   confirmAction: <ConfirmActionState> {
     label: "Confirm Action",
     width: 600,

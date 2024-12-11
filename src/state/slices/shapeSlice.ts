@@ -15,10 +15,10 @@ const initialState:shapeState = {
   color2: "rgb(255, 255, 255)",
   grid: {
     enabled: true,
-    width: 32,
-    widthUnits: "px",
+    width: 3,
+    widthUnits: "cells",
     height: 10,
-    heightUnits: "cells",
+    heightUnits: "%",
   }
 }
 
@@ -39,10 +39,13 @@ const shapeSlice = createSlice({
       else {
         state.color2 = action.payload[1];
       }
+    },
+    setGridStatus(state, action:PayloadAction<boolean>) {
+      state.grid.enabled = action.payload;
     }
   }
 });
 
-export const { selectShape, deselectShape, setColor } = shapeSlice.actions;
+export const { selectShape, deselectShape, setColor, setGridStatus } = shapeSlice.actions;
 
 export default shapeSlice.reducer;
