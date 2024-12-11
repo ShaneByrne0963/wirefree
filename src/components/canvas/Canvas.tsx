@@ -29,8 +29,9 @@ function Canvas(props: CanvasProps) {
   const pageData = useSelector((state: RootState) => state.pages);
   const currentPage =
     pageData.pages[pageData.selectedPage].data[selectedScreenSize.name];
-  let renderElements: ShapeProps[] = [];
+  let renderElements: (ShapeProps | string)[] = [];
   currentPage.layers.map((layer: string) => {
+    renderElements.push(layer);
     // Regular layers
     if (layer[0] === "_") {
       // Add all the shapes to the canvas if the layer is visible
@@ -50,20 +51,33 @@ function Canvas(props: CanvasProps) {
       }
     }
   });
+  let shapeLayer = "";
+  let shapeIndex = 0;
+
+  function renderShape(value: ShapeProps | string, index: number) {
+    if (typeof value === "string") {
+      shapeLayer = value;
+      shapeIndex = 0;
+      return;
+    }
+    const shapeHtml = (
+      <CanvasShape
+        id={`shape-${index}`}
+        styles={value.styles}
+        props={value.props}
+        key={index}
+        layer={shapeLayer}
+        index={shapeIndex}
+        selected={selectedShapes.includes(`shape-${index}`)}
+      ></CanvasShape>
+    );
+    shapeIndex++;
+    return shapeHtml;
+  }
 
   return (
     <div id="canvas" className="z-depth-2" ref={canvasRef}>
-      <div id="canvas-elements">
-        {renderElements.map((element, index) => (
-          <CanvasShape
-            id={`shape-${index}`}
-            styles={element.styles}
-            props={element.props}
-            key={index}
-            selected={selectedShapes.includes(`shape-${index}`)}
-          ></CanvasShape>
-        ))}
-      </div>
+      <div id="canvas-elements">{renderElements.map(renderShape)}</div>
       {props.startPoint[0] >= 0 && (
         <CanvasCreateShape props={props.shapeProps}></CanvasCreateShape>
       )}

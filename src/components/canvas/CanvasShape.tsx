@@ -15,6 +15,8 @@ export interface ShapeProps {
 
 interface ShapeLocalProps extends ShapeProps {
   id: string;
+  layer: string;
+  index: number;
   selected: boolean;
 }
 
@@ -31,6 +33,8 @@ function CanvasShape(props: ShapeLocalProps) {
       className={"canvas-shape" + (props.selected ? " selected" : "")}
       id={props.id}
       style={shapeStyles as CSSProperties}
+      data-layer={props.layer}
+      data-index={props.index}
     >
       {shapeHtml}
     </div>
