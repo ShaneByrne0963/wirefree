@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Axis } from "../../context";
 
 export type gridUnits = "px" | "%" | "cells";
 
@@ -42,10 +43,20 @@ const shapeSlice = createSlice({
     },
     setGridStatus(state, action:PayloadAction<boolean>) {
       state.grid.enabled = action.payload;
+    },
+    setGridProperty(state, action:PayloadAction<{ axis: Axis, value: number, units: gridUnits }>) {
+      if (action.payload.axis === "x") {
+        state.grid.width = action.payload.value;
+        state.grid.widthUnits = action.payload.units;
+      }
+      else {
+        state.grid.height = action.payload.value;
+        state.grid.heightUnits = action.payload.units;
+      }
     }
   }
 });
 
-export const { selectShape, deselectShape, setColor, setGridStatus } = shapeSlice.actions;
+export const { selectShape, deselectShape, setColor, setGridStatus, setGridProperty } = shapeSlice.actions;
 
 export default shapeSlice.reducer;
