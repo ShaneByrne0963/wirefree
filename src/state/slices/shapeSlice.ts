@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-type gridUnits = "px" | "%" | "cells";
+export type gridUnits = "px" | "%" | "cells";
 
 interface shapeState {
   selected: string;

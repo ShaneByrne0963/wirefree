@@ -8,4 +8,6 @@ export const defaultScreenSizes = [
   { name: "iPhone", width: 1170, height: 2532 },
 ];
 
+export type Axis = "x" | "y";
+
 export const ThemeContext = createContext('red');

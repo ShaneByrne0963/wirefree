@@ -6,6 +6,7 @@ import { addShape } from "../../state/slices/pageSlice";
 import { ShapeProps, ShapeStyles } from "./CanvasShape";
 import { RootState } from "../../state/store";
 import GridControls from "./GridControls";
+import { Axis } from "../../context";
 
 const minShapeSize = 2;
 
@@ -23,7 +24,7 @@ function CanvasContainer() {
   const shapeCurrentPoint = useRef([-1, -1]);
   const isCreatingShape = useRef(false);
 
-  function snapToGrid(value: number, axis: "x" | "y") {
+  function snapToGrid(value: number, axis: Axis) {
     let snapValue = 0;
     const screenValue =
       axis === "x" ? selectedScreen.width : selectedScreen.height;

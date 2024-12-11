@@ -251,3 +251,13 @@
   font-size: 1rem;
   line-height: normal;
 }
+
+/* Grid Settings */
+
+.grid-properties {
+  margin-top: 8px;
+
+  select {
+    max-width: 80px;
+  }
+}

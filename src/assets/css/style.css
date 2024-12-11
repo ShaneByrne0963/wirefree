@@ -54,7 +54,8 @@ input[type="text"]:not(.browser-default) {
     margin-bottom: 0;
 }
 
-.add-item-input {
+.add-item-input,
+.input-inline {
     display: flex;
     align-items: top;
     gap: 4px;
