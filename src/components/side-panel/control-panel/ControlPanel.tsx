@@ -5,11 +5,20 @@ import { RootState } from "../../../state/store";
 
 function ControlPanel() {
   const colorClick = useOutsideClick();
-  const color1 = useSelector((state: RootState) => state.shapes.color1);
+  const shapeData = useSelector((state: RootState) => state.shapes);
 
-  const color1Styles = {
-    backgroundColor: color1,
-  };
+  let colorPickerStyles = {};
+
+  if (shapeData.selectedShapes.length === 0) {
+    colorPickerStyles = {
+      backgroundColor: shapeData.color1,
+    };
+  } else if (shapeData.selectedShapes.length === 1) {
+    colorPickerStyles = {
+      backgroundColor: shapeData.color2,
+    };
+  }
+
   return (
     <div id="control-panel-container">
       <div id="control-panel">
@@ -18,7 +27,7 @@ function ControlPanel() {
           id="color-picker"
           onClick={colorClick.handleClickInside}
           ref={colorClick.ref}
-          style={color1Styles}
+          style={colorPickerStyles}
         >
           <div className="border"></div>
           {colorClick.isActive && <ColorPickerWindow></ColorPickerWindow>}

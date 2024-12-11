@@ -7,7 +7,7 @@ import { ShapeProps, ShapeStyles } from "./CanvasShape";
 import { RootState } from "../../state/store";
 import GridControls from "./GridControls";
 import { Axis } from "../../context";
-import { deselectAllShapes } from "../../state/slices/shapeSlice";
+import { deselectAllShapes, selectShape } from "../../state/slices/shapeSlice";
 
 const minShapeSize = 2;
 
@@ -20,6 +20,9 @@ function CanvasContainer() {
   const selectedScreen = screenData.activeScreens[screenData.selectedScreen];
 
   const shapeColor = useSelector((state: RootState) => state.shapes.color1);
+  const selectedTool = useSelector(
+    (state: RootState) => state.shapes.selectedTool
+  );
   const grid = useSelector((state: RootState) => state.shapes.grid);
   const [shapeCreatePoint, setShapeCreatePoint] = useState([-1, -1]);
   const shapeCurrentPoint = useRef([-1, -1]);
@@ -45,9 +48,29 @@ function CanvasContainer() {
     return Math.round(value / snapValue) * snapValue;
   }
 
+  // Handles the selection of shapes
+  function handleMouseClick(event: MouseEvent) {
+    dispatch(deselectAllShapes());
+
+    if (!selectedTool) {
+      const element = event.target as HTMLElement;
+
+      // Check if the clicked element is a shape
+      if (element.classList.contains("canvas-shape")) {
+        dispatch(selectShape(element.id));
+        return;
+      }
+
+      // If not, check if it is a child of one
+      const parentElement = element.closest(".canvas-shape") as HTMLElement;
+      if (parentElement) {
+        dispatch(selectShape(parentElement.id));
+      }
+    }
+  }
+
   // This mouse down event initialises a shape creation
   function handleMouseDown(event: MouseEvent<HTMLDivElement>) {
-    dispatch(deselectAllShapes());
     if (selectedShape) {
       const [mouseX, mouseY] = [event.clientX, event.clientY];
       const canvasElement = document.querySelector("#canvas");
@@ -177,6 +200,7 @@ function CanvasContainer() {
   return (
     <div
       id="canvas-container"
+      onClick={handleMouseClick}
       onMouseDown={handleMouseDown}
       className={selectedShape ? "shape-selected" : ""}
     >
