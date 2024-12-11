@@ -79,11 +79,8 @@
   }
 }
 
-.canvas-shape {
-  top: calc(var(--top) * var(--scale));
-  left: calc(var(--left) * var(--scale));
-  width: calc(var(--width) * var(--scale));
-  height: calc(var(--height) * var(--scale));
+#shape-create {
+  scale: calc(1 / var(--scale));
 }
 
 .shape.round-rectangle {

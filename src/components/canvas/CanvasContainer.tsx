@@ -14,10 +14,7 @@ function CanvasContainer() {
   const selectedShape = useSelector(
     (state: RootState) => state.shapes.selected
   );
-  const screenSizeData = useSelector((state: RootState) => state.screenSize);
   const shapeColor = useSelector((state: RootState) => state.shapes.color1);
-  const selectedScreenSize =
-    screenSizeData.activeScreens[screenSizeData.selectedScreen];
   const [shapeCreatePoint, setShapeCreatePoint] = useState([-1, -1]);
   const shapeCurrentPoint = useRef([-1, -1]);
   const isCreatingShape = useRef(false);
@@ -27,10 +24,14 @@ function CanvasContainer() {
     if (selectedShape) {
       const [mouseX, mouseY] = [event.clientX, event.clientY];
       const canvasElement = document.querySelector("#canvas");
-      const canvasRect = canvasElement?.getBoundingClientRect();
-      if (canvasRect) {
-        const createPointX = clamp(mouseX - canvasRect.x, 0, canvasRect.width);
-        const createPointY = clamp(mouseY - canvasRect.y, 0, canvasRect.height);
+      if (canvasElement) {
+        const canvasRect = canvasElement.getBoundingClientRect();
+        const canvasStyles = window.getComputedStyle(canvasElement);
+        const canvasScale = parseFloat(canvasStyles.getPropertyValue("scale"));
+        const createPointX =
+          clamp(mouseX - canvasRect.x, 0, canvasRect.width) / canvasScale;
+        const createPointY =
+          clamp(mouseY - canvasRect.y, 0, canvasRect.height) / canvasScale;
         setShapeCreatePoint([createPointX, createPointY]);
         document.removeEventListener("mousemove", handleMouseMove);
         document.removeEventListener("mouseup", handleMouseUp);
@@ -45,10 +46,14 @@ function CanvasContainer() {
       const [startX, startY] = shapeCreatePoint;
       const [mouseX, mouseY] = [event.clientX, event.clientY];
       const canvasElement = document.querySelector("#canvas");
-      const canvasRect = canvasElement?.getBoundingClientRect();
-      if (canvasRect) {
-        const currentX = clamp(mouseX - canvasRect.x, 0, canvasRect.width);
-        const currentY = clamp(mouseY - canvasRect.y, 0, canvasRect.height);
+      if (canvasElement) {
+        const canvasRect = canvasElement.getBoundingClientRect();
+        const canvasStyles = window.getComputedStyle(canvasElement);
+        const canvasScale = parseFloat(canvasStyles.getPropertyValue("scale"));
+        const currentX =
+          clamp(mouseX - canvasRect.x, 0, canvasRect.width) / canvasScale;
+        const currentY =
+          clamp(mouseY - canvasRect.y, 0, canvasRect.height) / canvasScale;
         const [width, height] = [
           Math.abs(currentX - startX),
           Math.abs(currentY - startY),
@@ -89,10 +94,6 @@ function CanvasContainer() {
     let shapeCreateElement = document.querySelector("#shape-create");
     let canvasElement = document.querySelector("#canvas");
     if (shapeCreateElement && canvasElement) {
-      // Find the scale of the canvas to translate the shape onto
-      const canvasRect = canvasElement.getBoundingClientRect();
-      const scale = canvasRect.width / selectedScreenSize.width;
-
       // Extract the style properties from the shape create element into an object
       let shapeStyle = shapeCreateElement.getAttribute("style");
       if (shapeStyle) {
@@ -110,8 +111,7 @@ function CanvasContainer() {
         };
         shapeProperties.map((item) => {
           const [key, value] = item;
-          shapeObject.styles[key as keyof ShapeStyles] =
-            parseFloat(value) / scale;
+          shapeObject.styles[key as keyof ShapeStyles] = parseFloat(value);
         });
 
         // Make sure the new element isn't too small for the canvas
