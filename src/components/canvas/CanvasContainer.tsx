@@ -7,6 +7,7 @@ import { ShapeProps, ShapeStyles } from "./CanvasShape";
 import { RootState } from "../../state/store";
 import GridControls from "./GridControls";
 import { Axis } from "../../context";
+import { deselectAllShapes } from "../../state/slices/shapeSlice";
 
 const minShapeSize = 2;
 
@@ -46,6 +47,7 @@ function CanvasContainer() {
 
   // This mouse down event initialises a shape creation
   function handleMouseDown(event: MouseEvent<HTMLDivElement>) {
+    dispatch(deselectAllShapes());
     if (selectedShape) {
       const [mouseX, mouseY] = [event.clientX, event.clientY];
       const canvasElement = document.querySelector("#canvas");
