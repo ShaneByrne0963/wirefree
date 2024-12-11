@@ -17,8 +17,8 @@ const initialState:shapeState = {
     enabled: true,
     width: 32,
     widthUnits: "px",
-    height: 32,
-    heightUnits: "px",
+    height: 10,
+    heightUnits: "cells",
   }
 }
 

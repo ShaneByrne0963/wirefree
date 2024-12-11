@@ -14,10 +14,34 @@ function CanvasContainer() {
   const selectedShape = useSelector(
     (state: RootState) => state.shapes.selected
   );
+  const screenData = useSelector((state: RootState) => state.screenSize);
+  const selectedScreen = screenData.activeScreens[screenData.selectedScreen];
+
   const shapeColor = useSelector((state: RootState) => state.shapes.color1);
+  const grid = useSelector((state: RootState) => state.shapes.grid);
   const [shapeCreatePoint, setShapeCreatePoint] = useState([-1, -1]);
   const shapeCurrentPoint = useRef([-1, -1]);
   const isCreatingShape = useRef(false);
+
+  function snapToGrid(value: number, axis: "x" | "y") {
+    let snapValue = 0;
+    const screenValue =
+      axis === "x" ? selectedScreen.width : selectedScreen.height;
+    const gridValue = axis === "x" ? grid.width : grid.height;
+    const unit = axis === "x" ? grid.widthUnits : grid.heightUnits;
+
+    switch (unit) {
+      case "px":
+        snapValue = gridValue;
+        break;
+      case "%":
+        snapValue = screenValue * (gridValue / 100);
+        break;
+      case "cells":
+        snapValue = screenValue / gridValue;
+    }
+    return Math.round(value / snapValue) * snapValue;
+  }
 
   // This mouse down event initialises a shape creation
   function handleMouseDown(event: MouseEvent<HTMLDivElement>) {
@@ -28,10 +52,16 @@ function CanvasContainer() {
         const canvasRect = canvasElement.getBoundingClientRect();
         const canvasStyles = window.getComputedStyle(canvasElement);
         const canvasScale = parseFloat(canvasStyles.getPropertyValue("scale"));
-        const createPointX =
+        let createPointX =
           clamp(mouseX - canvasRect.x, 0, canvasRect.width) / canvasScale;
-        const createPointY =
+        let createPointY =
           clamp(mouseY - canvasRect.y, 0, canvasRect.height) / canvasScale;
+
+        // Snap to the grid
+        if (grid.enabled) {
+          createPointX = snapToGrid(createPointX, "x");
+          createPointY = snapToGrid(createPointY, "y");
+        }
         setShapeCreatePoint([createPointX, createPointY]);
         document.removeEventListener("mousemove", handleMouseMove);
         document.removeEventListener("mouseup", handleMouseUp);
@@ -50,10 +80,16 @@ function CanvasContainer() {
         const canvasRect = canvasElement.getBoundingClientRect();
         const canvasStyles = window.getComputedStyle(canvasElement);
         const canvasScale = parseFloat(canvasStyles.getPropertyValue("scale"));
-        const currentX =
+        let currentX =
           clamp(mouseX - canvasRect.x, 0, canvasRect.width) / canvasScale;
-        const currentY =
+        let currentY =
           clamp(mouseY - canvasRect.y, 0, canvasRect.height) / canvasScale;
+        // Snap to the grid
+        if (grid.enabled) {
+          currentX = snapToGrid(currentX, "x");
+          currentY = snapToGrid(currentY, "y");
+        }
+
         const [width, height] = [
           Math.abs(currentX - startX),
           Math.abs(currentY - startY),
