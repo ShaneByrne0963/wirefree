@@ -79,6 +79,10 @@
   }
 }
 
+.canvas-shape.selected {
+  border: 2px solid rgba(3, 169, 244, 0.7);
+}
+
 #shape-create {
   scale: calc(1 / var(--scale));
 }

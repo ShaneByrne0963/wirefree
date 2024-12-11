@@ -19,6 +19,9 @@ function Canvas(props: CanvasProps) {
     (state: RootState) => state.screenSize.selectedScreen
   );
   const gridData = useSelector((state: RootState) => state.shapes.grid);
+  const selectedShapes = useSelector(
+    (state: RootState) => state.shapes.selectedShapes
+  );
   const selectedScreenSize = activeScreenSizes[selectedScreenIndex];
   const canvasRef = updateCanvasScale(selectedScreenSize);
 
@@ -53,9 +56,11 @@ function Canvas(props: CanvasProps) {
       <div id="canvas-elements">
         {renderElements.map((element, index) => (
           <CanvasShape
+            id={`shape-${index}`}
             styles={element.styles}
             props={element.props}
             key={index}
+            selected={selectedShapes.includes(`shape-${index}`)}
           ></CanvasShape>
         ))}
       </div>

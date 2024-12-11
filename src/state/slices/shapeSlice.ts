@@ -4,14 +4,16 @@ import { Axis } from "../../context";
 export type gridUnits = "px" | "%" | "cells";
 
 interface shapeState {
-  selected: string;
+  selectedTool: string;
+  selectedShapes: string[];
   color1: string;
   color2: string;
   grid: { enabled: boolean, width: number, widthUnits: gridUnits, height: number, heightUnits: gridUnits };
 }
 
 const initialState:shapeState = {
-  selected: "",
+  selectedTool: "",
+  selectedShapes: [],
   color1: "rgb(117, 117, 117)",
   color2: "rgb(255, 255, 255)",
   grid: {
@@ -27,11 +29,23 @@ const shapeSlice = createSlice({
   name: "shapes",
   initialState,
   reducers: {
-    selectShape(state, action:PayloadAction<string>) {
-      state.selected = action.payload;
+    selectShapeTool(state, action:PayloadAction<string>) {
+      state.selectedTool = action.payload;
     },
-    deselectShape(state) {
-      state.selected = "";
+    deselectShapeTool(state) {
+      state.selectedTool = "";
+    },
+    selectShape(state, action:PayloadAction<string>) {
+      state.selectedShapes.push(action.payload);
+    },
+    deselectShape(state, action:PayloadAction<string>) {
+      const index = state.selectedShapes.indexOf(action.payload);
+      if (index >= 0) {
+        state.selectedShapes.splice(index, 1);
+      }
+    },
+    deselectAllShapes(state) {
+      state.selectedShapes = [];
     },
     setColor(state, action:PayloadAction<[number, string]>) {
       if (action.payload[0] === 1) {
@@ -57,6 +71,15 @@ const shapeSlice = createSlice({
   }
 });
 
-export const { selectShape, deselectShape, setColor, setGridStatus, setGridProperty } = shapeSlice.actions;
+export const {
+  selectShapeTool,
+  deselectShapeTool,
+  selectShape,
+  deselectShape,
+  deselectAllShapes,
+  setColor,
+  setGridStatus,
+  setGridProperty
+} = shapeSlice.actions;
 
 export default shapeSlice.reducer;

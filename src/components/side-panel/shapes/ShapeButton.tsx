@@ -1,6 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../state/store";
-import { deselectShape, selectShape } from "../../../state/slices/shapeSlice";
+import {
+  deselectShapeTool,
+  selectShapeTool,
+} from "../../../state/slices/shapeSlice";
 import { useRef } from "react";
 import { getShapeHtml } from "../../../shapes";
 
@@ -22,7 +25,7 @@ function ShapeButton(props: ShapeButtonProps) {
   };
   const buttonHtml = getShapeHtml(buttonData);
   const selectedButton = useSelector(
-    (state: RootState) => state.shapes.selected
+    (state: RootState) => state.shapes.selectedTool
   );
   const isClicked = useRef(false);
   const selected = props.buttonType === selectedButton;
@@ -30,7 +33,9 @@ function ShapeButton(props: ShapeButtonProps) {
 
   function handleClick() {
     if (!isClicked.current) {
-      dispatch(selected ? deselectShape() : selectShape(props.buttonType));
+      dispatch(
+        selected ? deselectShapeTool() : selectShapeTool(props.buttonType)
+      );
       isClicked.current = true;
       setTimeout(() => (isClicked.current = false), clickCooldown);
     } else {

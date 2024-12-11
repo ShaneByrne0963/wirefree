@@ -13,7 +13,7 @@ const minShapeSize = 2;
 function CanvasContainer() {
   const dispatch = useDispatch();
   const selectedShape = useSelector(
-    (state: RootState) => state.shapes.selected
+    (state: RootState) => state.shapes.selectedTool
   );
   const screenData = useSelector((state: RootState) => state.screenSize);
   const selectedScreen = screenData.activeScreens[screenData.selectedScreen];
