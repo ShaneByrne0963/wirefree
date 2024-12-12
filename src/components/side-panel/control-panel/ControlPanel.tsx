@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import useOutsideClick from "../../../hooks/useOutsideClick";
 import ColorPickerWindow from "../../inputs/ColorPickerWindow";
 import { RootState } from "../../../state/store";
+import { getShapeData } from "../../../helpers";
 
 function ControlPanel() {
   const colorClick = useOutsideClick();
@@ -14,9 +15,12 @@ function ControlPanel() {
       backgroundColor: shapeData.color1,
     };
   } else if (shapeData.selectedShapes.length === 1) {
-    colorPickerStyles = {
-      backgroundColor: shapeData.color2,
-    };
+    const selectedShape = getShapeData(shapeData.selectedShapes[0]);
+    if (selectedShape) {
+      colorPickerStyles = {
+        backgroundColor: selectedShape.color,
+      };
+    }
   }
 
   return (
