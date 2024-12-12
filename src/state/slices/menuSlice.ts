@@ -1,12 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface MenuItem {
-  label: string;
-  action: (...args: any[]) => any;
-}
-
 export interface MenuProps {
-  items: (MenuItem | "divide")[];
+  items: string[];
 }
 
 interface menuState {
@@ -21,12 +16,12 @@ const menuSlice = createSlice({
   name: "menu",
   initialState,
   reducers: {
-    createMenu(state, action: PayloadAction<MenuProps>) {
+    openMenu(state, action: PayloadAction<MenuProps>) {
       state.menus.push(action.payload);
     }
   }
 });
 
-export const { createMenu } = menuSlice.actions;
+export const { openMenu } = menuSlice.actions;
 
 export default menuSlice.reducer;

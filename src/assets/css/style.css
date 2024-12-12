@@ -66,7 +66,6 @@ input[type="text"]:not(.browser-default) {
     top: 0;
     left: 0;
     min-width: 200px;
-    height: 300px;
     background-color: white;
     z-index: 1000;
 }
