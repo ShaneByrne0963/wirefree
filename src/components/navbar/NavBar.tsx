@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import { ThemeContext } from "../../context";
 import { useDispatch } from "react-redux";
 import { openMenu } from "../../state/slices/menuSlice";
@@ -34,12 +34,16 @@ function NavBar() {
 
 function NavButton(props: NavButtonProps) {
   const dispatch = useDispatch();
+  const ref = useRef<HTMLAnchorElement | null>(null);
+
   function handleClick() {
-    dispatch(
-      openMenu({
-        items: props.items,
-      })
-    );
+    if (ref.current) {
+      dispatch(
+        openMenu({
+          items: props.items,
+        })
+      );
+    }
   }
   return (
     <li>
@@ -47,6 +51,7 @@ function NavButton(props: NavButtonProps) {
         role="button"
         className={props.color + "-text text-lighten-5"}
         onClick={handleClick}
+        ref={ref}
       >
         {props.name}
       </a>

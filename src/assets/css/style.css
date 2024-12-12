@@ -76,7 +76,8 @@ input[type="text"]:not(.browser-default) {
         scale: 1;
     }
 
-    >div {
+    >a {
+        display: block;
         font-size: 0.9rem;
         padding: 2px 4px;
 

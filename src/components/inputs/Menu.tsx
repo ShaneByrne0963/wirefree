@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { MouseEvent, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { closeMenu } from "../../state/slices/menuSlice";
 
@@ -13,16 +13,29 @@ function Menu(props: MenuProps) {
 
   // Each action the menu can perform
   const actions = {
-    "New Project": () => console.log("Hello World"),
+    "New Project": () => console.log("New Project"),
+    "Load Project": () => console.log("Load Project"),
+    "Save Project": () => console.log("Save Project"),
   };
 
-  function handleOutsideClick(event: Event) {
-    if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+  function triggerClose() {
+    if (menuRef.current) {
       menuRef.current.classList.remove("active");
       menuRef.current.addEventListener("transitionend", () =>
         dispatch(closeMenu(props.index))
       );
     }
+  }
+
+  function handleOutsideClick(event: Event | MouseEvent) {
+    if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+      triggerClose();
+    }
+  }
+
+  function handleInsideClick(action: string) {
+    actions[action as keyof typeof actions]();
+    triggerClose();
   }
 
   useEffect(() => {
@@ -42,9 +55,9 @@ function Menu(props: MenuProps) {
   return (
     <div className="menu z-depth-2" ref={menuRef}>
       {props.items.map((item, index) => (
-        <div key={index} onClick={actions[item as keyof typeof actions]}>
+        <a role="button" key={index} onClick={() => handleInsideClick(item)}>
           {item}
-        </div>
+        </a>
       ))}
     </div>
   );
