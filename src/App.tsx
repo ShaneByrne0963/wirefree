@@ -18,7 +18,7 @@ function App() {
       <CanvasContainer></CanvasContainer>
       <WindowContainer></WindowContainer>
       {menus.map((menu, index) => (
-        <Menu key={index} items={menu.items}></Menu>
+        <Menu key={index} index={index} items={menu.items}></Menu>
       ))}
     </ThemeContext.Provider>
   );

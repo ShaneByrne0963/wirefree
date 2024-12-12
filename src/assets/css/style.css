@@ -68,6 +68,22 @@ input[type="text"]:not(.browser-default) {
     min-width: 200px;
     background-color: white;
     z-index: 1000;
+    transform-origin: 0 0;
+    scale: 0;
+    transition: scale 0.15s ease-out;
+
+    &.active {
+        scale: 1;
+    }
+
+    >div {
+        font-size: 0.9rem;
+        padding: 2px 4px;
+
+        &:hover {
+            background-color: #eeeeee;
+        }
+    }
 }
 
 /* Navigation Bar */

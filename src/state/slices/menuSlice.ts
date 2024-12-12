@@ -18,10 +18,13 @@ const menuSlice = createSlice({
   reducers: {
     openMenu(state, action: PayloadAction<MenuProps>) {
       state.menus.push(action.payload);
+    },
+    closeMenu(state, action:PayloadAction<number>) {
+      state.menus.splice(action.payload, 1);
     }
   }
 });
 
-export const { openMenu } = menuSlice.actions;
+export const { openMenu, closeMenu } = menuSlice.actions;
 
 export default menuSlice.reducer;
