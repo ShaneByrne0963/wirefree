@@ -141,7 +141,8 @@ const pageSlice = createSlice({
       if (state.selectedPage === state.pages.length) {
         state.selectedPage--;
       }
-    }
+    },
+    resetPageSlice: () => initialState,
   }
 })
 
@@ -161,6 +162,7 @@ export const {
   toggleLayerVisibility,
   addShape,
   updateShape,
-  deletePage
+  deletePage,
+  resetPageSlice
 } = pageSlice.actions;
 export default pageSlice.reducer;

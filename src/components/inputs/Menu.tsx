@@ -1,6 +1,10 @@
 import { MouseEvent, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { closeMenu } from "../../state/slices/menuSlice";
+import {
+  confirmAction,
+  ConfirmActionProps,
+} from "../../state/slices/windowSlice";
 
 interface MenuProps {
   index: number;
@@ -15,7 +19,16 @@ function Menu(props: MenuProps) {
 
   // Each action the menu can perform
   const actions = {
-    "New Project": () => console.log("New Project"),
+    "New Project": () => {
+      const windowProps: ConfirmActionProps = {
+        label: "Clear Current Project",
+        bodyText:
+          "Are you sure you want to clear the current project? Any changes made will not be saved",
+        buttonText: "Confirm",
+        action: "newProject",
+      };
+      dispatch(confirmAction(windowProps));
+    },
     "Load Project": () => console.log("Load Project"),
     "Save Project": () => console.log("Save Project"),
   };

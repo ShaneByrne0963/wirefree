@@ -29,6 +29,7 @@ const screenSizeSlice = createSlice({
         }
       }
     },
+    resetScreenSlice: () => initialState,
   }
 });
 
@@ -37,5 +38,5 @@ export type ScreenSize = {
   width: number;
   height: number;
 }
-export const { selectScreenSize, addScreenSize, addDefaultScreenSize } = screenSizeSlice.actions;
+export const { selectScreenSize, addScreenSize, addDefaultScreenSize, resetScreenSlice } = screenSizeSlice.actions;
 export default screenSizeSlice.reducer;

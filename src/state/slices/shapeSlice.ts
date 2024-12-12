@@ -67,7 +67,8 @@ const shapeSlice = createSlice({
         state.grid.height = action.payload.value;
         state.grid.heightUnits = action.payload.units;
       }
-    }
+    },
+    resetShapeSlice: () => initialState
   }
 });
 
@@ -79,7 +80,8 @@ export const {
   deselectAllShapes,
   setColor,
   setGridStatus,
-  setGridProperty
+  setGridProperty,
+  resetShapeSlice
 } = shapeSlice.actions;
 
 export default shapeSlice.reducer;
