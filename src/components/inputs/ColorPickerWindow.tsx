@@ -47,7 +47,7 @@ const accents = [
 
 function ColorPickerWindow() {
   const dispatch = useDispatch();
-  let selectedShapes = useSelector(
+  const selectedShapes = useSelector(
     (state: RootState) => state.shapes.selectedShapes
   );
   let selectedColor = useSelector((state: RootState) => state.shapes.color1);
@@ -119,6 +119,9 @@ function ColorPickerRow(props: ColorButtonProps) {
 
 function ColorButton(props: ColorButtonProps) {
   const buttonRef = useRef<HTMLButtonElement | null>(null);
+  const selectedShapes = useSelector(
+    (state: RootState) => state.shapes.selectedShapes
+  );
   const dispatch = useDispatch();
 
   function updateColor() {
@@ -126,6 +129,20 @@ function ColorButton(props: ColorButtonProps) {
       // Find the background color of the button that was pressed
       const buttonStyles = window.getComputedStyle(buttonRef.current);
       const buttonColor = buttonStyles.getPropertyValue("background-color");
+
+      if (selectedShapes.length > 0) {
+        for (let id of selectedShapes) {
+          const data = getShapeData(id);
+          if (!data) continue;
+          const updateData = {
+            props: {
+              color: buttonColor,
+            },
+          };
+          dispatch(updateShape([data.layer, data.index, updateData]));
+        }
+        return;
+      }
       dispatch(setColor([1, buttonColor]));
     }
   }
