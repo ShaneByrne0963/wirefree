@@ -4,9 +4,9 @@ interface MenuProps {
 
 function Menu(props: MenuProps) {
   // Each action the menu can perform
-  const actions = {
-    "New Project": () => console.log("Hello World"),
-  };
+  // const actions = {
+  //   "New Project": () => console.log("Hello World"),
+  // };
 
   return (
     <div className="menu z-depth-2">
