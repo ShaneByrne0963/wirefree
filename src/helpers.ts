@@ -27,20 +27,21 @@ export function getNumberFromStyle(style: string) {
 }
 
 export function getShapeColor(element: HTMLElement) {
+  const defaultColor = "rgb(255, 255, 255)";
   // First check if the element is a shape
   const shapeElement = element.querySelector(".shape") as HTMLElement;
   if (shapeElement) {
-    return shapeElement.style.backgroundColor;
+    return shapeElement.style.backgroundColor || defaultColor;
   }
 
   // If not, it should be an icon
   const iconElement = element.querySelector("path");
   if (iconElement) {
-    return iconElement.getAttribute("fill");
+    return iconElement.getAttribute("fill") || defaultColor;
   }
 
   // Return white if nothing was found (Shouldn't happen)
-  return "rgb(255, 255, 255)";
+  return defaultColor;
 }
 
 export function getShapeData(id: string) {
@@ -48,7 +49,7 @@ export function getShapeData(id: string) {
 
   if (foundElement) {
     return {
-      index: foundElement.getAttribute("data-index") || 0,
+      index: parseInt(foundElement.getAttribute("data-index") || "0"),
       layer: foundElement.getAttribute("data-layer") || "",
       left: getNumberFromStyle(foundElement.style.left) || 0,
       top: getNumberFromStyle(foundElement.style.top) || 0,

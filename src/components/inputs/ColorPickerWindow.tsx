@@ -1,8 +1,9 @@
-import { useRef } from "react";
+import { ChangeEvent, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setColor } from "../../state/slices/shapeSlice";
 import { RootState } from "../../state/store";
-import { convertRgbToHex } from "../../helpers";
+import { convertRgbToHex, getShapeData } from "../../helpers";
+import { updateShape } from "../../state/slices/pageSlice";
 
 interface ColorButtonProps {
   hue?: string;
@@ -46,10 +47,38 @@ const accents = [
 
 function ColorPickerWindow() {
   const dispatch = useDispatch();
+  let selectedShapes = useSelector(
+    (state: RootState) => state.shapes.selectedShapes
+  );
   let selectedColor = useSelector((state: RootState) => state.shapes.color1);
+  if (selectedShapes.length === 1) {
+    const shapeData = getShapeData(selectedShapes[0]);
+    if (shapeData) {
+      selectedColor = shapeData.color;
+    }
+  }
   if (selectedColor.includes("rgb")) {
     selectedColor = convertRgbToHex(selectedColor);
   }
+
+  function handleColorUpdate(event: ChangeEvent) {
+    const value = (event.target as HTMLInputElement).value;
+    if (selectedShapes.length > 0) {
+      for (let id of selectedShapes) {
+        const data = getShapeData(id);
+        if (!data) continue;
+        const updateData = {
+          props: {
+            color: value,
+          },
+        };
+        dispatch(updateShape([data.layer, data.index, updateData]));
+      }
+      return;
+    }
+    dispatch(setColor([1, value]));
+  }
+
   return (
     <div className="color-window z-depth-2">
       <div className="color-grid">
@@ -66,7 +95,7 @@ function ColorPickerWindow() {
         <input
           type="color"
           value={selectedColor}
-          onChange={(event) => dispatch(setColor([1, event.target.value]))}
+          onChange={handleColorUpdate}
         />
       </div>
     </div>

@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { defaultScreenSizes } from "../../context";
-import { ShapeProps } from "../../components/canvas/CanvasShape";
+import { ShapeProps, ShapeStyles } from "../../components/canvas/CanvasShape";
+import { ShapeHtmlProps } from "../../shapes";
 
 interface PageState {
   screenSizes: string[];
@@ -20,6 +21,11 @@ const defaultLayerData = {
     visible: true,
     shapes: [],
   }
+}
+
+interface updateStyleProps {
+  styles?: Partial<ShapeStyles>,
+  props?: Partial<ShapeHtmlProps>,
 }
 
 const initialState:PageState = {
@@ -111,6 +117,25 @@ const pageSlice = createSlice({
       let shapeData = layerName[0] === "_" ? pageData[layerName].shapes : state.persistentLayers[state.selectedScreen][layerName];
       shapeData.push(action.payload);
     },
+    updateShape(state, action: PayloadAction<[layer: string, index: number, value: updateStyleProps]>) {
+      const [layer, index, value] = action.payload;
+      let pageData = state.pages[state.selectedPage].data[state.selectedScreen];
+      let shapeData = layer[0] === "_" ? pageData[layer].shapes[index] : state.persistentLayers[state.selectedScreen][layer][index];
+
+      // Combining the new properties with the old
+      const updatedProps = {
+        styles: { ...shapeData.styles, ...value.styles },
+        props: { ...shapeData.props, ...value.props }
+      };
+
+      // Setting the new properties in the store
+      if (layer[0] === "_") {
+        pageData[layer].shapes[index] = updatedProps;
+      }
+      else {
+        state.persistentLayers[state.selectedScreen][layer][index] = updatedProps;
+      }
+    },
     deletePage(state, action: PayloadAction<number>) {
       state.pages.splice(action.payload, 1);
       if (state.selectedPage === state.pages.length) {
@@ -135,6 +160,7 @@ export const {
   selectLayer,
   toggleLayerVisibility,
   addShape,
+  updateShape,
   deletePage
 } = pageSlice.actions;
 export default pageSlice.reducer;
