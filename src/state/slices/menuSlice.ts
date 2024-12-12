@@ -2,6 +2,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface MenuProps {
   items: string[];
+  x: number;
+  y: number;
 }
 
 interface menuState {

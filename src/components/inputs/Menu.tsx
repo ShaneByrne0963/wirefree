@@ -5,6 +5,8 @@ import { closeMenu } from "../../state/slices/menuSlice";
 interface MenuProps {
   index: number;
   items: string[];
+  x: number;
+  y: number;
 }
 
 function Menu(props: MenuProps) {
@@ -16,6 +18,12 @@ function Menu(props: MenuProps) {
     "New Project": () => console.log("New Project"),
     "Load Project": () => console.log("Load Project"),
     "Save Project": () => console.log("Save Project"),
+  };
+
+  // Set the position of the menu
+  const styles = {
+    left: props.x,
+    top: props.y,
   };
 
   function triggerClose() {
@@ -53,7 +61,7 @@ function Menu(props: MenuProps) {
   }, []);
 
   return (
-    <div className="menu z-depth-2" ref={menuRef}>
+    <div className="menu z-depth-2" ref={menuRef} style={styles}>
       {props.items.map((item, index) => (
         <a role="button" key={index} onClick={() => handleInsideClick(item)}>
           {item}

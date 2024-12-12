@@ -3,6 +3,8 @@ import { ThemeContext } from "../../context";
 import { useDispatch } from "react-redux";
 import { openMenu } from "../../state/slices/menuSlice";
 
+const navHeight = 32;
+
 interface NavButtonProps {
   name: string;
   color: string;
@@ -41,6 +43,8 @@ function NavButton(props: NavButtonProps) {
       dispatch(
         openMenu({
           items: props.items,
+          x: 0,
+          y: navHeight,
         })
       );
     }
