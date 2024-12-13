@@ -15,7 +15,7 @@ export function getShapeHtml(props: ShapeHtmlProps) {
       <VectorGraphic
         path={path}
         color={props.color}
-        className={"icon " + typeClass}
+        className={"icon-" + typeClass}
       ></VectorGraphic>
     );
   } else {
