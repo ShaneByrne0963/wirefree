@@ -16,6 +16,8 @@ export const confirmActions = {
 
 function ConfirmAction(props: ConfirmActionProps) {
   const dispatch = useDispatch();
+  const body =
+    typeof props.bodyText === "string" ? [props.bodyText] : props.bodyText;
 
   function handleConfirm() {
     const action = confirmActions[props.action];
@@ -28,7 +30,11 @@ function ConfirmAction(props: ConfirmActionProps) {
   }
   return (
     <>
-      <div className="confirm-body">{props.bodyText}</div>
+      <div className="confirm-body">
+        {body.map((item, index) => (
+          <p key={index}>{item}</p>
+        ))}
+      </div>
       <WindowActionButtons
         text={props.buttonText}
         canSubmit={true}

@@ -22,8 +22,10 @@ function Menu(props: MenuProps) {
     "New Project": () => {
       const windowProps: ConfirmActionProps = {
         label: "Clear Current Project",
-        bodyText:
-          "Are you sure you want to clear the current project? Any changes made will not be saved",
+        bodyText: [
+          "Are you sure you want to clear the current project?",
+          "Any changes made will not be saved",
+        ],
         buttonText: "Confirm",
         action: "newProject",
       };

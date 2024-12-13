@@ -25,7 +25,7 @@ export interface ConfirmActionState {
 
 export interface ConfirmActionProps {
   label: string;
-  bodyText: string;
+  bodyText: string|string[];
   buttonText: string;
   action: keyof typeof confirmActions;
   parameter?: any;
