@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { defaultScreenSizes } from "../../context";
 
-interface ScreenSizeState {
+export interface ScreenSizeState {
   activeScreens: ScreenSize[];
   selectedScreen: number;
 };
@@ -29,6 +29,11 @@ const screenSizeSlice = createSlice({
         }
       }
     },
+    setScreenSlice(state, action:PayloadAction<ScreenSizeState>) {
+      // Just to keep the compiler happy
+      state;
+      return action.payload;
+    },
     resetScreenSlice: () => initialState,
   }
 });
@@ -38,5 +43,5 @@ export type ScreenSize = {
   width: number;
   height: number;
 }
-export const { selectScreenSize, addScreenSize, addDefaultScreenSize, resetScreenSlice } = screenSizeSlice.actions;
+export const { selectScreenSize, addScreenSize, addDefaultScreenSize, setScreenSlice, resetScreenSlice } = screenSizeSlice.actions;
 export default screenSizeSlice.reducer;

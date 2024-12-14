@@ -40,6 +40,7 @@ function Menu(props: MenuProps) {
     "Save Project": () => {
       const data = {
         name: "New Project",
+        version: "0.0.0",
         screenSizes: screenData,
         pages: pageData,
         grid: shapeData.grid,

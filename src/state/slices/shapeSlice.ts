@@ -3,15 +3,23 @@ import { Axis } from "../../context";
 
 export type gridUnits = "px" | "%" | "cells";
 
-interface shapeState {
+export interface GridProps {
+  enabled: boolean;
+  width: number;
+  widthUnits: gridUnits;
+  height: number;
+  heightUnits: gridUnits;
+}
+
+export interface ShapeState {
   selectedTool: string;
   selectedShapes: string[];
   color1: string;
   color2: string;
-  grid: { enabled: boolean, width: number, widthUnits: gridUnits, height: number, heightUnits: gridUnits };
+  grid: GridProps;
 }
 
-const initialState:shapeState = {
+const initialState:ShapeState = {
   selectedTool: "",
   selectedShapes: [],
   color1: "rgb(117, 117, 117)",

@@ -3,7 +3,7 @@ import { defaultScreenSizes } from "../../context";
 import { ShapeProps, ShapeStyles } from "../../components/canvas/CanvasShape";
 import { ShapeHtmlProps } from "../../shapes";
 
-interface PageState {
+export interface PageState {
   screenSizes: string[];
   pages: Page[];
   persistentLayers: Record<string, any>;
@@ -142,6 +142,11 @@ const pageSlice = createSlice({
         state.selectedPage--;
       }
     },
+    setPageSlice(state, action:PayloadAction<PageState>) {
+      // Just to keep the compiler happy
+      state;
+      return action.payload;
+    },
     resetPageSlice: () => initialState,
   }
 })
@@ -163,6 +168,7 @@ export const {
   addShape,
   updateShape,
   deletePage,
+  setPageSlice,
   resetPageSlice
 } = pageSlice.actions;
 export default pageSlice.reducer;
