@@ -10,18 +10,18 @@ import {
 } from "react";
 import { ThemeContext } from "../../context";
 import {
-  WindowMessageState,
+  ConfirmActionState,
   WindowState,
   closeWindow,
   setWindowActive,
 } from "../../state/slices/windowSlice";
 import AddScreenSizeWindow from "./add_screen_size/AddScreenSizeWindow";
 import PageSettingsWindow from "./page_settings/PageSettingsWindow";
-import ConfirmAction from "./WindowMessage";
+import WindowMessage from "./WindowMessage";
 import GridSettingsWindow from "./grid_settings/GridSettingsWindow";
 
 interface WindowProps {
-  window: WindowState | WindowMessageState;
+  window: WindowState | ConfirmActionState;
   index: number;
 }
 
@@ -125,13 +125,13 @@ function Window(props: WindowProps) {
             <GridSettingsWindow></GridSettingsWindow>
           )}
           {"bodyText" in props.window && (
-            <ConfirmAction
+            <WindowMessage
               label={props.window.label}
               bodyText={props.window.bodyText}
               buttonText={props.window.buttonText}
               action={props.window.action}
               parameter={props.window.parameter}
-            ></ConfirmAction>
+            ></WindowMessage>
           )}
         </div>
       </div>
@@ -150,7 +150,7 @@ interface WindowActionButtonProps {
 
 interface WindowCloseProps {
   windowLabel: string;
-  close: true;
+  close: true | "ok";
 }
 
 export function WindowActionButtons(
@@ -174,7 +174,7 @@ export function WindowActionButtons(
         className="btn btn-cancel waves-effect waves-light btn-small"
         onClick={() => dispatch(setWindowActive([props.windowLabel, false]))}
       >
-        {"close" in props ? "Close" : "Cancel"}
+        {"close" in props ? (props.close === "ok" ? "OK" : "Close") : "Cancel"}
       </button>
     </div>
   );

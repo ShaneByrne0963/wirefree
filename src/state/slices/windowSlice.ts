@@ -9,24 +9,19 @@ export interface WindowState {
 };
 
 interface WindowListState {
-  windows: (WindowState | WindowMessageState)[];
+  windows: (WindowState | ConfirmActionState)[];
 };
 
-export interface WindowMessageState {
-  active?: boolean;
-  label: string;
-  width: number;
-  collapsedWidth?: number;
-  bodyText: string;
-  buttonText: string;
-  action: keyof typeof confirmActions;
-  parameter?: any;
-};
+export type WindowMessageState = (WindowState & WindowMessageProps);
+export type ConfirmActionState = (WindowState & ConfirmActionProps);
 
 export interface WindowMessageProps {
   label: string;
   bodyText: string|string[];
   buttonText: string;
+}
+
+export interface ConfirmActionProps extends WindowMessageProps {
   action: keyof typeof confirmActions;
   parameter?: any;
 };
@@ -45,7 +40,13 @@ const windowProperties = {
     label: "Grid Settings",
     width: 400
   },
-  confirmAction: <WindowMessageState> {
+  showMessage: <WindowMessageState> {
+    label: "Message",
+    width: 600,
+    collapsedWidth: 300,
+    bodyText: ""
+  },
+  confirmAction: <ConfirmActionState> {
     label: "Confirm Action",
     width: 600,
     collapsedWidth: 300,
@@ -59,7 +60,7 @@ const initialState: WindowListState = {
   windows: []
 };
 
-function findWindowIndexFromLabel(windows: (WindowState | WindowMessageState)[], label: string) {
+function findWindowIndexFromLabel(windows: (WindowState | WindowMessageState | ConfirmActionState)[], label: string) {
   for (let i = 0; i < windows.length; i++) {
     const window = windows[i];
     if (window.label === label) {
@@ -90,13 +91,17 @@ const windowSlice = createSlice({
         state.windows.splice(foundIndex, 1);
       }
     },
-    confirmAction(state, action: PayloadAction<WindowMessageProps>) {
+    showMessage(state, action: PayloadAction<WindowMessageProps>) {
+      let newWindowProps = {...windowProperties.showMessage, ...action.payload};
+      state.windows.push(newWindowProps);
+    },
+    confirmAction(state, action: PayloadAction<ConfirmActionProps>) {
       let newWindowProps = {...windowProperties.confirmAction, ...action.payload};
       state.windows.push(newWindowProps);
-    }
+    },
   }
 });
 
-export const { addWindow, setWindowActive, closeWindow, confirmAction } = windowSlice.actions;
+export const { addWindow, setWindowActive, closeWindow, showMessage, confirmAction } = windowSlice.actions;
 
 export default windowSlice.reducer;

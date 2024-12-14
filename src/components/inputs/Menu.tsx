@@ -2,8 +2,8 @@ import { MouseEvent, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeMenu } from "../../state/slices/menuSlice";
 import {
+  ConfirmActionProps,
   confirmAction,
-  WindowMessageProps,
 } from "../../state/slices/windowSlice";
 import { saveProject } from "../../helpers";
 import { RootState } from "../../state/store";
@@ -25,7 +25,7 @@ function Menu(props: MenuProps) {
   // Each action the menu can perform
   const actions = {
     "New Project": () => {
-      const windowProps: WindowMessageProps = {
+      const windowProps: ConfirmActionProps = {
         label: "Clear Current Project",
         bodyText: [
           "Are you sure you want to clear the current project?",

@@ -1,7 +1,8 @@
 import { useDispatch } from "react-redux";
 import {
-  WindowMessageProps,
+  ConfirmActionProps,
   setWindowActive,
+  WindowMessageProps,
 } from "../../state/slices/windowSlice";
 import { WindowActionButtons } from "./Window";
 import { deletePage, resetPageSlice } from "../../state/slices/pageSlice";
@@ -14,19 +15,21 @@ export const confirmActions = {
   deletePage: deletePage,
 };
 
-function WindowMessage(props: WindowMessageProps) {
+function WindowMessage(props: WindowMessageProps | ConfirmActionProps) {
   const dispatch = useDispatch();
   const body =
     typeof props.bodyText === "string" ? [props.bodyText] : props.bodyText;
 
   function handleConfirm() {
-    const action = confirmActions[props.action];
-    if (typeof action === "function") {
-      dispatch(action(props.parameter || null));
-    } else {
-      action.map((func) => dispatch(func(props.parameter || null)));
+    if ("action" in props) {
+      const action = confirmActions[props.action];
+      if (typeof action === "function") {
+        dispatch(action(props.parameter || null));
+      } else {
+        action.map((func) => dispatch(func(props.parameter || null)));
+      }
+      dispatch(setWindowActive([props.label, false]));
     }
-    dispatch(setWindowActive([props.label, false]));
   }
   return (
     <>
@@ -35,12 +38,19 @@ function WindowMessage(props: WindowMessageProps) {
           <p key={index}>{item}</p>
         ))}
       </div>
-      <WindowActionButtons
-        text={props.buttonText}
-        canSubmit={true}
-        action={handleConfirm}
-        windowLabel={props.label}
-      ></WindowActionButtons>
+      {"action" in props ? (
+        <WindowActionButtons
+          text={props.buttonText}
+          canSubmit={true}
+          action={handleConfirm}
+          windowLabel={props.label}
+        ></WindowActionButtons>
+      ) : (
+        <WindowActionButtons
+          windowLabel={props.label}
+          close="ok"
+        ></WindowActionButtons>
+      )}
     </>
   );
 }
