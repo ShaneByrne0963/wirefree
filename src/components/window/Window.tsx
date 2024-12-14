@@ -10,18 +10,18 @@ import {
 } from "react";
 import { ThemeContext } from "../../context";
 import {
-  ConfirmActionState,
+  WindowMessageState,
   WindowState,
   closeWindow,
   setWindowActive,
 } from "../../state/slices/windowSlice";
 import AddScreenSizeWindow from "./add_screen_size/AddScreenSizeWindow";
 import PageSettingsWindow from "./page_settings/PageSettingsWindow";
-import ConfirmAction from "./ConfirmAction";
+import ConfirmAction from "./WindowMessage";
 import GridSettingsWindow from "./grid_settings/GridSettingsWindow";
 
 interface WindowProps {
-  window: WindowState | ConfirmActionState;
+  window: WindowState | WindowMessageState;
   index: number;
 }
 

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { confirmActions } from "../../components/window/ConfirmAction";
+import { confirmActions } from "../../components/window/WindowMessage";
 
 export interface WindowState {
   active?: boolean;
@@ -9,10 +9,10 @@ export interface WindowState {
 };
 
 interface WindowListState {
-  windows: (WindowState | ConfirmActionState)[];
+  windows: (WindowState | WindowMessageState)[];
 };
 
-export interface ConfirmActionState {
+export interface WindowMessageState {
   active?: boolean;
   label: string;
   width: number;
@@ -23,7 +23,7 @@ export interface ConfirmActionState {
   parameter?: any;
 };
 
-export interface ConfirmActionProps {
+export interface WindowMessageProps {
   label: string;
   bodyText: string|string[];
   buttonText: string;
@@ -45,7 +45,7 @@ const windowProperties = {
     label: "Grid Settings",
     width: 400
   },
-  confirmAction: <ConfirmActionState> {
+  confirmAction: <WindowMessageState> {
     label: "Confirm Action",
     width: 600,
     collapsedWidth: 300,
@@ -59,7 +59,7 @@ const initialState: WindowListState = {
   windows: []
 };
 
-function findWindowIndexFromLabel(windows: (WindowState | ConfirmActionState)[], label: string) {
+function findWindowIndexFromLabel(windows: (WindowState | WindowMessageState)[], label: string) {
   for (let i = 0; i < windows.length; i++) {
     const window = windows[i];
     if (window.label === label) {
@@ -90,7 +90,7 @@ const windowSlice = createSlice({
         state.windows.splice(foundIndex, 1);
       }
     },
-    confirmAction(state, action: PayloadAction<ConfirmActionProps>) {
+    confirmAction(state, action: PayloadAction<WindowMessageProps>) {
       let newWindowProps = {...windowProperties.confirmAction, ...action.payload};
       state.windows.push(newWindowProps);
     }

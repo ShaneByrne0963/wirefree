@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import {
-  ConfirmActionProps,
+  WindowMessageProps,
   setWindowActive,
 } from "../../state/slices/windowSlice";
 import { WindowActionButtons } from "./Window";
@@ -14,7 +14,7 @@ export const confirmActions = {
   deletePage: deletePage,
 };
 
-function ConfirmAction(props: ConfirmActionProps) {
+function WindowMessage(props: WindowMessageProps) {
   const dispatch = useDispatch();
   const body =
     typeof props.bodyText === "string" ? [props.bodyText] : props.bodyText;
@@ -45,4 +45,4 @@ function ConfirmAction(props: ConfirmActionProps) {
   );
 }
 
-export default ConfirmAction;
+export default WindowMessage;

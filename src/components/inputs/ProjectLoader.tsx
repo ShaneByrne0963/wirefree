@@ -46,10 +46,16 @@ function ProjectLoader() {
 
     // Read the data from the input
     const reader = new FileReader();
+
     reader.readAsText(files[0], "UTF-8");
     reader.onload = (event) => {
       if (!event.target?.result) return;
-      const data = JSON.parse(event.target.result as string);
+      let data: any = {};
+      try {
+        data = JSON.parse(event.target.result as string);
+      } catch {
+        handleInvalidInput();
+      }
       if (
         !(
           data &&
