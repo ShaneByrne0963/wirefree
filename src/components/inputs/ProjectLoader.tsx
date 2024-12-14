@@ -10,6 +10,7 @@ import {
   setScreenSlice,
 } from "../../state/slices/screenSizeSlice";
 import { PageState, setPageSlice } from "../../state/slices/pageSlice";
+import { showMessage } from "../../state/slices/windowSlice";
 
 export interface ProjectFormat {
   name: string;
@@ -23,11 +24,25 @@ function ProjectLoader() {
   const dispatch = useDispatch();
 
   function handleInvalidInput() {
-    console.log("Invalid Input");
+    dispatch(
+      showMessage({
+        label: "Invalid File",
+        bodyText: [
+          "The file you are trying to load is invalid.",
+          "Please try a different file",
+        ],
+      })
+    );
   }
 
   function handleCorruptedFile() {
-    console.log("File has missing data or has been corrupted");
+    dispatch(
+      showMessage({
+        label: "Invalid File",
+        bodyText:
+          "The file you are trying to load is missing data, or has been corrupted",
+      })
+    );
   }
 
   // Ensure the file properties match the types they are setting

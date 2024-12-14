@@ -11,6 +11,7 @@ import {
 import { ThemeContext } from "../../context";
 import {
   ConfirmActionState,
+  WindowMessageState,
   WindowState,
   closeWindow,
   setWindowActive,
@@ -21,7 +22,7 @@ import WindowMessage from "./WindowMessage";
 import GridSettingsWindow from "./grid_settings/GridSettingsWindow";
 
 interface WindowProps {
-  window: WindowState | ConfirmActionState;
+  window: WindowState | WindowMessageState | ConfirmActionState;
   index: number;
 }
 
@@ -125,13 +126,22 @@ function Window(props: WindowProps) {
             <GridSettingsWindow></GridSettingsWindow>
           )}
           {"bodyText" in props.window && (
-            <WindowMessage
-              label={props.window.label}
-              bodyText={props.window.bodyText}
-              buttonText={props.window.buttonText}
-              action={props.window.action}
-              parameter={props.window.parameter}
-            ></WindowMessage>
+            <>
+              {"action" in props.window ? (
+                <WindowMessage
+                  label={props.window.label}
+                  bodyText={props.window.bodyText}
+                  buttonText={props.window.buttonText}
+                  action={props.window.action}
+                  parameter={props.window.parameter}
+                ></WindowMessage>
+              ) : (
+                <WindowMessage
+                  label={props.window.label}
+                  bodyText={props.window.bodyText}
+                ></WindowMessage>
+              )}
+            </>
           )}
         </div>
       </div>

@@ -18,10 +18,10 @@ export type ConfirmActionState = (WindowState & ConfirmActionProps);
 export interface WindowMessageProps {
   label: string;
   bodyText: string|string[];
-  buttonText: string;
 }
 
 export interface ConfirmActionProps extends WindowMessageProps {
+  buttonText: string;
   action: keyof typeof confirmActions;
   parameter?: any;
 };
