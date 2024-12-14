@@ -36,7 +36,7 @@ function Menu(props: MenuProps) {
       };
       dispatch(confirmAction(windowProps));
     },
-    "Load Project": () => console.log("Load Project"),
+    "Load Project": () => document.getElementById("project-loader")?.click(),
     "Save Project": () => {
       const data = {
         name: "New Project",

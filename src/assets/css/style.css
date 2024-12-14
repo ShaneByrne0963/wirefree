@@ -65,7 +65,7 @@ input[type="text"]:not(.browser-default) {
     position: absolute;
     top: 0;
     left: 0;
-    min-width: 200px;
+    min-width: 320px;
     background-color: white;
     z-index: 1000;
     transform-origin: 0 0;
@@ -79,7 +79,7 @@ input[type="text"]:not(.browser-default) {
     >a {
         display: block;
         font-size: 0.9rem;
-        padding: 2px 4px;
+        padding: 4px;
 
         &:hover {
             background-color: #eeeeee;
@@ -95,6 +95,10 @@ input[type="text"]:not(.browser-default) {
     height: var(--nav-height);
     line-height: var(--nav-height);
     z-index: 1;
+}
+
+#project-loader {
+    display: none;
 }
 
 /* Side Panel */

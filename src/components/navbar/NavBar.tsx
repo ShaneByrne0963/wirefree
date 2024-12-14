@@ -2,6 +2,7 @@ import { useContext, useRef } from "react";
 import { ThemeContext } from "../../context";
 import { useDispatch } from "react-redux";
 import { openMenu } from "../../state/slices/menuSlice";
+import ProjectLoader from "../inputs/ProjectLoader";
 
 const navHeight = 32;
 
@@ -30,6 +31,7 @@ function NavBar() {
           ))}
         </ul>
       </div>
+      <ProjectLoader></ProjectLoader>
     </nav>
   );
 }
