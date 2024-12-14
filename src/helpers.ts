@@ -1,3 +1,38 @@
+/**
+ * Downloads a file onto the user's computer
+ * Source: https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server
+ * @param filename The name of the file to be saved
+ * @param text The contents in that file
+ */
+export function downloadFile(filename: string, text: string) {
+  var element = document.createElement("a");
+  element.setAttribute(
+    "href",
+    "data:text/plain;charset=utf-8," + encodeURIComponent(text)
+  );
+  element.setAttribute("download", filename);
+
+  element.style.display = "none";
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+}
+
+/**
+ * Saves a project to the user's computer
+ * @param data All the saved data of the project
+ */
+export function saveProject(data: {[key: string]: any}) {
+  downloadFile("test.json", JSON.stringify(data));
+}
+
+/**
+ * Converts a display name to be used as a class, removing any capital letters and spaces
+ * @param value The value to be converted
+ * @returns The converted value
+ */
 export function convertDisplayToClassName(value: string) {
   return value.replace(" ", "-").toLowerCase();
 };

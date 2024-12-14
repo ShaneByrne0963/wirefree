@@ -5,6 +5,7 @@ import {
   confirmAction,
   ConfirmActionProps,
 } from "../../state/slices/windowSlice";
+import { saveProject } from "../../helpers";
 
 interface MenuProps {
   index: number;
@@ -32,7 +33,9 @@ function Menu(props: MenuProps) {
       dispatch(confirmAction(windowProps));
     },
     "Load Project": () => console.log("Load Project"),
-    "Save Project": () => console.log("Save Project"),
+    "Save Project": () => {
+      saveProject({ info: "Hello World" });
+    },
   };
 
   // Set the position of the menu
@@ -77,9 +80,9 @@ function Menu(props: MenuProps) {
 
   return (
     <div className="menu z-depth-2" ref={menuRef} style={styles}>
-      {props.items.map((item, index) => (
-        <a role="button" key={index} onClick={() => handleInsideClick(item)}>
-          {item}
+      {props.items.map((data, index) => (
+        <a role="button" key={index} onClick={() => handleInsideClick(data)}>
+          {data}
         </a>
       ))}
     </div>
