@@ -1,11 +1,12 @@
 import { MouseEvent, useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { closeMenu } from "../../state/slices/menuSlice";
 import {
   confirmAction,
   ConfirmActionProps,
 } from "../../state/slices/windowSlice";
 import { saveProject } from "../../helpers";
+import { RootState } from "../../state/store";
 
 interface MenuProps {
   index: number;
@@ -17,6 +18,9 @@ interface MenuProps {
 function Menu(props: MenuProps) {
   const dispatch = useDispatch();
   const menuRef = useRef<HTMLDivElement | null>(null);
+  const pageData = useSelector((state: RootState) => state.pages);
+  const screenData = useSelector((state: RootState) => state.screenSize);
+  const shapeData = useSelector((state: RootState) => state.shapes);
 
   // Each action the menu can perform
   const actions = {
@@ -34,7 +38,13 @@ function Menu(props: MenuProps) {
     },
     "Load Project": () => console.log("Load Project"),
     "Save Project": () => {
-      saveProject({ info: "Hello World" });
+      const data = {
+        name: "New Project",
+        screenSizes: screenData,
+        pages: pageData,
+        grid: shapeData.grid,
+      };
+      saveProject(data);
     },
   };
 
