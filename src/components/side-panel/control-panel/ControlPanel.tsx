@@ -25,7 +25,7 @@ function ControlPanel() {
 
   return (
     <div id="control-panel-container">
-      <div id="control-panel">
+      <div id="control-panel-old">
         <div>Colour:</div>
         <div
           id="color-picker"

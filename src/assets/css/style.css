@@ -1,12 +1,13 @@
 :root {
     --nav-height: 32px;
+    --control-panel-height: 32px;
     --side-panel-width: 320px;
 }
 
 #root {
     height: 100vh;
     display: grid;
-    grid-template-rows: var(--nav-height) calc(100vh - var(--nav-height));
+    grid-template-rows: var(--nav-height) var(--control-panel-height) calc(100vh - var(--nav-height) - var(--control-panel-height));
     grid-template-columns: var(--side-panel-width) 1fr;
     background-color: #DFDFDF;
     user-select: none;
@@ -323,11 +324,45 @@ input[type="text"]:not(.browser-default) {
 
 /* Control Panel */
 
+#control-panel {
+    height: var(--control-panel-height);
+    grid-column-start: 1;
+    grid-column-end: 3;
+    background-color: #eaeaea;
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 4px;
+
+    >#project-name {
+        width: var(--side-panel-width);
+        font-weight: 500;
+    }
+
+    >.control-panel-item {
+        height: 100%;
+        padding: 2px;
+        text-align: center;
+
+        >svg {
+            height: 100%;
+            width: calc(100% * var(--aspect-ratio));
+            aspect-ratio: 1 / 1;
+        }
+
+        &.selected {
+            background-color: rgba(0, 0, 0, 0.2);
+            border: 1px inset rgba(0, 0, 0, 0.4);
+            cursor: default;
+        }
+    }
+
+}
+
 #control-panel-container {
     min-height: 64px;
 }
 
-#control-panel {
+#control-panel-old {
     padding: 4px;
     display: grid;
     grid-template-columns: 1fr auto;

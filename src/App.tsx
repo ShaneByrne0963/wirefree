@@ -6,6 +6,7 @@ import { ThemeContext } from "./context";
 import { useSelector } from "react-redux";
 import { RootState } from "./state/store";
 import Menu from "./components/inputs/Menu";
+import ControlPanel from "./components/control-panel/ControlPanel";
 
 const colorTheme = "red";
 
@@ -14,6 +15,7 @@ function App() {
   return (
     <ThemeContext.Provider value={colorTheme}>
       <NavBar></NavBar>
+      <ControlPanel></ControlPanel>
       <SidePanel></SidePanel>
       <CanvasContainer></CanvasContainer>
       <WindowContainer></WindowContainer>
