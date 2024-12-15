@@ -23,7 +23,15 @@ interface PaletteDisplayProps {
 function ControlPanelItem(props: PanelItemProps) {
   const activeClick = useOutsideClick();
   // Remove for full release
-  const unusableItems = ["Fill", "Dropper", "Cut", "Copy", "Paste"];
+  const unusableItems = [
+    "Fill",
+    "Dropper",
+    "Cut",
+    "Copy",
+    "Paste",
+    "Undo",
+    "Redo",
+  ];
 
   const dispatch = useDispatch();
   const selectedShape = useSelector(

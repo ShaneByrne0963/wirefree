@@ -399,10 +399,10 @@ input[type="text"]:not(.browser-default) {
     }
 
     >.divider {
-        height: 100%;
+        height: calc(100% - 8px);
         width: 1px;
         border-right: 1px solid rgba(0, 0, 0, 0.4);
-        margin: 0 8px;
+        margin: 4px 8px;
     }
 }
 
