@@ -354,8 +354,18 @@ input[type="text"]:not(.browser-default) {
             border: 1px inset rgba(0, 0, 0, 0.4);
             cursor: default;
         }
+
+        &.disabled {
+            pointer-events: none;
+        }
     }
 
+    >.divider {
+        height: 100%;
+        width: 1px;
+        border-right: 1px solid rgba(0, 0, 0, 0.4);
+        margin: 0 4px;
+    }
 }
 
 #control-panel-container {

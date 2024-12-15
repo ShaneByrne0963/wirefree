@@ -19,8 +19,6 @@ const clickCooldown = 500;
 function ShapeButton(props: ShapeButtonProps) {
   const buttonData = {
     type: props.buttonType,
-    width: 100,
-    height: 100,
     color: buttonColor,
   };
   const buttonHtml = getShapeHtml(buttonData);
