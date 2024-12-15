@@ -331,7 +331,8 @@ input[type="text"]:not(.browser-default) {
     background-color: #eaeaea;
     display: inline-flex;
     align-items: center;
-    padding: 4px;
+    position: relative;
+    padding: 2px 4px;
 
     >#project-name {
         width: calc(var(--side-panel-width) - 4px);
@@ -340,9 +341,12 @@ input[type="text"]:not(.browser-default) {
 
     >.control-panel-item {
         height: 100%;
-        padding: 2px;
+        padding: 6px;
         text-align: center;
         position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
         >svg {
             height: 100%;
@@ -351,11 +355,6 @@ input[type="text"]:not(.browser-default) {
         >svg.icon-tall {
             width: calc(100% * var(--aspect-ratio));
             aspect-ratio: 1 / 1;
-        }
-
-        &:has(.icon-wide) {
-            display: flex;
-            align-items: center;
         }
 
         >svg.icon-wide {
@@ -383,8 +382,13 @@ input[type="text"]:not(.browser-default) {
             pointer-events: none;
         }
 
-        &:not(:last-child) {
-            margin-right: 4px;
+        >.color-display {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 6px;
+            border: 1px solid rgba(0, 0, 0, 0.3);
         }
     }
 

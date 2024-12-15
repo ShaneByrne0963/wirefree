@@ -15,14 +15,14 @@ interface PanelItemProps {
 
 function ControlPanelItem(props: PanelItemProps) {
   // Remove for full release
-  const unusableItems = ["Shapes", "Fill", "Cut", "Copy", "Paste"];
-  const disabled = "disabled" in props || unusableItems.includes(props.graphic);
+  const unusableItems = ["Fill", "Dropper", "Cut", "Copy", "Paste"];
 
   const dispatch = useDispatch();
   const selectedShape = useSelector(
     (state: RootState) => state.shapes.selectedTool
   );
   const toolSelector = props.graphic === "Cursor" ? "" : props.graphic;
+  const disabled = "disabled" in props || unusableItems.includes(props.graphic);
 
   function handleClick(event: MouseEvent) {
     if (props.type === "toolSelect") {
@@ -46,14 +46,24 @@ function ControlPanelItem(props: PanelItemProps) {
   }
   const buttonData = {
     type: props.graphic,
-    color: disabled ? "#999999" : "#000000",
+    color: disabled ? "#999999" : "#343434",
   };
   const shapeHtml = getShapeHtml(buttonData);
   return (
     <a role="button" className={className} onClick={handleClick}>
       {shapeHtml}
+      {props.graphic === "Palette" && <PaletteDisplay></PaletteDisplay>}
     </a>
   );
+}
+
+function PaletteDisplay() {
+  const selectedColor = useSelector((state: RootState) => state.shapes.color1);
+  const style = {
+    backgroundColor: selectedColor,
+  };
+
+  return <div className="color-display" style={style} aria-hidden></div>;
 }
 
 export default ControlPanelItem;

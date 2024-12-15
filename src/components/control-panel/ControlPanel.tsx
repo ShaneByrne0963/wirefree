@@ -5,11 +5,15 @@ function ControlPanel() {
   const panelItems = [
     { graphic: "Cursor", type: "toolSelect" },
     { graphic: "Shapes", type: "toolSelect" },
+    { graphic: "Text", type: "toolSelect" },
     { graphic: "Fill", type: "toolSelect" },
-    "|",
+    { graphic: "Dropper", type: "toolSelect" },
+    "",
     { graphic: "Cut", type: "action" },
     { graphic: "Copy", type: "action" },
     { graphic: "Paste", type: "action" },
+    "",
+    { graphic: "Palette", type: "action" },
   ];
 
   return (
