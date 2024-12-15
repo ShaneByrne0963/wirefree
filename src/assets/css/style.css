@@ -331,10 +331,10 @@ input[type="text"]:not(.browser-default) {
     background-color: #eaeaea;
     display: inline-flex;
     align-items: center;
-    padding: 2px 4px;
+    padding: 4px;
 
     >#project-name {
-        width: var(--side-panel-width);
+        width: calc(var(--side-panel-width) - 4px);
         font-weight: 500;
     }
 
@@ -342,21 +342,49 @@ input[type="text"]:not(.browser-default) {
         height: 100%;
         padding: 2px;
         text-align: center;
+        position: relative;
 
         >svg {
             height: 100%;
+        }
+
+        >svg.icon-tall {
             width: calc(100% * var(--aspect-ratio));
             aspect-ratio: 1 / 1;
         }
 
-        &.selected {
+        &:has(.icon-wide) {
+            display: flex;
+            align-items: center;
+        }
+
+        >svg.icon-wide {
+            width: 100%;
+            height: calc(100% / var(--aspect-ratio));
+        }
+
+        &.selected::before {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
             background-color: rgba(0, 0, 0, 0.2);
             border: 1px inset rgba(0, 0, 0, 0.4);
-            cursor: default;
+
+            &:not(.action) {
+                cursor: default;
+            }
         }
 
         &.disabled {
             pointer-events: none;
+        }
+
+        &:not(:last-child) {
+            margin-right: 4px;
         }
     }
 
@@ -364,7 +392,7 @@ input[type="text"]:not(.browser-default) {
         height: 100%;
         width: 1px;
         border-right: 1px solid rgba(0, 0, 0, 0.4);
-        margin: 0 4px;
+        margin: 0 8px;
     }
 }
 
