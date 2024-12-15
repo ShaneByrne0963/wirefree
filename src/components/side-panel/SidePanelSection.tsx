@@ -9,7 +9,6 @@ import { selectScreenSize } from "../../state/slices/screenSizeSlice";
 import LayerList from "./layers/LayerList";
 import { updatePageSelectedScreen } from "../../state/slices/pageSlice";
 import ShapeList from "./shapes/ShapeList";
-import ControlPanel from "./control-panel/ControlPanel";
 
 ///////// Configuration
 
@@ -100,7 +99,6 @@ function SectionComponent(props: SectionComponentProps) {
       id={"section-" + props.sectionType}
       className={"side-panel-section " + sectionSize}
     >
-      {props.sectionType === "controls" && <ControlPanel></ControlPanel>}
       {props.sectionType === "shapes" && (
         <ShapeList tab={props.selectedIndex}></ShapeList>
       )}

@@ -4,6 +4,9 @@ import { RootState } from "../../state/store";
 import { iconData } from "../VectorGraphic";
 import { selectShapeTool } from "../../state/slices/shapeSlice";
 import { MouseEvent } from "react";
+import { getShapeData } from "../../helpers";
+import useOutsideClick from "../../hooks/useOutsideClick";
+import ColorPickerWindow from "../inputs/ColorPickerWindow";
 
 export type PanelItemType = "toolSelect" | "action";
 
@@ -13,7 +16,12 @@ interface PanelItemProps {
   disabled?: true;
 }
 
+interface PaletteDisplayProps {
+  active: boolean;
+}
+
 function ControlPanelItem(props: PanelItemProps) {
+  const activeClick = useOutsideClick();
   // Remove for full release
   const unusableItems = ["Fill", "Dropper", "Cut", "Copy", "Paste"];
 
@@ -30,6 +38,7 @@ function ControlPanelItem(props: PanelItemProps) {
         selectShapeTool(props.graphic === "Cursor" ? "" : props.graphic)
       );
     } else if (props.type === "action") {
+      activeClick.handleClickInside();
       // Start an animation to show feedback that the user selected it
       const element = event.target as HTMLElement;
       if (!element) return;
@@ -50,20 +59,43 @@ function ControlPanelItem(props: PanelItemProps) {
   };
   const shapeHtml = getShapeHtml(buttonData);
   return (
-    <a role="button" className={className} onClick={handleClick}>
+    <a
+      role="button"
+      className={className}
+      onClick={handleClick}
+      ref={activeClick.ref}
+    >
       {shapeHtml}
-      {props.graphic === "Palette" && <PaletteDisplay></PaletteDisplay>}
+      {props.graphic === "Palette" && (
+        <PaletteDisplay active={activeClick.isActive}></PaletteDisplay>
+      )}
     </a>
   );
 }
 
-function PaletteDisplay() {
-  const selectedColor = useSelector((state: RootState) => state.shapes.color1);
-  const style = {
-    backgroundColor: selectedColor,
-  };
+function PaletteDisplay(props: PaletteDisplayProps) {
+  const shapeData = useSelector((state: RootState) => state.shapes);
 
-  return <div className="color-display" style={style} aria-hidden></div>;
+  let colorPickerStyles = {};
+
+  if (shapeData.selectedShapes.length === 0) {
+    colorPickerStyles = {
+      backgroundColor: shapeData.color1,
+    };
+  } else if (shapeData.selectedShapes.length === 1) {
+    const selectedShape = getShapeData(shapeData.selectedShapes[0]);
+    if (selectedShape) {
+      colorPickerStyles = {
+        backgroundColor: selectedShape.color,
+      };
+    }
+  }
+
+  return (
+    <div className="color-display" style={colorPickerStyles} aria-hidden>
+      {props.active && <ColorPickerWindow></ColorPickerWindow>}
+    </div>
+  );
 }
 
 export default ControlPanelItem;

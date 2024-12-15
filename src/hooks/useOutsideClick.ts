@@ -2,14 +2,14 @@ import { useState, useEffect, useRef } from 'react';
 
 // Type definition for the return value of the hook
 interface UseOutsideClickReturn {
-  ref: React.RefObject<HTMLDivElement>;
+  ref: React.RefObject<HTMLAnchorElement>;
   isActive: boolean;
   handleClickInside: () => void;
 }
 
 function useOutsideClick(initialState: boolean = false): UseOutsideClickReturn {
   const [isActive, setIsActive] = useState<boolean>(initialState);
-  const ref = useRef<HTMLDivElement | null>(null);
+  const ref = useRef<HTMLAnchorElement | null>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

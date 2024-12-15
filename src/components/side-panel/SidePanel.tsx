@@ -41,8 +41,15 @@ function SidePanel() {
     <div id="side-panel" className={color + " lighten-3"}>
       <PageName></PageName>
       <SidePanelSection
-        sectionType="controls"
-        label="Controls"
+        sectionType="screen"
+        label="Screen"
+        canOverflow={true}
+      ></SidePanelSection>
+      <SidePanelSection
+        sectionType="layers"
+        label="Layers"
+        labelButton="add"
+        labelButtonAction={handleAddLayer}
       ></SidePanelSection>
       <SidePanelSection
         sectionType="shapes"
@@ -53,17 +60,6 @@ function SidePanel() {
         selectedGroup={shapeGroup}
         handleChangeGroup={setShapeGroup}
       ></ShapeGroups>
-      <SidePanelSection
-        sectionType="layers"
-        label="Layers"
-        labelButton="add"
-        labelButtonAction={handleAddLayer}
-      ></SidePanelSection>
-      <SidePanelSection
-        sectionType="screen"
-        label="Screen"
-        canOverflow={true}
-      ></SidePanelSection>
     </div>
   );
 }

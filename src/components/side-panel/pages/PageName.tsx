@@ -17,13 +17,13 @@ function PageName() {
   }
   return (
     <div id="page-select">
-      <div id="selected-page" ref={ref} onClick={handleClickInside}>
+      <a role="button" id="selected-page" ref={ref} onClick={handleClickInside}>
         <div className="side-panel-label">
           {pageData.pages[pageData.selectedPage].name}
         </div>
         <i className={iconClass}>arrow_drop_down</i>
         {isActive && <PageDropdown></PageDropdown>}
-      </div>
+      </a>
       <PageSettings></PageSettings>
     </div>
   );
