@@ -1,4 +1,4 @@
-import { ChangeEvent, useRef } from "react";
+import { ChangeEvent, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setColor } from "../../state/slices/shapeSlice";
 import { RootState } from "../../state/store";
@@ -50,6 +50,9 @@ function ColorPickerWindow() {
     (state: RootState) => state.shapes.selectedShapes
   );
   let selectedColor = useSelector((state: RootState) => state.shapes.color1);
+
+  // Set the color of the input to the selected color when first loaded
+  const customColorRef = useRef<HTMLInputElement | null>(null);
   if (selectedShapes.length === 1) {
     const shapeData = getShapeData(selectedShapes[0]);
     if (shapeData) {
@@ -59,6 +62,11 @@ function ColorPickerWindow() {
   if (selectedColor.includes("rgb")) {
     selectedColor = convertRgbToHex(selectedColor);
   }
+  useEffect(() => {
+    if (customColorRef.current) {
+      customColorRef.current.value = selectedColor;
+    }
+  }, []);
 
   function handleColorUpdate(event: ChangeEvent) {
     const value = (event.target as HTMLInputElement).value;
@@ -98,11 +106,7 @@ function ColorPickerWindow() {
       </div>
       <div className="custom-color">
         <span>Custom:</span>
-        <input
-          type="color"
-          value={selectedColor}
-          onChange={handleColorUpdate}
-        />
+        <input type="color" onChange={handleColorUpdate} ref={customColorRef} />
       </div>
     </div>
   );
