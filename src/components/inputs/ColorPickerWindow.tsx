@@ -80,7 +80,7 @@ function ColorPickerWindow() {
       for (let id of selectedShapes) {
         const shape = document.querySelector<HTMLElement>(`#${id}`);
         if (!shape) continue;
-        const icon = shape.querySelector("svg");
+        const icon = shape.querySelector("path");
         if (icon) {
           icon.style.fill = value;
         } else {
