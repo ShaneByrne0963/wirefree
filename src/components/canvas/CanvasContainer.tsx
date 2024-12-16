@@ -154,9 +154,7 @@ function CanvasContainer() {
     isCreatingShape.current = false;
 
     const shapeCreateElement = document.querySelector("#shape-create");
-    // Extract the color from the color display in case the user started drawing the shape before the selected color saved
-    const colorDisplay = document.querySelector<HTMLElement>(".color-display");
-    if (shapeCreateElement && colorDisplay) {
+    if (shapeCreateElement) {
       // Extract the style properties from the shape create element into an object
       let shapeStyle = shapeCreateElement.getAttribute("style");
       if (shapeStyle) {
@@ -166,7 +164,7 @@ function CanvasContainer() {
         let shapeObject: ShapeProps = {
           props: {
             type: selectedShape,
-            color: colorDisplay.style.backgroundColor,
+            color: shapeColor,
           },
           styles: {
             left: 0,
