@@ -54,15 +54,7 @@ function ControlPanelItem(props: PanelItemProps) {
       : undefined
   );
   // Remove for full release
-  const unusableItems = [
-    "Fill",
-    "Dropper",
-    "Cut",
-    "Copy",
-    "Paste",
-    "Undo",
-    "Redo",
-  ];
+  const unusableItems = ["Fill", "Dropper", "Cut", "Copy", "Paste"];
 
   const dispatch = useDispatch();
   const selectedShape = useSelector(

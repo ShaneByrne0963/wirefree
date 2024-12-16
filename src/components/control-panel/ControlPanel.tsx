@@ -12,8 +12,6 @@ function ControlPanel() {
     { graphic: "Cut", type: "action" },
     { graphic: "Copy", type: "action" },
     { graphic: "Paste", type: "action" },
-    { graphic: "Undo", type: "action" },
-    { graphic: "Redo", type: "action" },
     "",
     { graphic: "Grid", type: "action" },
     "",

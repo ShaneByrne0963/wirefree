@@ -403,10 +403,10 @@ input[type="text"]:not(.browser-default) {
     }
 
     >.divider {
-        height: calc(100% - 8px);
+        height: 100%;
         width: 1px;
         border-right: 1px solid rgba(0, 0, 0, 0.4);
-        margin: 4px 8px;
+        margin: 0 8px;
     }
 }
 
