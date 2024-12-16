@@ -7,9 +7,11 @@ interface UseOutsideClickReturn {
   handleClickInside: () => void;
 }
 
-function useOutsideClick(initialState: boolean = false): UseOutsideClickReturn {
-  const [isActive, setIsActive] = useState<boolean>(initialState);
+function useOutsideClick(onClose?: () => void): UseOutsideClickReturn {
+  const [isActive, setIsActive] = useState<boolean>(false);
   const ref = useRef<HTMLAnchorElement | null>(null);
+  // To allow the on outside click event to work
+  const activeRef = useRef(false);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -17,6 +19,10 @@ function useOutsideClick(initialState: boolean = false): UseOutsideClickReturn {
       if ((ref.current && !ref.current.contains(event.target as Node))
         || (target && target.classList.contains('trigger-clickaway'))) {
         // Disable if click is outside
+        if (activeRef.current && onClose) {
+          activeRef.current = false;
+          onClose();
+        }
         setIsActive(false);
       }
     };
@@ -31,6 +37,7 @@ function useOutsideClick(initialState: boolean = false): UseOutsideClickReturn {
   // Enables the element if clicked inside
   const handleClickInside = () => {
     setIsActive(true);
+    activeRef.current = true;
   };
 
   return { ref, isActive, handleClickInside };

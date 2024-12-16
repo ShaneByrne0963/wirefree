@@ -21,7 +21,14 @@ interface PaletteDisplayProps {
 }
 
 function ControlPanelItem(props: PanelItemProps) {
-  const activeClick = useOutsideClick();
+  const onCloseFunctions = {
+    Palette: () => console.log("Hello World"),
+  };
+  const activeClick = useOutsideClick(
+    props.graphic in onCloseFunctions
+      ? onCloseFunctions[props.graphic as keyof typeof onCloseFunctions]
+      : undefined
+  );
   // Remove for full release
   const unusableItems = [
     "Fill",
