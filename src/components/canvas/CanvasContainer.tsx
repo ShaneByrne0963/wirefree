@@ -153,9 +153,10 @@ function CanvasContainer() {
     document.removeEventListener("mouseup", handleMouseUp);
     isCreatingShape.current = false;
 
-    let shapeCreateElement = document.querySelector("#shape-create");
-    let canvasElement = document.querySelector("#canvas");
-    if (shapeCreateElement && canvasElement) {
+    const shapeCreateElement = document.querySelector("#shape-create");
+    // Extract the color from the color display in case the user started drawing the shape before the selected color saved
+    const colorDisplay = document.querySelector<HTMLElement>(".color-display");
+    if (shapeCreateElement && colorDisplay) {
       // Extract the style properties from the shape create element into an object
       let shapeStyle = shapeCreateElement.getAttribute("style");
       if (shapeStyle) {
@@ -163,7 +164,10 @@ function CanvasContainer() {
           .split("px; ")
           .map((prop) => prop.replace("px;", "").split(": "));
         let shapeObject: ShapeProps = {
-          props: { type: selectedShape, color: shapeColor },
+          props: {
+            type: selectedShape,
+            color: colorDisplay.style.backgroundColor,
+          },
           styles: {
             left: 0,
             top: 0,

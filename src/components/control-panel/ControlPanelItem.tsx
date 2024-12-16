@@ -2,11 +2,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { getShapeHtml } from "../../shapes";
 import { RootState } from "../../state/store";
 import { iconData } from "../VectorGraphic";
-import { selectShapeTool } from "../../state/slices/shapeSlice";
+import { selectShapeTool, setColor } from "../../state/slices/shapeSlice";
 import { MouseEvent } from "react";
 import { getShapeData } from "../../helpers";
 import useOutsideClick from "../../hooks/useOutsideClick";
 import ColorPickerWindow from "../inputs/ColorPickerWindow";
+import { updateShape } from "../../state/slices/pageSlice";
 
 export type PanelItemType = "toolSelect" | "action";
 
@@ -21,8 +22,31 @@ interface PaletteDisplayProps {
 }
 
 function ControlPanelItem(props: PanelItemProps) {
+  const selectedShapes = useSelector(
+    (state: RootState) => state.shapes.selectedShapes
+  );
   const onCloseFunctions = {
-    Palette: () => console.log("Hello World"),
+    Palette: () => {
+      // Update the selected color only when the color picker window is closed for better performance
+      const newColor =
+        document.querySelector<HTMLElement>(".color-display")?.style
+          .backgroundColor;
+      if (!newColor) return;
+      if (selectedShapes.length > 0) {
+        for (let id of selectedShapes) {
+          const data = getShapeData(id);
+          if (!data) continue;
+          const updateData = {
+            props: {
+              color: newColor,
+            },
+          };
+          dispatch(updateShape([data.layer, data.index, updateData]));
+        }
+        return;
+      }
+      dispatch(setColor([1, newColor]));
+    },
   };
   const activeClick = useOutsideClick(
     props.graphic in onCloseFunctions

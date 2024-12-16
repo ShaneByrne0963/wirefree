@@ -15,6 +15,8 @@ function ControlPanel() {
     { graphic: "Undo", type: "action" },
     { graphic: "Redo", type: "action" },
     "",
+    { graphic: "Grid", type: "action" },
+    "",
     { graphic: "Palette", type: "action" },
   ];
 

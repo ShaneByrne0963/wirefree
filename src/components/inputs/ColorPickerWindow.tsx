@@ -46,7 +46,6 @@ const accents = [
 ];
 
 function ColorPickerWindow() {
-  const dispatch = useDispatch();
   const selectedShapes = useSelector(
     (state: RootState) => state.shapes.selectedShapes
   );
@@ -63,20 +62,27 @@ function ColorPickerWindow() {
 
   function handleColorUpdate(event: ChangeEvent) {
     const value = (event.target as HTMLInputElement).value;
+
+    const colorDisplay = document.querySelector<HTMLElement>(".color-display");
+    if (colorDisplay) {
+      colorDisplay.style.backgroundColor = value;
+    }
+
     if (selectedShapes.length > 0) {
       for (let id of selectedShapes) {
-        const data = getShapeData(id);
-        if (!data) continue;
-        const updateData = {
-          props: {
-            color: value,
-          },
-        };
-        dispatch(updateShape([data.layer, data.index, updateData]));
+        const shape = document.querySelector<HTMLElement>(`#${id}`);
+        if (!shape) continue;
+        const icon = shape.querySelector("svg");
+        if (icon) {
+          icon.style.fill = value;
+        } else {
+          const shapeRender = shape.querySelector<HTMLElement>(".shape");
+          if (shapeRender) {
+            shapeRender.style.backgroundColor = value;
+          }
+        }
       }
-      return;
     }
-    dispatch(setColor([1, value]));
   }
 
   return (

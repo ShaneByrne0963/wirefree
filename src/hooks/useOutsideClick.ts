@@ -14,22 +14,36 @@ function useOutsideClick(onClose?: () => void): UseOutsideClickReturn {
   const activeRef = useRef(false);
 
   useEffect(() => {
+    // Disable if click is outside
+    function triggerOutsideClick() {
+      if (activeRef.current && onClose) {
+        activeRef.current = false;
+        onClose();
+      }
+      setIsActive(false);
+    }
+
+    // The mouse click doesn't have to be released to close the component if clicked outside
+    const handleMouseDownOutside = (event: MouseEvent) => {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        triggerOutsideClick();
+      }
+    };
+
+    // If a descendant os 
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
       if ((ref.current && !ref.current.contains(event.target as Node))
         || (target && target.classList.contains('trigger-clickaway'))) {
-        // Disable if click is outside
-        if (activeRef.current && onClose) {
-          activeRef.current = false;
-          onClose();
-        }
-        setIsActive(false);
+        triggerOutsideClick();
       }
     };
 
     // Add event listener for clicks outside
+    document.addEventListener('mousedown', handleMouseDownOutside);
     document.addEventListener('click', handleClickOutside);
     return () => {
+      document.removeEventListener('mousedown', handleMouseDownOutside);
       document.removeEventListener('click', handleClickOutside);
     };
   }, []);

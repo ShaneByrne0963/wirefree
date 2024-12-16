@@ -348,6 +348,10 @@ input[type="text"]:not(.browser-default) {
         align-items: center;
         justify-content: center;
 
+        &:has(.icon-grid) {
+            padding: 3px;
+        }
+
         >svg {
             height: 100%;
         }
