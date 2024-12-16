@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useRef } from "react";
+import { ChangeEvent, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setColor } from "../../state/slices/shapeSlice";
 import { RootState } from "../../state/store";
@@ -46,13 +46,15 @@ const accents = [
 ];
 
 function ColorPickerWindow() {
+  const dispatch = useDispatch();
   const selectedShapes = useSelector(
     (state: RootState) => state.shapes.selectedShapes
   );
   let selectedColor = useSelector((state: RootState) => state.shapes.color1);
 
-  // Set the color of the input to the selected color when first loaded
-  const customColorRef = useRef<HTMLInputElement | null>(null);
+  // A short cooldown for setting the color input which significantly improves performance
+  const isCooldownRef = useRef(true);
+
   if (selectedShapes.length === 1) {
     const shapeData = getShapeData(selectedShapes[0]);
     if (shapeData) {
@@ -62,34 +64,27 @@ function ColorPickerWindow() {
   if (selectedColor.includes("rgb")) {
     selectedColor = convertRgbToHex(selectedColor);
   }
-  useEffect(() => {
-    if (customColorRef.current) {
-      customColorRef.current.value = selectedColor;
-    }
-  }, []);
 
   function handleColorUpdate(event: ChangeEvent) {
     const value = (event.target as HTMLInputElement).value;
 
-    const colorDisplay = document.querySelector<HTMLElement>(".color-display");
-    if (colorDisplay) {
-      colorDisplay.style.backgroundColor = value;
-    }
-
-    if (selectedShapes.length > 0) {
-      for (let id of selectedShapes) {
-        const shape = document.querySelector<HTMLElement>(`#${id}`);
-        if (!shape) continue;
-        const icon = shape.querySelector("path");
-        if (icon) {
-          icon.style.fill = value;
-        } else {
-          const shapeRender = shape.querySelector<HTMLElement>(".shape");
-          if (shapeRender) {
-            shapeRender.style.backgroundColor = value;
-          }
+    if (isCooldownRef.current) {
+      isCooldownRef.current = false;
+      setTimeout(() => (isCooldownRef.current = true));
+      if (selectedShapes.length > 0) {
+        for (let id of selectedShapes) {
+          const data = getShapeData(id);
+          if (!data) continue;
+          const updateData = {
+            props: {
+              color: value,
+            },
+          };
+          dispatch(updateShape([data.layer, data.index, updateData]));
         }
+        return;
       }
+      dispatch(setColor([1, value]));
     }
   }
 
@@ -106,7 +101,11 @@ function ColorPickerWindow() {
       </div>
       <div className="custom-color">
         <span>Custom:</span>
-        <input type="color" onChange={handleColorUpdate} ref={customColorRef} />
+        <input
+          type="color"
+          value={selectedColor}
+          onChange={handleColorUpdate}
+        />
       </div>
     </div>
   );
