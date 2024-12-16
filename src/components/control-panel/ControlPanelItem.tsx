@@ -72,9 +72,9 @@ function ControlPanelItem(props: PanelItemProps) {
       activeClick.handleClickInside();
       // Start an animation to show feedback that the user selected it
       const element = event.target as HTMLElement;
-      if (!element || element.closest(".color-window")) return;
+      if (!element) return;
       element.closest("a")?.classList.add("selected");
-      setTimeout(() => element.closest("a")?.classList.remove("selected"), 100);
+      setTimeout(() => element.closest("a")?.classList.remove("selected"), 80);
     }
   }
 
