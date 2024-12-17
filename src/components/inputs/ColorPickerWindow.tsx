@@ -89,7 +89,7 @@ function ColorPickerWindow() {
   }
 
   return (
-    <div className="color-window z-depth-2">
+    <>
       <div className="color-grid">
         {accents.map((accent, index) => (
           <ColorPickerRow
@@ -107,7 +107,7 @@ function ColorPickerWindow() {
           onChange={handleColorUpdate}
         />
       </div>
-    </div>
+    </>
   );
 }
 

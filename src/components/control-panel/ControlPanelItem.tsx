@@ -7,6 +7,7 @@ import { MouseEvent } from "react";
 import { getShapeData } from "../../helpers";
 import useOutsideClick from "../../hooks/useOutsideClick";
 import ColorPickerWindow from "../inputs/ColorPickerWindow";
+import ControlPanelWindow from "./ControlPanelWindow";
 
 export type PanelItemType = "toolSelect" | "action";
 
@@ -105,7 +106,9 @@ function PaletteDisplay(props: PaletteDisplayProps) {
       style={colorPickerStyles}
       aria-hidden
     >
-      {props.active && <ColorPickerWindow></ColorPickerWindow>}
+      {props.active && (
+        <ControlPanelWindow content={ColorPickerWindow}></ControlPanelWindow>
+      )}
     </div>
   );
 }

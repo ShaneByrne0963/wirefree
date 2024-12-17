@@ -395,7 +395,7 @@ input[type="text"]:not(.browser-default) {
             border: 1px solid rgba(0, 0, 0, 0.3);
         }
 
-        .color-window {
+        .control-panel-window {
             top: calc(100% + 4px);
             left: -4px;
             border-top-left-radius: 0;
@@ -410,7 +410,7 @@ input[type="text"]:not(.browser-default) {
     }
 }
 
-.color-window {
+.control-panel-window {
     position: absolute;
     min-width: 400px;
     min-height: 300px;
