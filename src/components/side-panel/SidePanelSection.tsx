@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectScreenSize } from "../../state/slices/screenSizeSlice";
 import LayerList from "./layers/LayerList";
 import { updatePageSelectedScreen } from "../../state/slices/pageSlice";
-import ShapeList from "./shapes/ShapeList";
+import ShapeList from "../control-panel/Windows/ShapeList";
 
 ///////// Configuration
 

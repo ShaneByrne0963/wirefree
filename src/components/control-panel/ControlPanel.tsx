@@ -1,10 +1,12 @@
+import ColorPickerWindow from "../inputs/ColorPickerWindow";
 import { iconData } from "../VectorGraphic";
 import ControlPanelItem, { PanelItemType } from "./ControlPanelItem";
+import ShapeSelector from "./Windows/ShapeSelector";
 
 function ControlPanel() {
   const panelItems = [
     { graphic: "Cursor", type: "toolSelect" },
-    { graphic: "Shapes", type: "toolSelect" },
+    { graphic: "Shapes", type: "toolSelect", options: ShapeSelector },
     { graphic: "Text", type: "toolSelect" },
     { graphic: "Fill", type: "toolSelect" },
     { graphic: "Dropper", type: "toolSelect" },
@@ -15,7 +17,7 @@ function ControlPanel() {
     "",
     { graphic: "Grid", type: "action" },
     "",
-    { graphic: "Palette", type: "action" },
+    { graphic: "Palette", type: "action", options: ColorPickerWindow },
   ];
 
   return (
@@ -29,6 +31,7 @@ function ControlPanel() {
             graphic={item.graphic as keyof typeof iconData}
             key={index}
             type={item.type as PanelItemType}
+            options={item.options}
           ></ControlPanelItem>
         );
       })}

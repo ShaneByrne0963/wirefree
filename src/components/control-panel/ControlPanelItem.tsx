@@ -6,19 +6,15 @@ import { selectShapeTool } from "../../state/slices/shapeSlice";
 import { MouseEvent } from "react";
 import { getShapeData } from "../../helpers";
 import useOutsideClick from "../../hooks/useOutsideClick";
-import ColorPickerWindow from "../inputs/ColorPickerWindow";
-import ControlPanelWindow from "./ControlPanelWindow";
+import ControlPanelWindow from "./Windows/ControlPanelWindow";
 
-export type PanelItemType = "toolSelect" | "action";
+export type PanelItemType = "toolSelect" | "action" | "toggle";
 
 interface PanelItemProps {
   graphic: keyof typeof iconData;
   type: PanelItemType;
   disabled?: true;
-}
-
-interface PaletteDisplayProps {
-  active: boolean;
+  options?: React.ComponentType;
 }
 
 function ControlPanelItem(props: PanelItemProps) {
@@ -35,18 +31,20 @@ function ControlPanelItem(props: PanelItemProps) {
 
   function handleClick(event: MouseEvent) {
     if (props.type === "toolSelect") {
-      dispatch(
-        selectShapeTool(props.graphic === "Cursor" ? "" : props.graphic)
-      );
+      // Open the options menu if clicked while the control item is selected
+      const currentTool = props.graphic === "Cursor" ? "" : props.graphic;
+      if ("options" in props && selectedShape === currentTool) {
+        activeClick.handleClickInside();
+      }
+      dispatch(selectShapeTool(currentTool));
+    } else if (props.type === "toggle") {
+      console.log("");
     } else if (props.type === "action") {
       activeClick.handleClickInside();
       // Start an animation to show feedback that the user selected it
       const element = event.target as HTMLElement;
       if (!element) return;
-      if (
-        !element.closest(".prevent-select") ||
-        element.classList.contains("prevent-select")
-      ) {
+      if (!element.closest(".control-panel-window")) {
         element.closest("a")?.classList.add("selected");
         setTimeout(
           () => element.closest("a")?.classList.remove("selected"),
@@ -75,14 +73,15 @@ function ControlPanelItem(props: PanelItemProps) {
       ref={activeClick.ref}
     >
       {shapeHtml}
-      {props.graphic === "Palette" && (
-        <PaletteDisplay active={activeClick.isActive}></PaletteDisplay>
+      {props.graphic === "Palette" && <PaletteDisplay></PaletteDisplay>}
+      {props.options && activeClick.isActive && (
+        <ControlPanelWindow content={props.options}></ControlPanelWindow>
       )}
     </a>
   );
 }
 
-function PaletteDisplay(props: PaletteDisplayProps) {
+function PaletteDisplay() {
   const shapeData = useSelector((state: RootState) => state.shapes);
 
   let colorPickerStyles = {};
@@ -100,17 +99,7 @@ function PaletteDisplay(props: PaletteDisplayProps) {
     }
   }
 
-  return (
-    <div
-      className="color-display prevent-select"
-      style={colorPickerStyles}
-      aria-hidden
-    >
-      {props.active && (
-        <ControlPanelWindow content={ColorPickerWindow}></ControlPanelWindow>
-      )}
-    </div>
-  );
+  return <div className="color-display" style={colorPickerStyles}></div>;
 }
 
 export default ControlPanelItem;

@@ -397,7 +397,7 @@ input[type="text"]:not(.browser-default) {
 
         .control-panel-window {
             top: calc(100% + 4px);
-            left: -4px;
+            left: 0;
             border-top-left-radius: 0;
         }
     }
@@ -413,12 +413,15 @@ input[type="text"]:not(.browser-default) {
 .control-panel-window {
     position: absolute;
     min-width: 400px;
-    min-height: 300px;
-    padding: 6px;
     border: 1px solid rgba(0, 0, 0, 0.5);
     background-color: #fbfbfb;
-    border-radius: 12px;
     z-index: 20;
+    cursor: default;
+    
+    &:not(:has(#shape-list)) {
+        border-radius: 12px;
+        padding: 6px;
+    }
 
     >.color-grid {
         display: grid;

@@ -25,9 +25,10 @@
 #shape-groups {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  position: relative;
-  top: -1px;
-  margin: 0 24px 16px 4px;
+  position: absolute;
+  top: 100%;
+  left: -1px;
+  width: calc(100% + 2px);
 }
 
 .shape-group-button {
