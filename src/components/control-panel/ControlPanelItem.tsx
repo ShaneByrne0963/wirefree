@@ -42,8 +42,16 @@ function ControlPanelItem(props: PanelItemProps) {
       // Start an animation to show feedback that the user selected it
       const element = event.target as HTMLElement;
       if (!element) return;
-      element.closest("a")?.classList.add("selected");
-      setTimeout(() => element.closest("a")?.classList.remove("selected"), 80);
+      if (
+        !element.closest(".prevent-select") ||
+        element.classList.contains("prevent-select")
+      ) {
+        element.closest("a")?.classList.add("selected");
+        setTimeout(
+          () => element.closest("a")?.classList.remove("selected"),
+          80
+        );
+      }
     }
   }
 
@@ -92,7 +100,11 @@ function PaletteDisplay(props: PaletteDisplayProps) {
   }
 
   return (
-    <div className="color-display" style={colorPickerStyles} aria-hidden>
+    <div
+      className="color-display prevent-select"
+      style={colorPickerStyles}
+      aria-hidden
+    >
       {props.active && <ColorPickerWindow></ColorPickerWindow>}
     </div>
   );

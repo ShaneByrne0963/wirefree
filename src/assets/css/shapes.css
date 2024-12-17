@@ -79,6 +79,19 @@
   }
 }
 
+/* An additional outline of space that allows users extra room when trying to resize */
+/* Coming soon... */
+/* .canvas-shape.selected::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  width: calc(100% + 8px);
+  height: calc(100% + 8px);
+  cursor: e-resize;
+} */
+
 .canvas-shape.selected::after {
   content: "";
   display: block;
