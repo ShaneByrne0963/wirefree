@@ -11,15 +11,16 @@ interface ShapeButtonProps {
   buttonType: string;
 }
 
-const buttonColor = "rgba(0, 0, 0, 0.6)";
-
 // The amount of milliseconds that allows another click to add the shape to favorites
 const clickCooldown = 500;
 
 function ShapeButton(props: ShapeButtonProps) {
+  const selectedColor = useSelector(
+    (state: RootState) => state.controls.color1
+  );
   const buttonData = {
     type: props.buttonType,
-    color: buttonColor,
+    color: selectedColor,
   };
   const buttonHtml = getShapeHtml(buttonData);
   const selectedShape = useSelector(
