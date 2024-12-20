@@ -37,10 +37,10 @@ const controlSlice = createSlice({
   name: "shapes",
   initialState,
   reducers: {
-    selectShapeTool(state, action:PayloadAction<string>) {
+    selectTool(state, action:PayloadAction<string>) {
       state.selectedTool = action.payload;
     },
-    deselectShapeTool(state) {
+    deselectTool(state) {
       state.selectedTool = "";
     },
     selectShape(state, action:PayloadAction<string>) {
@@ -81,8 +81,8 @@ const controlSlice = createSlice({
 });
 
 export const {
-  selectShapeTool,
-  deselectShapeTool,
+  selectTool,
+  deselectTool,
   selectShape,
   deselectShape,
   deselectAllShapes,

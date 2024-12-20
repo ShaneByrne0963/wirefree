@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getShapeHtml } from "../../shapes";
 import { RootState } from "../../state/store";
 import { iconData } from "../VectorGraphic";
-import { selectShapeTool } from "../../state/slices/controlSlice";
+import { selectTool } from "../../state/slices/controlSlice";
 import { MouseEvent, useState } from "react";
 import { getShapeData } from "../../helpers";
 import useOutsideClick from "../../hooks/useOutsideClick";
@@ -38,7 +38,7 @@ function ControlPanelItem(props: PanelItemProps) {
       if ("options" in props && selectedShape === currentTool) {
         activeClick.handleClickInside();
       }
-      dispatch(selectShapeTool(currentTool));
+      dispatch(selectTool(currentTool));
     } else if (props.type === "toggle") {
       console.log("");
     } else if (props.type === "action") {

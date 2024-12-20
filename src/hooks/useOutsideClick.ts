@@ -17,7 +17,7 @@ function useOutsideClick(): UseOutsideClickReturn {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
       if ((ref.current && !ref.current.contains(event.target as Node))
-        || (target && target.classList.contains('trigger-clickaway'))) {
+        || (target && target.closest('.trigger-clickaway'))) {
           setIsActive(false);
       }
     };

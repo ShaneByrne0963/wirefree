@@ -1,9 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../state/store";
-import {
-  deselectShapeTool,
-  selectShapeTool,
-} from "../../../state/slices/controlSlice";
+import { deselectTool, selectTool } from "../../../state/slices/controlSlice";
 import { useRef } from "react";
 import { getShapeHtml } from "../../../shapes";
 
@@ -31,9 +28,7 @@ function ShapeButton(props: ShapeButtonProps) {
 
   function handleClick() {
     if (!isClicked.current) {
-      dispatch(
-        selected ? deselectShapeTool() : selectShapeTool(props.buttonType)
-      );
+      dispatch(selected ? deselectTool() : selectTool(props.buttonType));
       isClicked.current = true;
       setTimeout(() => (isClicked.current = false), clickCooldown);
     } else {
@@ -43,7 +38,9 @@ function ShapeButton(props: ShapeButtonProps) {
 
   return (
     <div
-      className={"shape-button" + (selected ? " selected" : "")}
+      className={
+        "shape-button trigger-clickaway" + (selected ? " selected" : "")
+      }
       onClick={handleClick}
     >
       {buttonHtml}
