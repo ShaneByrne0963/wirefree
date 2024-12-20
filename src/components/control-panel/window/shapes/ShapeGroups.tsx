@@ -1,4 +1,4 @@
-import VectorGraphic, { iconData } from "../../VectorGraphic";
+import VectorGraphic, { iconData } from "../../../VectorGraphic";
 
 // The type of shape group tabs
 export const shapeGroupNames = [

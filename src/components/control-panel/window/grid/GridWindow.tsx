@@ -1,49 +1,24 @@
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../state/store";
-import { ChangeEvent, useRef } from "react";
+import { Axis } from "../../../../context";
+import { clamp } from "../../../../helpers";
+import { RootState } from "../../../../state/store";
 import {
   gridUnits,
   setGridProperty,
-  setGridStatus,
-} from "../../../state/slices/controlSlice";
-import { Axis } from "../../../context";
-import { WindowActionButtons } from "../Window";
-import { clamp } from "../../../helpers";
+} from "../../../../state/slices/controlSlice";
+import { useRef } from "react";
 
 interface GridPropertyProps {
   label: string;
   axis: Axis;
 }
 
-function GridSettingsWindow() {
-  const dispatch = useDispatch();
-  const gridData = useSelector((state: RootState) => state.controls.grid);
-
-  function handleGridStatus(event: ChangeEvent<HTMLInputElement>) {
-    const enabled = event.target.checked;
-    dispatch(setGridStatus(enabled));
-  }
-
+function GridWindow() {
   return (
-    <>
-      <label>
-        <input
-          type="checkbox"
-          onChange={handleGridStatus}
-          checked={gridData.enabled}
-        />
-        <span>Enable Grid</span>
-      </label>
-      <fieldset className="grid-properties">
-        <legend>Grid Properties</legend>
-        <GridProperty label="Width" axis="x"></GridProperty>
-        <GridProperty label="Height" axis="y"></GridProperty>
-      </fieldset>
-      <WindowActionButtons
-        close
-        windowLabel="Grid Settings"
-      ></WindowActionButtons>
-    </>
+    <div className="grid-properties">
+      <GridProperty label="Width" axis="x"></GridProperty>
+      <GridProperty label="Height" axis="y"></GridProperty>
+    </div>
   );
 }
 
@@ -107,4 +82,4 @@ function GridProperty(props: GridPropertyProps) {
   );
 }
 
-export default GridSettingsWindow;
+export default GridWindow;

@@ -6,7 +6,7 @@ import { selectTool } from "../../state/slices/controlSlice";
 import { MouseEvent, useState } from "react";
 import { getShapeData } from "../../helpers";
 import useOutsideClick from "../../hooks/useOutsideClick";
-import ControlPanelWindow from "./Windows/ControlPanelWindow";
+import ControlPanelWindow from "./window/ControlPanelWindow";
 
 export type PanelItemType = "toolSelect" | "action" | "toggle";
 
@@ -45,6 +45,8 @@ function ControlPanelItem(props: PanelItemProps) {
 
     // Toggle control panel items toggle a boolean value. When double-clicked, an options panel can appear if specified
     else if (props.type === "toggle") {
+      if ((event.target as HTMLElement).closest(".control-panel-window"))
+        return;
       if (cooldown) {
         activeClick.handleClickInside();
       } else {

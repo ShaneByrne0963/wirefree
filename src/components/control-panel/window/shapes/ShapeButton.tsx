@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../state/store";
+import { RootState } from "../../../../state/store";
 import {
   deselectTool,
   selectShapeTool,
-} from "../../../state/slices/controlSlice";
+} from "../../../../state/slices/controlSlice";
 import { useRef } from "react";
-import { getShapeHtml } from "../../../shapes";
+import { getShapeHtml } from "../../../../shapes";
 
 interface ShapeButtonProps {
   buttonType: string;

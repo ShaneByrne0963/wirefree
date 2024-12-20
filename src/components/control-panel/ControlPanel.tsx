@@ -2,9 +2,10 @@ import { useSelector } from "react-redux";
 import ColorPickerWindow from "../inputs/ColorPickerWindow";
 import { iconData } from "../VectorGraphic";
 import ControlPanelItem, { PanelItemType } from "./ControlPanelItem";
-import ShapeSelector from "./Windows/ShapeSelector";
+import ShapeSelector from "./window/shapes/ShapeSelector";
 import { RootState } from "../../state/store";
 import { toggleGrid } from "../../state/slices/controlSlice";
+import GridWindow from "./window/grid/GridWindow";
 
 function ControlPanel() {
   const hasGrid = useSelector(
@@ -26,6 +27,7 @@ function ControlPanel() {
       type: "toggle",
       selectedFactor: hasGrid,
       toggleSelectedFactor: toggleGrid,
+      options: GridWindow,
     },
     "",
     { graphic: "Palette", type: "action", options: ColorPickerWindow },

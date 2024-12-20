@@ -14,18 +14,27 @@ function useOutsideClick(): UseOutsideClickReturn {
   const activeRef = useRef(false);
 
   useEffect(() => {
+    // The click event listens for action buttons within the component
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
-      if ((ref.current && !ref.current.contains(event.target as Node))
-        || (target && target.closest('.trigger-clickaway'))) {
+      if (target && target.closest('.trigger-clickaway')) {
+          setIsActive(false);
+      }
+    };
+
+    // The mousedown event listens for 
+    const handleMouseDownOutside = (event: MouseEvent) => {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
           setIsActive(false);
       }
     };
 
     // Add event listener for clicks outside
     document.addEventListener('click', handleClickOutside);
+    document.addEventListener('mousedown', handleMouseDownOutside);
     return () => {
       document.removeEventListener('click', handleClickOutside);
+      document.removeEventListener('mousedown', handleMouseDownOutside);
     };
   }, []);
 

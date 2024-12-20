@@ -5,6 +5,7 @@ import "./assets/css/style.css";
 import "./assets/css/canvas.css";
 import "./assets/css/window.css";
 import "./assets/css/shapes.css";
+import "./assets/css/controlpanel.css";
 import { Provider } from "react-redux";
 import { store } from "./state/store.ts";
 

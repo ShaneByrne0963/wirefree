@@ -1,0 +1,8 @@
+.grid-properties {
+  text-align: left;
+  margin: 0 8px;
+
+  select {
+    max-width: 80px;
+  }
+}
