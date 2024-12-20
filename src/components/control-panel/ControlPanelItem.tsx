@@ -25,8 +25,11 @@ function ControlPanelItem(props: PanelItemProps) {
   const unusableItems = ["Fill", "Dropper", "Cut", "Copy", "Paste"];
 
   const dispatch = useDispatch();
-  const selectedShape = useSelector(
+  const selectedTool = useSelector(
     (state: RootState) => state.controls.selectedTool
+  );
+  const selectedShape = useSelector(
+    (state: RootState) => state.controls.shapeTool
   );
   const toolSelector = props.graphic === "Cursor" ? "" : props.graphic;
   const disabled = "disabled" in props || unusableItems.includes(props.graphic);
@@ -35,7 +38,7 @@ function ControlPanelItem(props: PanelItemProps) {
     if (props.type === "toolSelect") {
       // Open the options menu if clicked while the control item is selected
       const currentTool = props.graphic === "Cursor" ? "" : props.graphic;
-      if ("options" in props && selectedShape === currentTool) {
+      if ("options" in props && selectedTool === currentTool) {
         activeClick.handleClickInside();
       }
       dispatch(selectTool(currentTool));
@@ -59,11 +62,11 @@ function ControlPanelItem(props: PanelItemProps) {
   let className = "control-panel-item " + props.type;
   if (disabled) {
     className += " disabled";
-  } else if (selectedShape === toolSelector) {
+  } else if (selectedTool === toolSelector) {
     className += " selected";
   }
   const buttonData = {
-    type: props.graphic,
+    type: props.graphic === "Shapes" ? selectedShape : props.graphic,
     color: disabled ? "#999999" : "#343434",
   };
   const shapeHtml = getShapeHtml(buttonData);
