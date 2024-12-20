@@ -71,6 +71,9 @@ const controlSlice = createSlice({
     setGridStatus(state, action:PayloadAction<boolean>) {
       state.grid.enabled = action.payload;
     },
+    toggleGrid(state) {
+      state.grid.enabled = !state.grid.enabled;
+    },
     setGridProperty(state, action:PayloadAction<{ axis: Axis, value: number, units: gridUnits }>) {
       if (action.payload.axis === "x") {
         state.grid.width = action.payload.value;
@@ -94,6 +97,7 @@ export const {
   deselectAllShapes,
   setColor,
   setGridStatus,
+  toggleGrid,
   setGridProperty,
   resetControlSlice
 } = controlSlice.actions;

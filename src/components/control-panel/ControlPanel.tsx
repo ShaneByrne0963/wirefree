@@ -1,9 +1,15 @@
+import { useSelector } from "react-redux";
 import ColorPickerWindow from "../inputs/ColorPickerWindow";
 import { iconData } from "../VectorGraphic";
 import ControlPanelItem, { PanelItemType } from "./ControlPanelItem";
 import ShapeSelector from "./Windows/ShapeSelector";
+import { RootState } from "../../state/store";
+import { toggleGrid } from "../../state/slices/controlSlice";
 
 function ControlPanel() {
+  const hasGrid = useSelector(
+    (state: RootState) => state.controls.grid.enabled
+  );
   const panelItems = [
     { graphic: "Cursor", type: "toolSelect" },
     { graphic: "Shapes", type: "toolSelect", options: ShapeSelector },
@@ -15,7 +21,12 @@ function ControlPanel() {
     { graphic: "Copy", type: "action" },
     { graphic: "Paste", type: "action" },
     "",
-    { graphic: "Grid", type: "action" },
+    {
+      graphic: "Grid",
+      type: "toggle",
+      selectedFactor: hasGrid,
+      toggleSelectedFactor: toggleGrid,
+    },
     "",
     { graphic: "Palette", type: "action", options: ColorPickerWindow },
   ];
@@ -32,6 +43,8 @@ function ControlPanel() {
             key={index}
             type={item.type as PanelItemType}
             options={item.options as React.ComponentType}
+            selectedFactor={item.selectedFactor}
+            toggleSelectedFactor={item.toggleSelectedFactor}
           ></ControlPanelItem>
         );
       })}
