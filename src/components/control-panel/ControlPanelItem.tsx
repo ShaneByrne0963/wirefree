@@ -3,7 +3,7 @@ import { getShapeHtml } from "../../shapes";
 import { RootState } from "../../state/store";
 import { iconData } from "../VectorGraphic";
 import { selectShapeTool } from "../../state/slices/shapeSlice";
-import { MouseEvent } from "react";
+import { MouseEvent, useState } from "react";
 import { getShapeData } from "../../helpers";
 import useOutsideClick from "../../hooks/useOutsideClick";
 import ControlPanelWindow from "./Windows/ControlPanelWindow";
@@ -15,10 +15,12 @@ interface PanelItemProps {
   type: PanelItemType;
   disabled?: true;
   options?: React.ComponentType;
+  props?: { [key: string]: any };
 }
 
 function ControlPanelItem(props: PanelItemProps) {
   const activeClick = useOutsideClick();
+  const [tab, setTab] = useState(0);
   // Remove for full release
   const unusableItems = ["Fill", "Dropper", "Cut", "Copy", "Paste"];
 
@@ -75,7 +77,10 @@ function ControlPanelItem(props: PanelItemProps) {
       {shapeHtml}
       {props.graphic === "Palette" && <PaletteDisplay></PaletteDisplay>}
       {props.options && activeClick.isActive && (
-        <ControlPanelWindow content={props.options}></ControlPanelWindow>
+        <ControlPanelWindow
+          content={props.options}
+          props={{ ...props.props, tab: tab, setTab: setTab }}
+        ></ControlPanelWindow>
       )}
     </a>
   );

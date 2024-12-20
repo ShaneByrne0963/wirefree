@@ -31,7 +31,7 @@ function ControlPanel() {
             graphic={item.graphic as keyof typeof iconData}
             key={index}
             type={item.type as PanelItemType}
-            options={item.options}
+            options={item.options as React.ComponentType}
           ></ControlPanelItem>
         );
       })}
