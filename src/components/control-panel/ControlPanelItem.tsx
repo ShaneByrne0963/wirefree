@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getShapeHtml } from "../../shapes";
 import { RootState } from "../../state/store";
 import { iconData } from "../VectorGraphic";
-import { selectShapeTool } from "../../state/slices/shapeSlice";
+import { selectShapeTool } from "../../state/slices/controlSlice";
 import { MouseEvent, useState } from "react";
 import { getShapeData } from "../../helpers";
 import useOutsideClick from "../../hooks/useOutsideClick";
@@ -26,7 +26,7 @@ function ControlPanelItem(props: PanelItemProps) {
 
   const dispatch = useDispatch();
   const selectedShape = useSelector(
-    (state: RootState) => state.shapes.selectedTool
+    (state: RootState) => state.controls.selectedTool
   );
   const toolSelector = props.graphic === "Cursor" ? "" : props.graphic;
   const disabled = "disabled" in props || unusableItems.includes(props.graphic);
@@ -87,16 +87,16 @@ function ControlPanelItem(props: PanelItemProps) {
 }
 
 function PaletteDisplay() {
-  const shapeData = useSelector((state: RootState) => state.shapes);
+  const controlData = useSelector((state: RootState) => state.controls);
 
   let colorPickerStyles = {};
 
-  if (shapeData.selectedShapes.length === 0) {
+  if (controlData.selectedShapes.length === 0) {
     colorPickerStyles = {
-      backgroundColor: shapeData.color1,
+      backgroundColor: controlData.color1,
     };
-  } else if (shapeData.selectedShapes.length === 1) {
-    const selectedShape = getShapeData(shapeData.selectedShapes[0]);
+  } else if (controlData.selectedShapes.length === 1) {
+    const selectedShape = getShapeData(controlData.selectedShapes[0]);
     if (selectedShape) {
       colorPickerStyles = {
         backgroundColor: selectedShape.color,

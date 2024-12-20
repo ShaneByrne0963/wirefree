@@ -20,7 +20,7 @@ function Menu(props: MenuProps) {
   const menuRef = useRef<HTMLDivElement | null>(null);
   const pageData = useSelector((state: RootState) => state.pages);
   const screenData = useSelector((state: RootState) => state.screenSize);
-  const shapeData = useSelector((state: RootState) => state.shapes);
+  const controlData = useSelector((state: RootState) => state.controls);
 
   // Each action the menu can perform
   const actions = {
@@ -43,7 +43,7 @@ function Menu(props: MenuProps) {
         version: "0.0.0",
         screenSizes: screenData,
         pages: pageData,
-        grid: shapeData.grid,
+        grid: controlData.grid,
       };
       saveProject(data);
     },

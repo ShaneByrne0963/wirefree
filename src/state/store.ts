@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import windowReducer from './slices/windowSlice.ts';
 import screenSizeReducer from './slices/screenSizeSlice.ts';
 import pageReducer from './slices/pageSlice.ts';
-import shapeReducer from './slices/shapeSlice.ts';
+import controlReducer from './slices/controlSlice.ts';
 import menuReducer from './slices/menuSlice.ts';
 
 export const store = configureStore({
@@ -10,7 +10,7 @@ export const store = configureStore({
     screenSize: screenSizeReducer,
     window: windowReducer,
     pages: pageReducer,
-    shapes: shapeReducer,
+    controls: controlReducer,
     menu: menuReducer,
   },
 });

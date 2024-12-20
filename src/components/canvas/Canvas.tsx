@@ -18,9 +18,9 @@ function Canvas(props: CanvasProps) {
   const selectedScreenIndex = useSelector(
     (state: RootState) => state.screenSize.selectedScreen
   );
-  const gridData = useSelector((state: RootState) => state.shapes.grid);
+  const gridData = useSelector((state: RootState) => state.controls.grid);
   const selectedShapes = useSelector(
-    (state: RootState) => state.shapes.selectedShapes
+    (state: RootState) => state.controls.selectedShapes
   );
   const selectedScreenSize = activeScreenSizes[selectedScreenIndex];
   const canvasRef = updateCanvasScale(selectedScreenSize);

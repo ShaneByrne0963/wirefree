@@ -5,7 +5,7 @@ import {
   gridUnits,
   setGridProperty,
   setGridStatus,
-} from "../../../state/slices/shapeSlice";
+} from "../../../state/slices/controlSlice";
 import { Axis } from "../../../context";
 import { WindowActionButtons } from "../Window";
 import { clamp } from "../../../helpers";
@@ -17,7 +17,7 @@ interface GridPropertyProps {
 
 function GridSettingsWindow() {
   const dispatch = useDispatch();
-  const gridData = useSelector((state: RootState) => state.shapes.grid);
+  const gridData = useSelector((state: RootState) => state.controls.grid);
 
   function handleGridStatus(event: ChangeEvent<HTMLInputElement>) {
     const enabled = event.target.checked;
@@ -55,7 +55,7 @@ const unitOptions = [
 
 function GridProperty(props: GridPropertyProps) {
   const dispatch = useDispatch();
-  const gridData = useSelector((state: RootState) => state.shapes.grid);
+  const gridData = useSelector((state: RootState) => state.controls.grid);
 
   const gridValue = props.axis === "x" ? gridData.width : gridData.height;
   const units = props.axis === "x" ? gridData.widthUnits : gridData.heightUnits;

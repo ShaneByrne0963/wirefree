@@ -6,12 +6,12 @@ import {
 } from "../../state/slices/windowSlice";
 import { WindowActionButtons } from "./Window";
 import { deletePage, resetPageSlice } from "../../state/slices/pageSlice";
-import { resetShapeSlice } from "../../state/slices/shapeSlice";
+import { resetControlSlice } from "../../state/slices/controlSlice";
 import { resetScreenSlice } from "../../state/slices/screenSizeSlice";
 
 // All the functions that need confirmation should be stored here
 export const confirmActions = {
-  newProject: [resetPageSlice, resetScreenSlice, resetShapeSlice],
+  newProject: [resetPageSlice, resetScreenSlice, resetControlSlice],
   deletePage: deletePage,
 };
 

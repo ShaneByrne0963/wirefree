@@ -33,7 +33,7 @@ const initialState:ShapeState = {
   }
 }
 
-const shapeSlice = createSlice({
+const controlSlice = createSlice({
   name: "shapes",
   initialState,
   reducers: {
@@ -76,7 +76,7 @@ const shapeSlice = createSlice({
         state.grid.heightUnits = action.payload.units;
       }
     },
-    resetShapeSlice: () => initialState
+    resetControlSlice: () => initialState
   }
 });
 
@@ -89,7 +89,7 @@ export const {
   setColor,
   setGridStatus,
   setGridProperty,
-  resetShapeSlice
-} = shapeSlice.actions;
+  resetControlSlice
+} = controlSlice.actions;
 
-export default shapeSlice.reducer;
+export default controlSlice.reducer;

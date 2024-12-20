@@ -7,23 +7,26 @@ import { ShapeProps, ShapeStyles } from "./CanvasShape";
 import { RootState } from "../../state/store";
 import GridControls from "./GridControls";
 import { Axis } from "../../context";
-import { deselectAllShapes, selectShape } from "../../state/slices/shapeSlice";
+import {
+  deselectAllShapes,
+  selectShape,
+} from "../../state/slices/controlSlice";
 
 const minShapeSize = 2;
 
 function CanvasContainer() {
   const dispatch = useDispatch();
   const selectedShape = useSelector(
-    (state: RootState) => state.shapes.selectedTool
+    (state: RootState) => state.controls.selectedTool
   );
   const screenData = useSelector((state: RootState) => state.screenSize);
   const selectedScreen = screenData.activeScreens[screenData.selectedScreen];
 
-  const shapeColor = useSelector((state: RootState) => state.shapes.color1);
+  const shapeColor = useSelector((state: RootState) => state.controls.color1);
   const selectedTool = useSelector(
-    (state: RootState) => state.shapes.selectedTool
+    (state: RootState) => state.controls.selectedTool
   );
-  const grid = useSelector((state: RootState) => state.shapes.grid);
+  const grid = useSelector((state: RootState) => state.controls.grid);
   const [shapeCreatePoint, setShapeCreatePoint] = useState([-1, -1]);
   const shapeCurrentPoint = useRef([-1, -1]);
   const isCreatingShape = useRef(false);

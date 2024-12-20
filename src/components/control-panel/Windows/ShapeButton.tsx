@@ -3,7 +3,7 @@ import { RootState } from "../../../state/store";
 import {
   deselectShapeTool,
   selectShapeTool,
-} from "../../../state/slices/shapeSlice";
+} from "../../../state/slices/controlSlice";
 import { useRef } from "react";
 import { getShapeHtml } from "../../../shapes";
 
@@ -23,7 +23,7 @@ function ShapeButton(props: ShapeButtonProps) {
   };
   const buttonHtml = getShapeHtml(buttonData);
   const selectedButton = useSelector(
-    (state: RootState) => state.shapes.selectedTool
+    (state: RootState) => state.controls.selectedTool
   );
   const isClicked = useRef(false);
   const selected = props.buttonType === selectedButton;

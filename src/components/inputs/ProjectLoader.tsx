@@ -4,7 +4,7 @@ import {
   GridProps,
   setGridProperty,
   setGridStatus,
-} from "../../state/slices/shapeSlice";
+} from "../../state/slices/controlSlice";
 import {
   ScreenSizeState,
   setScreenSlice,

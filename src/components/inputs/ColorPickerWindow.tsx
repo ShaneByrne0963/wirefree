@@ -1,6 +1,6 @@
 import { ChangeEvent, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setColor } from "../../state/slices/shapeSlice";
+import { setColor } from "../../state/slices/controlSlice";
 import { RootState } from "../../state/store";
 import { convertRgbToHex, getShapeData } from "../../helpers";
 import { updateShape } from "../../state/slices/pageSlice";
@@ -48,9 +48,9 @@ const accents = [
 function ColorPickerWindow() {
   const dispatch = useDispatch();
   const selectedShapes = useSelector(
-    (state: RootState) => state.shapes.selectedShapes
+    (state: RootState) => state.controls.selectedShapes
   );
-  let selectedColor = useSelector((state: RootState) => state.shapes.color1);
+  let selectedColor = useSelector((state: RootState) => state.controls.color1);
 
   // A short cooldown for setting the color input which significantly improves performance
   const isCooldownRef = useRef(true);
@@ -129,7 +129,7 @@ function ColorPickerRow(props: ColorButtonProps) {
 function ColorButton(props: ColorButtonProps) {
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const selectedShapes = useSelector(
-    (state: RootState) => state.shapes.selectedShapes
+    (state: RootState) => state.controls.selectedShapes
   );
   const dispatch = useDispatch();
 

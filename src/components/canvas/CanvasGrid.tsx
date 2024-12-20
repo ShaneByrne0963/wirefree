@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../state/store";
 
 function CanvasGrid() {
-  const gridData = useSelector((state: RootState) => state.shapes.grid);
+  const gridData = useSelector((state: RootState) => state.controls.grid);
   let screenSizeData = useSelector((state: RootState) => state.screenSize);
   const activeScreen =
     screenSizeData.activeScreens[screenSizeData.selectedScreen];
