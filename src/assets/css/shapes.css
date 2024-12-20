@@ -157,3 +157,24 @@
     height: 100%;
   }
 }
+
+.control-panel-item:has(.shape) {
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  >.shape.rectangle {
+    height: 70%;
+  }
+
+  >.shape.round-rectangle {
+    height: 70%;
+    border-radius: 4px;
+  }
+
+  >.shape.circle {
+    height: 100%;
+  }
+}
