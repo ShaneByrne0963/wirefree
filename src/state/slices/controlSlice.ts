@@ -13,6 +13,7 @@ export interface GridProps {
 
 export interface ShapeState {
   selectedTool: string;
+  shapeTool: string;
   selectedShapes: string[];
   color1: string;
   color2: string;
@@ -21,6 +22,7 @@ export interface ShapeState {
 
 const initialState:ShapeState = {
   selectedTool: "",
+  shapeTool: "Rectangle",
   selectedShapes: [],
   color1: "rgb(117, 117, 117)",
   color2: "rgb(255, 255, 255)",
@@ -42,6 +44,9 @@ const controlSlice = createSlice({
     },
     deselectTool(state) {
       state.selectedTool = "";
+    },
+    selectShapeTool(state, action:PayloadAction<string>) {
+      state.shapeTool = action.payload;
     },
     selectShape(state, action:PayloadAction<string>) {
       state.selectedShapes.push(action.payload);
@@ -83,6 +88,7 @@ const controlSlice = createSlice({
 export const {
   selectTool,
   deselectTool,
+  selectShapeTool,
   selectShape,
   deselectShape,
   deselectAllShapes,

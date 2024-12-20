@@ -16,15 +16,15 @@ const minShapeSize = 2;
 
 function CanvasContainer() {
   const dispatch = useDispatch();
-  const selectedShape = useSelector(
-    (state: RootState) => state.controls.selectedTool
-  );
   const screenData = useSelector((state: RootState) => state.screenSize);
   const selectedScreen = screenData.activeScreens[screenData.selectedScreen];
 
   const shapeColor = useSelector((state: RootState) => state.controls.color1);
   const selectedTool = useSelector(
     (state: RootState) => state.controls.selectedTool
+  );
+  const selectedShape = useSelector(
+    (state: RootState) => state.controls.shapeTool
   );
   const grid = useSelector((state: RootState) => state.controls.grid);
   const [shapeCreatePoint, setShapeCreatePoint] = useState([-1, -1]);
@@ -74,7 +74,7 @@ function CanvasContainer() {
 
   // This mouse down event initialises a shape creation
   function handleMouseDown(event: MouseEvent<HTMLDivElement>) {
-    if (selectedShape) {
+    if (selectedTool === "Shapes") {
       const [mouseX, mouseY] = [event.clientX, event.clientY];
       const canvasElement = document.querySelector("#canvas");
       if (canvasElement) {
