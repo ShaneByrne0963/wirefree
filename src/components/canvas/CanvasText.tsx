@@ -3,6 +3,8 @@ import { ShapeProps } from "./CanvasShape";
 import { useDispatch } from "react-redux";
 import { updateShape } from "../../state/slices/pageSlice";
 
+import sanitizeHtml from "sanitize-html";
+
 interface TextLocalProps extends ShapeProps {
   id: string;
   layer: string;
@@ -19,11 +21,11 @@ function CanvasText(props: TextLocalProps) {
     height: `${props.styles.height}px`,
   };
 
-  function handleChange(event: ChangeEvent) {
-    const value = (event.target as HTMLInputElement).value;
+  function handleBlur(event: ChangeEvent) {
+    const value = (event.target as HTMLDivElement).innerHTML;
     const newData = {
       props: {
-        text: value,
+        text: sanitizeHtml(value),
       },
     };
     dispatch(updateShape([props.layer, props.index, newData]));
@@ -38,13 +40,10 @@ function CanvasText(props: TextLocalProps) {
       style={textStyles as CSSProperties}
       data-layer={props.layer}
       data-index={props.index}
-    >
-      {props.selected ? (
-        <textarea onChange={handleChange} value={props.props.text}></textarea>
-      ) : (
-        props.props.text
-      )}
-    </div>
+      contentEditable={props.selected}
+      onBlur={handleBlur}
+      dangerouslySetInnerHTML={{ __html: props.props.text || "" }}
+    ></div>
   );
 }
 
