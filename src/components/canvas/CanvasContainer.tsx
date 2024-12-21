@@ -73,7 +73,7 @@ function CanvasContainer() {
 
   // This mouse down event initialises a shape creation
   function handleMouseDown(event: MouseEvent<HTMLDivElement>) {
-    if (selectedTool === "Shapes") {
+    if (selectedTool === "Shapes" || selectedTool === "Text") {
       const [mouseX, mouseY] = [event.clientX, event.clientY];
       const canvasElement = document.querySelector("#canvas");
       if (canvasElement) {
@@ -163,11 +163,20 @@ function CanvasContainer() {
         const shapeProperties = shapeStyle
           .split("px; ")
           .map((prop) => prop.replace("px;", "").split(": "));
+
+        const shapeProps =
+          selectedTool === "Text"
+            ? {
+                type: "Shape:Text",
+                color: shapeColor,
+                text: "Hello World",
+              }
+            : {
+                type: selectedShape,
+                color: shapeColor,
+              };
         let shapeObject: ShapeProps = {
-          props: {
-            type: selectedShape,
-            color: shapeColor,
-          },
+          props: shapeProps,
           styles: {
             left: 0,
             top: 0,
@@ -201,12 +210,20 @@ function CanvasContainer() {
     isCreatingShape.current = true;
   }
 
+  let classList = [];
+  if (selectedTool === "Shapes" || selectedTool === "Text") {
+    classList.push("drag-create");
+  }
+  if (selectedTool === "Text") {
+    classList.push("text-outline");
+  }
+
   return (
     <div
       id="canvas-container"
       onClick={handleMouseClick}
       onMouseDown={handleMouseDown}
-      className={selectedShape ? "shape-selected" : ""}
+      className={classList.join(" ")}
     >
       <Canvas
         startPoint={shapeCreatePoint}

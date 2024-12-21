@@ -12,8 +12,12 @@
     position: relative;
     padding: var(--canvas-margin);
 
-    &.shape-selected {
+    &.drag-create {
         cursor: crosshair;
+    }
+
+    &.text-outline #shape-create {
+        border: 2px solid rgba(3, 169, 244, 0.7);
     }
 }
 
