@@ -58,13 +58,13 @@ function CanvasContainer() {
       const element = event.target as HTMLElement;
 
       // Check if the clicked element is a shape
-      if (element.classList.contains("canvas-shape")) {
+      if (element.classList.contains("canvas-element")) {
         dispatch(selectShape(element.id));
         return;
       }
 
       // If not, check if it is a child of one
-      const parentElement = element.closest(".canvas-shape") as HTMLElement;
+      const parentElement = element.closest(".canvas-element") as HTMLElement;
       if (parentElement) {
         dispatch(selectShape(parentElement.id));
       }
@@ -169,7 +169,7 @@ function CanvasContainer() {
             ? {
                 type: "Shape:Text",
                 color: shapeColor,
-                text: "Hello World",
+                text: "",
               }
             : {
                 type: selectedShape,

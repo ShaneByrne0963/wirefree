@@ -55,7 +55,8 @@
 /* Shapes */
 
 #shape-create,
-.canvas-shape {
+.canvas-shape,
+.canvas-text {
   position: absolute;
 
   &:has(.icon) {
@@ -93,7 +94,7 @@
   cursor: e-resize;
 } */
 
-.canvas-shape.selected::after {
+.canvas-element.selected::after {
   content: "";
   display: block;
   position: absolute;
@@ -102,6 +103,7 @@
   width: 100%;
   height: 100%;
   border: 2px solid rgba(3, 169, 244, 0.7);
+  pointer-events: none;
 }
 
 #shape-create {
@@ -119,6 +121,15 @@
 .shape {
   width: 100%;
   height: 100%;
+}
+
+.canvas-text textarea {
+  border: none;
+  outline: none;
+  resize: none;
+  width: 100%;
+  min-height: 100%;
+  overflow: visible;
 }
 
 /* Shape Buttons */

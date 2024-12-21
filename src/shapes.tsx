@@ -15,7 +15,7 @@ export function getShapeHtml(props: ShapeHtmlProps) {
       color: props.color,
     };
     shapeHtml = (
-      <div className="text" style={shapeStyles}>
+      <div className="text" style={shapeStyles} contentEditable>
         {props.text}
       </div>
     );

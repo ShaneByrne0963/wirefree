@@ -30,7 +30,9 @@ function CanvasShape(props: ShapeLocalProps) {
   };
   return (
     <div
-      className={"canvas-shape" + (props.selected ? " selected" : "")}
+      className={
+        "canvas-element canvas-shape" + (props.selected ? " selected" : "")
+      }
       id={props.id}
       style={shapeStyles as CSSProperties}
       data-layer={props.layer}

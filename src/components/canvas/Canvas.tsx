@@ -5,6 +5,7 @@ import CanvasShape, { ShapeProps } from "./CanvasShape";
 import { ShapeHtmlProps } from "../../shapes";
 import updateCanvasScale from "../../hooks/updateCanvasScale";
 import CanvasGrid from "./CanvasGrid";
+import CanvasText from "./CanvasText";
 
 interface CanvasProps {
   startPoint: number[];
@@ -60,17 +61,28 @@ function Canvas(props: CanvasProps) {
       shapeIndex = 0;
       return;
     }
-    const shapeHtml = (
-      <CanvasShape
-        id={`shape-${index}`}
-        styles={value.styles}
-        props={value.props}
-        key={index}
-        layer={shapeLayer}
-        index={shapeIndex}
-        selected={selectedShapes.includes(`shape-${index}`)}
-      ></CanvasShape>
-    );
+    const shapeHtml =
+      value.props.type === "Shape:Text" ? (
+        <CanvasText
+          id={`shape-${index}`}
+          styles={value.styles}
+          props={value.props}
+          key={index}
+          layer={shapeLayer}
+          index={shapeIndex}
+          selected={selectedShapes.includes(`shape-${index}`)}
+        ></CanvasText>
+      ) : (
+        <CanvasShape
+          id={`shape-${index}`}
+          styles={value.styles}
+          props={value.props}
+          key={index}
+          layer={shapeLayer}
+          index={shapeIndex}
+          selected={selectedShapes.includes(`shape-${index}`)}
+        ></CanvasShape>
+      );
     shapeIndex++;
     return shapeHtml;
   }
