@@ -70,6 +70,11 @@ export function getShapeColor(element: HTMLElement) {
     return shapeElement.style.backgroundColor || defaultColor;
   }
 
+  // If not a shape, check if its a text component
+  if (element.classList.contains("canvas-text")) {
+    return element.style.color || defaultColor;
+  }
+
   // If not, it should be an icon
   const iconElement = element.querySelector("path");
   if (iconElement) {

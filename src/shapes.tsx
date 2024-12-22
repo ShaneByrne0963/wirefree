@@ -10,16 +10,7 @@ export interface ShapeHtmlProps {
 export function getShapeHtml(props: ShapeHtmlProps) {
   let shapeHtml = <></>;
   const typeClass = convertDisplayToClassName(props.type);
-  if (props.type === "Shape:Text") {
-    const shapeStyles = {
-      color: props.color,
-    };
-    shapeHtml = (
-      <div className="text" style={shapeStyles} contentEditable>
-        {props.text}
-      </div>
-    );
-  } else if (props.type in iconData) {
+  if (props.type in iconData) {
     let path = iconData[props.type as keyof typeof iconData];
     shapeHtml = (
       <VectorGraphic

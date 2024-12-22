@@ -19,6 +19,7 @@ function CanvasText(props: TextLocalProps) {
     top: `${props.styles.top}px`,
     width: `${props.styles.width}px`,
     height: `${props.styles.height}px`,
+    color: props.props.color,
   };
 
   function handleBlur(event: ChangeEvent) {
