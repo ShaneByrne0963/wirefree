@@ -1,9 +1,13 @@
-import { ChangeEvent, CSSProperties } from "react";
+import { ChangeEvent, CSSProperties, useEffect, useRef } from "react";
 import { ShapeProps } from "./CanvasShape";
 import { useDispatch } from "react-redux";
 import { updateShape } from "../../state/slices/pageSlice";
 
 import sanitizeHtml from "sanitize-html";
+import {
+  deselectAllShapes,
+  selectShape,
+} from "../../state/slices/controlSlice";
 
 interface TextLocalProps extends ShapeProps {
   id: string;
@@ -14,6 +18,7 @@ interface TextLocalProps extends ShapeProps {
 
 function CanvasText(props: TextLocalProps) {
   const dispatch = useDispatch();
+  const ref = useRef<HTMLDivElement | null>(null);
   const textStyles = {
     left: `${props.styles.left}px`,
     top: `${props.styles.top}px`,
@@ -32,6 +37,17 @@ function CanvasText(props: TextLocalProps) {
     dispatch(updateShape([props.layer, props.index, newData]));
   }
 
+  // Automatically select the text element on creation
+  useEffect(() => {
+    if (ref.current) {
+      dispatch(deselectAllShapes());
+      setTimeout(() => {
+        dispatch(selectShape(props.id));
+        ref.current?.focus();
+      });
+    }
+  }, []);
+
   return (
     <div
       className={
@@ -43,6 +59,7 @@ function CanvasText(props: TextLocalProps) {
       data-index={props.index}
       contentEditable={props.selected}
       onBlur={handleBlur}
+      ref={ref}
       dangerouslySetInnerHTML={{ __html: props.props.text || "" }}
     ></div>
   );

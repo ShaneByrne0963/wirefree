@@ -9,6 +9,7 @@ import { Axis } from "../../context";
 import {
   deselectAllShapes,
   selectShape,
+  selectTool,
 } from "../../state/slices/controlSlice";
 
 const minShapeSize = 2;
@@ -195,6 +196,10 @@ function CanvasContainer() {
           shapeObject.styles.height > minShapeSize
         ) {
           dispatch(addShape(shapeObject));
+        }
+        // Deselect the text tool to allow text editing
+        if (selectedTool === "Text") {
+          dispatch(selectTool(""));
         }
       }
     }
