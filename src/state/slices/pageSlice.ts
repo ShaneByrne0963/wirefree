@@ -136,6 +136,16 @@ const pageSlice = createSlice({
         state.persistentLayers[state.selectedScreen][layer][index] = updatedProps;
       }
     },
+    deleteShape(state, action: PayloadAction<[layer: string, index: number]>) {
+      const [layer, index] = action.payload;
+      let pageData = state.pages[state.selectedPage].data[state.selectedScreen];
+      if (layer[0] === "_") {
+        pageData[layer].shapes.splice(index, 1);
+      }
+      else {
+        state.persistentLayers[state.selectedScreen][layer].splice(index, 1);
+      }
+    },
     deletePage(state, action: PayloadAction<number>) {
       state.pages.splice(action.payload, 1);
       if (state.selectedPage === state.pages.length) {
@@ -167,6 +177,7 @@ export const {
   toggleLayerVisibility,
   addShape,
   updateShape,
+  deleteShape,
   deletePage,
   setPageSlice,
   resetPageSlice

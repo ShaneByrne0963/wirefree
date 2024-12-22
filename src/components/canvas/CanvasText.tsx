@@ -1,13 +1,14 @@
 import { ChangeEvent, CSSProperties, useEffect, useRef } from "react";
 import { ShapeProps } from "./CanvasShape";
 import { useDispatch } from "react-redux";
-import { updateShape } from "../../state/slices/pageSlice";
+import { deleteShape, updateShape } from "../../state/slices/pageSlice";
 
 import sanitizeHtml from "sanitize-html";
 import {
   deselectAllShapes,
   selectShape,
 } from "../../state/slices/controlSlice";
+import { getShapeData } from "../../helpers";
 
 interface TextLocalProps extends ShapeProps {
   id: string;
@@ -28,7 +29,17 @@ function CanvasText(props: TextLocalProps) {
   };
 
   function handleBlur(event: ChangeEvent) {
-    const value = (event.target as HTMLDivElement).innerHTML;
+    const element = event.target as HTMLDivElement;
+    const value = element.innerHTML;
+
+    if (element.textContent?.length === 0) {
+      const data = getShapeData(props.id);
+      if (data) {
+        dispatch(deleteShape([data.layer, data.index]));
+        return;
+      }
+    }
+
     const newData = {
       props: {
         text: sanitizeHtml(value),
@@ -39,13 +50,11 @@ function CanvasText(props: TextLocalProps) {
 
   // Automatically select the text element on creation
   useEffect(() => {
-    if (ref.current) {
-      dispatch(deselectAllShapes());
-      setTimeout(() => {
-        dispatch(selectShape(props.id));
-        ref.current?.focus();
-      });
-    }
+    dispatch(deselectAllShapes());
+    setTimeout(() => {
+      dispatch(selectShape(props.id));
+      ref.current?.focus();
+    });
   }, []);
 
   return (
