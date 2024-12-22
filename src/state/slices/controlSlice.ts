@@ -49,7 +49,9 @@ const controlSlice = createSlice({
       state.shapeTool = action.payload;
     },
     selectShape(state, action:PayloadAction<string>) {
-      state.selectedShapes.push(action.payload);
+      if (!state.selectedShapes.includes(action.payload)) {
+        state.selectedShapes.push(action.payload);
+      }
     },
     deselectShape(state, action:PayloadAction<string>) {
       const index = state.selectedShapes.indexOf(action.payload);
