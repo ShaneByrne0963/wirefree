@@ -9,6 +9,7 @@ import { selectScreenSize } from "../../state/slices/screenSizeSlice";
 import LayerList from "./layers/LayerList";
 import { updatePageSelectedScreen } from "../../state/slices/pageSlice";
 import ShapeList from "../control-panel/window/shapes/ShapeList";
+import deselectShapes from "../../hooks/deselectShapes";
 
 ///////// Configuration
 
@@ -92,6 +93,7 @@ function SectionComponent(props: SectionComponentProps) {
   const selectedIndex = useSelector(
     (state: RootState) => state.screenSize.selectedScreen
   );
+  const handleDeselect = deselectShapes();
   const dispatch = useDispatch();
 
   return (
@@ -113,7 +115,8 @@ function SectionComponent(props: SectionComponentProps) {
                 width={item.width}
                 height={item.height}
                 selected={selectedIndex === index}
-                handler={() => {
+                handler={(event: React.MouseEvent) => {
+                  handleDeselect(event);
                   dispatch(selectScreenSize(index));
                   dispatch(updatePageSelectedScreen(item.name));
                 }}

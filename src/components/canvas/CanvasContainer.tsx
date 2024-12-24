@@ -2,15 +2,12 @@ import { MouseEvent, useRef, useState } from "react";
 import Canvas from "./Canvas";
 import { clamp } from "../../helpers";
 import { useDispatch, useSelector } from "react-redux";
-import { addShape, deleteShape } from "../../state/slices/pageSlice";
+import { addShape } from "../../state/slices/pageSlice";
 import { ShapeProps, ShapeStyles } from "./CanvasShape";
 import { RootState } from "../../state/store";
 import { Axis } from "../../context";
-import {
-  deselectAllShapes,
-  selectShape,
-  selectTool,
-} from "../../state/slices/controlSlice";
+import { selectTool } from "../../state/slices/controlSlice";
+import deselectShapes from "../../hooks/deselectShapes";
 
 const minShapeSize = 2;
 
@@ -19,6 +16,7 @@ function CanvasContainer() {
   const screenData = useSelector((state: RootState) => state.screenSize);
   const selectedScreen = screenData.activeScreens[screenData.selectedScreen];
   const controlData = useSelector((state: RootState) => state.controls);
+  const handleMouseClick = deselectShapes();
 
   const [shapeCreatePoint, setShapeCreatePoint] = useState([-1, -1]);
   const shapeCurrentPoint = useRef([-1, -1]);
@@ -44,42 +42,6 @@ function CanvasContainer() {
         snapValue = screenValue / gridValue;
     }
     return Math.round(value / snapValue) * snapValue;
-  }
-
-  // Handles the selection of shapes
-  function handleMouseClick(event: MouseEvent) {
-    dispatch(deselectAllShapes());
-
-    if (!controlData.selectedTool) {
-      const element = event.target as HTMLElement;
-
-      // Check if the clicked element is a shape
-      let foundElement = null;
-      if (element.classList.contains("canvas-element")) {
-        dispatch(selectShape(element.id));
-        foundElement = element;
-      } else {
-        // If not, check if it is a child of one
-        const parentElement = element.closest(".canvas-element") as HTMLElement;
-        if (parentElement) {
-          dispatch(selectShape(parentElement.id));
-          foundElement = parentElement;
-        }
-      }
-      document
-        .querySelectorAll(".canvas-element.selected")
-        .forEach((element) => {
-          if (
-            element.classList.contains("canvas-text") &&
-            element.id !== foundElement?.id &&
-            !element.textContent
-          ) {
-            const layer = element.getAttribute("data-layer") || "";
-            const index = parseInt(element.getAttribute("data-index") || "0");
-            dispatch(deleteShape([layer, index]));
-          }
-        });
-    }
   }
 
   // This mouse down event initialises a shape creation

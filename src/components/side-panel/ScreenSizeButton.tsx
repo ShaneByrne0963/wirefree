@@ -3,7 +3,7 @@ type ScreenSizeButtonProps = {
   width: number;
   height: number;
   selected: boolean;
-  handler: () => void;
+  handler: (...args: any[]) => void;
 };
 
 function ScreenSizeButton(props: ScreenSizeButtonProps) {
