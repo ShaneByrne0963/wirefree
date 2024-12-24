@@ -32,13 +32,13 @@ function CanvasText(props: TextLocalProps) {
     const element = event.target as HTMLDivElement;
     const value = element.innerHTML;
 
-    if (element.textContent?.length === 0) {
-      const data = getShapeData(props.id);
-      if (data) {
-        dispatch(deleteShape([data.layer, data.index]));
-        return;
-      }
-    }
+    // if (element.textContent?.length === 0) {
+    //   const data = getShapeData(props.id);
+    //   if (data) {
+    //     dispatch(deleteShape([data.layer, data.index]));
+    //     return;
+    //   }
+    // }
 
     const newData = {
       props: {
@@ -50,11 +50,13 @@ function CanvasText(props: TextLocalProps) {
 
   // Automatically select the text element on creation
   useEffect(() => {
-    dispatch(deselectAllShapes());
-    setTimeout(() => {
-      dispatch(selectShape(props.id));
-      ref.current?.focus();
-    });
+    if (!props.props.text) {
+      dispatch(deselectAllShapes());
+      setTimeout(() => {
+        dispatch(selectShape(props.id));
+        ref.current?.focus();
+      });
+    }
   }, []);
 
   return (

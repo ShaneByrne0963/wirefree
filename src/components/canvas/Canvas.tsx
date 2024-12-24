@@ -54,33 +54,35 @@ function Canvas(props: CanvasProps) {
   });
   let shapeLayer = "";
   let shapeIndex = 0;
+  let shapeCount = 0;
 
-  function renderShape(value: ShapeProps | string, index: number) {
+  function renderShape(value: ShapeProps | string) {
     if (typeof value === "string") {
       shapeLayer = value;
       shapeIndex = 0;
       return;
     }
+    shapeCount++;
     const shapeHtml =
       value.props.type === "Shape:Text" ? (
         <CanvasText
-          id={`shape-${index}`}
+          id={`shape-${shapeCount}`}
           styles={value.styles}
           props={value.props}
-          key={index}
+          key={shapeCount}
           layer={shapeLayer}
           index={shapeIndex}
-          selected={selectedShapes.includes(`shape-${index}`)}
+          selected={selectedShapes.includes(`shape-${shapeCount}`)}
         ></CanvasText>
       ) : (
         <CanvasShape
-          id={`shape-${index}`}
+          id={`shape-${shapeCount}`}
           styles={value.styles}
           props={value.props}
-          key={index}
+          key={shapeCount}
           layer={shapeLayer}
           index={shapeIndex}
-          selected={selectedShapes.includes(`shape-${index}`)}
+          selected={selectedShapes.includes(`shape-${shapeCount}`)}
         ></CanvasShape>
       );
     shapeIndex++;

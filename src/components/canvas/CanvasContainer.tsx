@@ -2,7 +2,7 @@ import { MouseEvent, useRef, useState } from "react";
 import Canvas from "./Canvas";
 import { clamp } from "../../helpers";
 import { useDispatch, useSelector } from "react-redux";
-import { addShape } from "../../state/slices/pageSlice";
+import { addShape, deleteShape } from "../../state/slices/pageSlice";
 import { ShapeProps, ShapeStyles } from "./CanvasShape";
 import { RootState } from "../../state/store";
 import { Axis } from "../../context";
@@ -18,15 +18,8 @@ function CanvasContainer() {
   const dispatch = useDispatch();
   const screenData = useSelector((state: RootState) => state.screenSize);
   const selectedScreen = screenData.activeScreens[screenData.selectedScreen];
+  const controlData = useSelector((state: RootState) => state.controls);
 
-  const shapeColor = useSelector((state: RootState) => state.controls.color1);
-  const selectedTool = useSelector(
-    (state: RootState) => state.controls.selectedTool
-  );
-  const selectedShape = useSelector(
-    (state: RootState) => state.controls.shapeTool
-  );
-  const grid = useSelector((state: RootState) => state.controls.grid);
   const [shapeCreatePoint, setShapeCreatePoint] = useState([-1, -1]);
   const shapeCurrentPoint = useRef([-1, -1]);
   const isCreatingShape = useRef(false);
@@ -35,8 +28,10 @@ function CanvasContainer() {
     let snapValue = 0;
     const screenValue =
       axis === "x" ? selectedScreen.width : selectedScreen.height;
-    const gridValue = axis === "x" ? grid.width : grid.height;
-    const unit = axis === "x" ? grid.widthUnits : grid.heightUnits;
+    const gridValue =
+      axis === "x" ? controlData.grid.width : controlData.grid.height;
+    const unit =
+      axis === "x" ? controlData.grid.widthUnits : controlData.grid.heightUnits;
 
     switch (unit) {
       case "px":
@@ -55,26 +50,44 @@ function CanvasContainer() {
   function handleMouseClick(event: MouseEvent) {
     dispatch(deselectAllShapes());
 
-    if (!selectedTool) {
+    if (!controlData.selectedTool) {
       const element = event.target as HTMLElement;
 
       // Check if the clicked element is a shape
+      let foundElement = null;
       if (element.classList.contains("canvas-element")) {
         dispatch(selectShape(element.id));
-        return;
+        foundElement = element;
+      } else {
+        // If not, check if it is a child of one
+        const parentElement = element.closest(".canvas-element") as HTMLElement;
+        if (parentElement) {
+          dispatch(selectShape(parentElement.id));
+          foundElement = parentElement;
+        }
       }
-
-      // If not, check if it is a child of one
-      const parentElement = element.closest(".canvas-element") as HTMLElement;
-      if (parentElement) {
-        dispatch(selectShape(parentElement.id));
-      }
+      document
+        .querySelectorAll(".canvas-element.selected")
+        .forEach((element) => {
+          if (
+            element.classList.contains("canvas-text") &&
+            element.id !== foundElement?.id &&
+            !element.textContent
+          ) {
+            const layer = element.getAttribute("data-layer") || "";
+            const index = parseInt(element.getAttribute("data-index") || "0");
+            dispatch(deleteShape([layer, index]));
+          }
+        });
     }
   }
 
   // This mouse down event initialises a shape creation
   function handleMouseDown(event: MouseEvent<HTMLDivElement>) {
-    if (selectedTool === "Shapes" || selectedTool === "Text") {
+    if (
+      controlData.selectedTool === "Shapes" ||
+      controlData.selectedTool === "Text"
+    ) {
       const [mouseX, mouseY] = [event.clientX, event.clientY];
       const canvasElement = document.querySelector("#canvas");
       if (canvasElement) {
@@ -87,7 +100,7 @@ function CanvasContainer() {
           clamp(mouseY - canvasRect.y, 0, canvasRect.height) / canvasScale;
 
         // Snap to the grid
-        if (grid.enabled) {
+        if (controlData.grid.enabled) {
           createPointX = snapToGrid(createPointX, "x");
           createPointY = snapToGrid(createPointY, "y");
         }
@@ -114,7 +127,7 @@ function CanvasContainer() {
         let currentY =
           clamp(mouseY - canvasRect.y, 0, canvasRect.height) / canvasScale;
         // Snap to the grid
-        if (grid.enabled) {
+        if (controlData.grid.enabled) {
           currentX = snapToGrid(currentX, "x");
           currentY = snapToGrid(currentY, "y");
         }
@@ -166,15 +179,15 @@ function CanvasContainer() {
           .map((prop) => prop.replace("px;", "").split(": "));
 
         const shapeProps =
-          selectedTool === "Text"
+          controlData.selectedTool === "Text"
             ? {
                 type: "Shape:Text",
-                color: shapeColor,
+                color: controlData.color1,
                 text: "",
               }
             : {
-                type: selectedShape,
-                color: shapeColor,
+                type: controlData.shapeTool,
+                color: controlData.color1,
               };
         let shapeObject: ShapeProps = {
           props: shapeProps,
@@ -198,7 +211,7 @@ function CanvasContainer() {
           dispatch(addShape(shapeObject));
         }
         // Deselect the text tool to allow text editing
-        if (selectedTool === "Text") {
+        if (controlData.selectedTool === "Text") {
           dispatch(selectTool(""));
         }
       }
@@ -216,10 +229,13 @@ function CanvasContainer() {
   }
 
   let classList = [];
-  if (selectedTool === "Shapes" || selectedTool === "Text") {
+  if (
+    controlData.selectedTool === "Shapes" ||
+    controlData.selectedTool === "Text"
+  ) {
     classList.push("drag-create");
   }
-  if (selectedTool === "Text") {
+  if (controlData.selectedTool === "Text") {
     classList.push("text-outline");
   }
 
@@ -232,7 +248,7 @@ function CanvasContainer() {
     >
       <Canvas
         startPoint={shapeCreatePoint}
-        shapeProps={{ type: selectedShape, color: shapeColor }}
+        shapeProps={{ type: controlData.shapeTool, color: controlData.color1 }}
       ></Canvas>
     </div>
   );
