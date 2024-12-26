@@ -14,6 +14,7 @@ interface TextLocalProps extends ShapeProps {
   layer: string;
   index: number;
   selected: boolean;
+  active: boolean;
 }
 
 function CanvasText(props: TextLocalProps) {
@@ -50,11 +51,17 @@ function CanvasText(props: TextLocalProps) {
     }
   }, []);
 
+  let className = "canvas-element canvas-shape";
+  if (props.selected || props.props.text === "") {
+    className += " selected";
+  }
+  if (!props.active) {
+    className += " inactive";
+  }
+
   return (
     <div
-      className={
-        "canvas-element canvas-text" + (props.selected ? " selected" : "")
-      }
+      className={className}
       id={props.id}
       style={textStyles as CSSProperties}
       data-layer={props.layer}

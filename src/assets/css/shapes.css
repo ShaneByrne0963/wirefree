@@ -106,6 +106,10 @@
   pointer-events: none;
 }
 
+.canvas-element.inactive {
+  pointer-events: none;
+}
+
 #shape-create {
   scale: calc(1 / var(--scale));
 }

@@ -18,6 +18,7 @@ interface ShapeLocalProps extends ShapeProps {
   layer: string;
   index: number;
   selected: boolean;
+  active: boolean;
 }
 
 function CanvasShape(props: ShapeLocalProps) {
@@ -28,11 +29,16 @@ function CanvasShape(props: ShapeLocalProps) {
     width: `${props.styles.width}px`,
     height: `${props.styles.height}px`,
   };
+  let className = "canvas-element canvas-shape";
+  if (props.selected) {
+    className += " selected";
+  }
+  if (!props.active) {
+    className += " inactive";
+  }
   return (
     <div
-      className={
-        "canvas-element canvas-shape" + (props.selected ? " selected" : "")
-      }
+      className={className}
       id={props.id}
       style={shapeStyles as CSSProperties}
       data-layer={props.layer}

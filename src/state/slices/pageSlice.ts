@@ -14,8 +14,8 @@ export interface PageState {
 
 // Every page starts with one layer
 const defaultLayerData = {
-  "layers": ["*Base Layer", "_Layer 1"], // We also store the layer names in an array to allow for custom ordering
-  "selected": 1,
+  layers: ["*Base Layer", "_Layer 1"], // We also store the layer names in an array to allow for custom ordering
+  selected: 1,
   "*Base Layer_visible": true,
   "_Layer 1": {
     visible: true,

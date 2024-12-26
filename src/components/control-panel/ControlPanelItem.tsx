@@ -83,16 +83,10 @@ function ControlPanelItem(props: PanelItemProps) {
   ) {
     className += " selected";
   }
-  const buttonData =
-    props.graphic === "Shapes"
-      ? {
-          type: controlData.shapeTool,
-          color: controlData.color1,
-        }
-      : {
-          type: props.graphic,
-          color: disabled ? "#999999" : "#343434",
-        };
+  const buttonData = {
+    type: props.graphic === "Shapes" ? controlData.shapeTool : props.graphic,
+    color: disabled ? "#999999" : "#343434",
+  };
   const shapeHtml = getShapeHtml(buttonData);
   return (
     <a

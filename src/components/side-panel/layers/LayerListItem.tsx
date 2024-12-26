@@ -3,6 +3,7 @@ import {
   selectLayer,
   toggleLayerVisibility,
 } from "../../../state/slices/pageSlice";
+import deselectShapes from "../../../hooks/deselectShapes";
 
 interface LayerListItemProps {
   name: string;
@@ -14,6 +15,12 @@ interface LayerListItemProps {
 
 function LayerListItem(props: LayerListItemProps) {
   const dispatch = useDispatch();
+  const handleDeselect = deselectShapes();
+
+  function handleClick(event: React.MouseEvent) {
+    dispatch(selectLayer(props.index));
+    handleDeselect(event);
+  }
 
   let className = "layer-list-item";
   if (props.selected) {
@@ -25,7 +32,7 @@ function LayerListItem(props: LayerListItemProps) {
     <div className={className}>
       <div
         className={"clickable" + (props.isBase ? " base-layer" : "")}
-        onClick={() => dispatch(selectLayer(props.index))}
+        onClick={handleClick}
       >
         {props.name}
       </div>

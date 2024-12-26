@@ -24,6 +24,11 @@ function Canvas(props: CanvasProps) {
     (state: RootState) => state.controls.selectedShapes
   );
   const selectedScreenSize = activeScreenSizes[selectedScreenIndex];
+  const selectedLayer = useSelector((state: RootState) => {
+    const selectedPage = state.pages.pages[state.pages.selectedPage];
+    const pageData = selectedPage.data[selectedScreenSize.name];
+    return pageData.layers[pageData.selected];
+  });
   const canvasRef = updateCanvasScale(selectedScreenSize);
 
   // Rendering each shape
@@ -73,6 +78,7 @@ function Canvas(props: CanvasProps) {
           layer={shapeLayer}
           index={shapeIndex}
           selected={selectedShapes.includes(`shape-${shapeCount}`)}
+          active={selectedLayer === shapeLayer}
         ></CanvasText>
       ) : (
         <CanvasShape
@@ -83,6 +89,7 @@ function Canvas(props: CanvasProps) {
           layer={shapeLayer}
           index={shapeIndex}
           selected={selectedShapes.includes(`shape-${shapeCount}`)}
+          active={selectedLayer === shapeLayer}
         ></CanvasShape>
       );
     shapeIndex++;
