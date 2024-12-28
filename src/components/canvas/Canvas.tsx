@@ -46,11 +46,7 @@ function Canvas(props: CanvasProps) {
       }
     } else {
       // Persistent Layers
-      if (
-        pageData.pages[pageData.selectedPage].data[selectedScreenSize.name][
-          `${layer}_visible`
-        ]
-      ) {
+      if (currentPage[`${layer}_visible`]) {
         renderElements.push(
           ...pageData.persistentLayers[selectedScreenSize.name][layer]
         );

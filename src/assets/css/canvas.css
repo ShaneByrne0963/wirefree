@@ -62,6 +62,13 @@
     }
 }
 
+#canvas-render {
+    position: fixed;
+    top: 110vh;
+    left: 0;
+    background-color: #ffffff;
+}
+
 @media screen and (max-width: 1000px) {
     :root {
         --canvas-margin: 16px;

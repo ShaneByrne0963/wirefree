@@ -49,7 +49,7 @@ export function saveProject(data: {[key: string]: any}) {
 }
 
 export function exportPage() {
-  let canvasElement = document.querySelector("#canvas-elements") as HTMLElement;
+  let canvasElement = document.querySelector("#canvas-render") as HTMLElement;
   if (!canvasElement) return;
 
   // Render the canvas

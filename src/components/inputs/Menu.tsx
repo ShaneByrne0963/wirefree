@@ -94,7 +94,7 @@ function Menu(props: MenuProps) {
     <div className="menu z-depth-2" ref={menuRef} style={styles}>
       {props.items.map((data, index) => {
         if (data === "Divider") {
-          return <hr></hr>;
+          return <hr key={index}></hr>;
         }
         return (
           <a role="button" key={index} onClick={() => handleInsideClick(data)}>
