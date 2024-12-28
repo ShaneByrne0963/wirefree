@@ -23,6 +23,11 @@ function Menu(props: MenuProps) {
   const screenData = useSelector((state: RootState) => state.screenSize);
   const controlData = useSelector((state: RootState) => state.controls);
 
+  const selectedScreen = useSelector(
+    (state: RootState) => state.pages.selectedScreen
+  );
+  const selectedPage = pageData.pages[pageData.selectedPage].name;
+
   // Each action the menu can perform
   const actions = {
     "New Project": () => {
@@ -49,7 +54,9 @@ function Menu(props: MenuProps) {
       saveProject(data);
     },
     "Export Page": () =>
-      dispatch(setExportingPages([{ screenSize: "Desktop", page: "Index" }])),
+      dispatch(
+        setExportingPages([{ screenSize: selectedScreen, page: selectedPage }])
+      ),
   };
 
   // Set the position of the menu
