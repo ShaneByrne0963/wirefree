@@ -92,11 +92,16 @@ function Menu(props: MenuProps) {
 
   return (
     <div className="menu z-depth-2" ref={menuRef} style={styles}>
-      {props.items.map((data, index) => (
-        <a role="button" key={index} onClick={() => handleInsideClick(data)}>
-          {data}
-        </a>
-      ))}
+      {props.items.map((data, index) => {
+        if (data === "Divider") {
+          return <hr></hr>;
+        }
+        return (
+          <a role="button" key={index} onClick={() => handleInsideClick(data)}>
+            {data}
+          </a>
+        );
+      })}
     </div>
   );
 }

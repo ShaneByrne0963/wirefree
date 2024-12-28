@@ -7,10 +7,26 @@ import html2canvas from "html2canvas";
  * @param text The contents in that file
  */
 export function downloadTextFile(filename: string, text: string) {
-  var element = document.createElement("a");
+  let element = document.createElement("a");
   element.setAttribute(
     "href",
     "data:text/plain;charset=utf-8," + encodeURIComponent(text)
+  );
+  element.setAttribute("download", filename);
+
+  element.style.display = "none";
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+}
+
+export function downloadImageFile(filename: string, canvas: HTMLCanvasElement) {
+  let element = document.createElement("a");
+  element.setAttribute(
+    "href",
+    canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream")
   );
   element.setAttribute("download", filename);
 
@@ -38,10 +54,11 @@ export function exportPage() {
 
   // Render the canvas
   const config = {
-    backgroundColor: "#ffffff"
+    backgroundColor: "#ffffff",
+    foreignObjectRendering: false
   }
   html2canvas(canvasElement, config).then((render) => {
-    document.body.appendChild(render);
+    downloadImageFile("test.jpeg", render);
   });
 }
 
