@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { exportPage } from "../../helpers";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../state/store";
@@ -11,6 +11,7 @@ import {
 
 function CanvasRender(props: exportProps) {
   const dispatch = useDispatch();
+  const rendered = useRef(false);
   const pageData = useSelector((state: RootState) => state.pages.pages).filter(
     (page) => page.name === props.page
   )[0].data[props.screenSize];
@@ -46,8 +47,11 @@ function CanvasRender(props: exportProps) {
 
   // Render the canvas when it is loaded
   useEffect(() => {
-    exportPage();
-    setTimeout(() => dispatch(removeExportingPage()), 10);
+    if (!rendered.current) {
+      rendered.current = true;
+      exportPage();
+      setTimeout(() => dispatch(removeExportingPage()), 10);
+    }
   }, []);
 
   function renderShape(value: ShapeProps, index: number) {
