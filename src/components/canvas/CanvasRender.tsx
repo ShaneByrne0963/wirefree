@@ -83,7 +83,12 @@ function CanvasRender(props: exportProps) {
   }
 
   return (
-    <div id="canvas-render" style={canvasStyles}>
+    <div
+      id="canvas-render"
+      style={canvasStyles}
+      data-page={props.page}
+      data-screensize={props.screenSize}
+    >
       {renderElements.map(renderShape)}
     </div>
   );

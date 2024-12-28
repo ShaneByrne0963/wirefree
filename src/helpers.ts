@@ -52,13 +52,16 @@ export function exportPage() {
   let canvasElement = document.querySelector("#canvas-render") as HTMLElement;
   if (!canvasElement) return;
 
+  const pageName = canvasElement.getAttribute("data-page")?.toLowerCase() || "page";
+  const screen = canvasElement.getAttribute("data-screensize")?.toLowerCase() || "screen";
+
   // Render the canvas
   const config = {
     backgroundColor: "#ffffff",
     foreignObjectRendering: false
   }
   html2canvas(canvasElement, config).then((render) => {
-    downloadImageFile("test.jpeg", render);
+    downloadImageFile(`${pageName}-${screen}.jpeg`, render);
   });
 }
 

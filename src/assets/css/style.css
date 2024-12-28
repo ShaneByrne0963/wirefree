@@ -100,6 +100,10 @@ input[type="text"]:not(.browser-default) {
             background-color: #eeeeee;
         }
     }
+
+    >hr {
+        margin: 0;
+    }
 }
 
 /* Navigation Bar */
