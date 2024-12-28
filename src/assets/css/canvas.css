@@ -63,6 +63,7 @@
 }
 
 #canvas-render {
+    /* Render the element offscreen */
     position: fixed;
     top: 110vh;
     left: 0;

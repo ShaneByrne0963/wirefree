@@ -1,22 +1,32 @@
 import { useEffect } from "react";
 import { exportPage } from "../../helpers";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../state/store";
 import CanvasShape, { ShapeProps } from "./CanvasShape";
 import CanvasText from "./CanvasText";
+import {
+  exportProps,
+  removeExportingPage,
+} from "../../state/slices/controlSlice";
 
-interface CanvasRenderProps {
-  page: string;
-  screenSize: string;
-}
-
-function CanvasRender(props: CanvasRenderProps) {
+function CanvasRender(props: exportProps) {
+  const dispatch = useDispatch();
   const pageData = useSelector((state: RootState) => state.pages.pages).filter(
     (page) => page.name === props.page
   )[0].data[props.screenSize];
   const persistentLayers = useSelector(
     (state: RootState) => state.pages.persistentLayers[props.screenSize]
   );
+  const screenSizeData = useSelector(
+    (state: RootState) =>
+      state.screenSize.activeScreens.filter(
+        (data) => data.name === props.screenSize
+      )[0]
+  );
+  const canvasStyles = {
+    width: `${screenSizeData.width}px`,
+    height: `${screenSizeData.height}px`,
+  };
   let renderElements: ShapeProps[] = [];
 
   pageData.layers.map((layer: string) => {
@@ -37,7 +47,7 @@ function CanvasRender(props: CanvasRenderProps) {
   // Render the canvas when it is loaded
   useEffect(() => {
     exportPage();
-    setTimeout(() => console.log("Image Exported!"), 10);
+    setTimeout(() => dispatch(removeExportingPage()), 10);
   }, []);
 
   function renderShape(value: ShapeProps, index: number) {
@@ -68,7 +78,11 @@ function CanvasRender(props: CanvasRenderProps) {
     return shapeHtml;
   }
 
-  return <div id="canvas-render">{renderElements.map(renderShape)}</div>;
+  return (
+    <div id="canvas-render" style={canvasStyles}>
+      {renderElements.map(renderShape)}
+    </div>
+  );
 }
 
 export default CanvasRender;

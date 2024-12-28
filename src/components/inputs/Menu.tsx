@@ -5,8 +5,9 @@ import {
   ConfirmActionProps,
   confirmAction,
 } from "../../state/slices/windowSlice";
-import { exportPage, saveProject } from "../../helpers";
+import { saveProject } from "../../helpers";
 import { RootState } from "../../state/store";
+import { setExportingPages } from "../../state/slices/controlSlice";
 
 interface MenuProps {
   index: number;
@@ -47,7 +48,8 @@ function Menu(props: MenuProps) {
       };
       saveProject(data);
     },
-    "Export Page": exportPage,
+    "Export Page": () =>
+      dispatch(setExportingPages([{ screenSize: "Desktop", page: "Index" }])),
   };
 
   // Set the position of the menu

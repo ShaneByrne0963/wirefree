@@ -7,11 +7,15 @@ import { useSelector } from "react-redux";
 import { RootState } from "./state/store";
 import Menu from "./components/inputs/Menu";
 import ControlPanel from "./components/control-panel/ControlPanel";
+import CanvasRender from "./components/canvas/CanvasRender";
 
 const colorTheme = "red";
 
 function App() {
   const menus = useSelector((state: RootState) => state.menu.menus);
+  const exportingPages = useSelector(
+    (state: RootState) => state.controls.exportingPages
+  );
   return (
     <ThemeContext.Provider value={colorTheme}>
       <NavBar></NavBar>
@@ -28,6 +32,9 @@ function App() {
           y={menu.y}
         ></Menu>
       ))}
+      {exportingPages.length > 0 && (
+        <CanvasRender {...exportingPages[0]}></CanvasRender>
+      )}
     </ThemeContext.Provider>
   );
 }

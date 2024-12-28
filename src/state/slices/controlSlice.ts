@@ -11,8 +11,14 @@ export interface GridProps {
   heightUnits: gridUnits;
 }
 
+export interface exportProps {
+  page: string;
+  screenSize: string;
+}
+
 export interface ControlState {
   projectName: string;
+  exportingPages: exportProps[];
   selectedTool: string;
   shapeTool: string;
   selectedShapes: string[];
@@ -23,6 +29,7 @@ export interface ControlState {
 
 const initialState: ControlState = {
   projectName: "New Project",
+  exportingPages: [],
   selectedTool: "",
   shapeTool: "Rectangle",
   selectedShapes: [],
@@ -43,6 +50,12 @@ const controlSlice = createSlice({
   reducers: {
     setProjectName(state, action:PayloadAction<string>) {
       state.projectName = action.payload;
+    },
+    setExportingPages(state, action:PayloadAction<exportProps[]>) {
+      state.exportingPages = action.payload;
+    },
+    removeExportingPage(state) {
+      state.exportingPages.splice(0, 1);
     },
     selectTool(state, action:PayloadAction<string>) {
       state.selectedTool = action.payload;
@@ -97,6 +110,8 @@ const controlSlice = createSlice({
 
 export const {
   setProjectName,
+  setExportingPages,
+  removeExportingPage,
   selectTool,
   deselectTool,
   selectShapeTool,
