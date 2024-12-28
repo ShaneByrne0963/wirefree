@@ -1,10 +1,12 @@
+import html2canvas from "html2canvas";
+
 /**
  * Downloads a file onto the user's computer
  * Source: https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server
  * @param filename The name of the file to be saved
  * @param text The contents in that file
  */
-export function downloadFile(filename: string, text: string) {
+export function downloadTextFile(filename: string, text: string) {
   var element = document.createElement("a");
   element.setAttribute(
     "href",
@@ -27,7 +29,20 @@ export function downloadFile(filename: string, text: string) {
 export function saveProject(data: {[key: string]: any}) {
   const name = data.name;
   delete data.name;
-  downloadFile(name + ".json", JSON.stringify(data));
+  downloadTextFile(name + ".json", JSON.stringify(data));
+}
+
+export function exportPage() {
+  let canvasElement = document.querySelector("#canvas-elements") as HTMLElement;
+  if (!canvasElement) return;
+
+  // Render the canvas
+  const config = {
+    backgroundColor: "#ffffff"
+  }
+  html2canvas(canvasElement, config).then((render) => {
+    document.body.appendChild(render);
+  });
 }
 
 /**

@@ -5,7 +5,7 @@ import {
   ConfirmActionProps,
   confirmAction,
 } from "../../state/slices/windowSlice";
-import { saveProject } from "../../helpers";
+import { exportPage, saveProject } from "../../helpers";
 import { RootState } from "../../state/store";
 
 interface MenuProps {
@@ -47,6 +47,7 @@ function Menu(props: MenuProps) {
       };
       saveProject(data);
     },
+    "Export Page": exportPage,
   };
 
   // Set the position of the menu

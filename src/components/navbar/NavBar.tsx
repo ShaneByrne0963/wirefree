@@ -14,7 +14,7 @@ interface NavButtonProps {
 
 function NavBar() {
   const navItems = {
-    File: ["New Project", "Load Project", "Save Project"],
+    File: ["New Project", "Load Project", "Save Project", "Export Page"],
   };
   const color = useContext(ThemeContext);
   return (

@@ -121,6 +121,7 @@ function ProjectName() {
           }
           defaultValue={projectName}
           maxLength={projectNameLength}
+          autoComplete="off"
           onChange={handleChange}
           onFocus={handleFocus}
           autoFocus
