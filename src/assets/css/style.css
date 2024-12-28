@@ -62,6 +62,20 @@ input[type="text"]:not(.browser-default) {
     gap: 4px;
 }
 
+.plain-input,
+.plain-input:focus,
+.plain-input:active {
+  height: auto;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  margin: 0;
+  padding: 0;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: normal;
+}
+
 .menu {
     position: absolute;
     top: 0;
@@ -334,7 +348,7 @@ input[type="text"]:not(.browser-default) {
     position: relative;
     padding: 2px 4px;
 
-    >#project-name {
+    >#project-name-container {
         width: calc(var(--side-panel-width) - 4px);
         font-weight: 500;
     }
@@ -449,14 +463,6 @@ input[type="text"]:not(.browser-default) {
     }
 }
 
-#grid-controls {
-    position: absolute;
-    bottom: 16px;
-    right: 16px;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    cursor: pointer;
-    padding: 8px;
-    z-index: 5;
+#project-name-input {
+    width: 100%;
 }

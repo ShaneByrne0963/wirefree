@@ -108,7 +108,7 @@ function PageListItem(props: PageListItemProps) {
           <input
             type="text"
             value={val}
-            className="edit-page-item browser-default"
+            className="plain-input browser-default"
             maxLength={20}
             autoFocus
             onChange={(event) => setVal(event.target.value)}

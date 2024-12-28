@@ -22,7 +22,7 @@ function useOutsideClick(): UseOutsideClickReturn {
       }
     };
 
-    // The mousedown event listens for 
+    // The mousedown event listens for clicks outside of the component
     const handleMouseDownOutside = (event: MouseEvent) => {
       if (ref.current && !ref.current.contains(event.target as Node)) {
           setIsActive(false);

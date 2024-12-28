@@ -1,11 +1,13 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ColorPickerWindow from "../inputs/ColorPickerWindow";
 import { iconData } from "../VectorGraphic";
 import ControlPanelItem, { PanelItemType } from "./ControlPanelItem";
 import ShapeSelector from "./window/shapes/ShapeSelector";
 import { RootState } from "../../state/store";
-import { toggleGrid } from "../../state/slices/controlSlice";
+import { setProjectName, toggleGrid } from "../../state/slices/controlSlice";
 import GridWindow from "./window/grid/GridWindow";
+import useOutsideClick from "../../hooks/useOutsideClick";
+import { useRef } from "react";
 
 function ControlPanel() {
   const hasGrid = useSelector(
@@ -55,12 +57,49 @@ function ControlPanel() {
 }
 
 function ProjectName() {
+  const { ref, isActive, handleClickInside } = useOutsideClick();
   const projectName = useSelector(
     (state: RootState) => state.controls.projectName
   );
+  const nameInput = useRef(projectName);
+  const dispatch = useDispatch();
+
+  if (!isActive && nameInput.current !== projectName) {
+    const cleanName = nameInput.current.trim();
+    if (cleanName) {
+      dispatch(setProjectName(cleanName));
+    }
+    nameInput.current = projectName;
+  }
+
+  function handleChange(event: React.ChangeEvent) {
+    nameInput.current = (event.target as HTMLInputElement).value;
+  }
+
+  function handleFocus(event: React.FocusEvent) {
+    (event.target as HTMLInputElement).select();
+  }
+
   return (
-    <a role="button" id="project-name">
-      {projectName}
+    <a
+      role="button"
+      id="project-name-container"
+      ref={ref}
+      onClick={handleClickInside}
+      onFocus={handleFocus}
+    >
+      {isActive ? (
+        <input
+          type="text"
+          id="project-name-input"
+          className="plain-input browser-default"
+          defaultValue={projectName}
+          onChange={handleChange}
+          autoFocus
+        ></input>
+      ) : (
+        <span id="project-name">{projectName}</span>
+      )}
     </a>
   );
 }
