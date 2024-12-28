@@ -51,7 +51,7 @@ function CanvasText(props: TextLocalProps) {
     }
   }, []);
 
-  let className = "canvas-element canvas-shape";
+  let className = "canvas-element canvas-text";
   if (props.selected || props.props.text === "") {
     className += " selected";
   }

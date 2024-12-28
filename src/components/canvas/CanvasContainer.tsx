@@ -10,17 +10,21 @@ import { selectTool } from "../../state/slices/controlSlice";
 import deselectShapes from "../../hooks/deselectShapes";
 
 const minShapeSize = 2;
+const minClickDistance = 8;
 
 function CanvasContainer() {
   const dispatch = useDispatch();
   const screenData = useSelector((state: RootState) => state.screenSize);
   const selectedScreen = screenData.activeScreens[screenData.selectedScreen];
   const controlData = useSelector((state: RootState) => state.controls);
-  const handleMouseClick = deselectShapes();
+  const handleDeselect = deselectShapes();
 
   const [shapeCreatePoint, setShapeCreatePoint] = useState([-1, -1]);
   const shapeCurrentPoint = useRef([-1, -1]);
   const isCreatingShape = useRef(false);
+  // Used to determine if the user clicks directly on an element
+  const mouseClickOrigin = useRef([0, 0]);
+  const clickedElement = useRef<HTMLElement | null>(null);
 
   function snapToGrid(value: number, axis: Axis) {
     let snapValue = 0;
@@ -44,13 +48,29 @@ function CanvasContainer() {
     return Math.round(value / snapValue) * snapValue;
   }
 
+  // Ensure the user clicked on an element directly without dragging the mouse
+  function handleMouseClick(event: MouseEvent) {
+    const distanceX = Math.abs(mouseClickOrigin.current[0] - event.clientX);
+    const distanceY = Math.abs(mouseClickOrigin.current[1] - event.clientY);
+
+    if (
+      distanceX < minClickDistance &&
+      distanceY < minClickDistance &&
+      clickedElement.current === (event.target as HTMLElement)
+    ) {
+      handleDeselect(event);
+    }
+  }
+
   // This mouse down event initialises a shape creation
   function handleMouseDown(event: MouseEvent<HTMLDivElement>) {
+    const [mouseX, mouseY] = [event.clientX, event.clientY];
+    mouseClickOrigin.current = [mouseX, mouseY];
+    clickedElement.current = event.target as HTMLElement;
     if (
       controlData.selectedTool === "Shapes" ||
       controlData.selectedTool === "Text"
     ) {
-      const [mouseX, mouseY] = [event.clientX, event.clientY];
       const canvasElement = document.querySelector("#canvas");
       if (canvasElement) {
         const canvasRect = canvasElement.getBoundingClientRect();
