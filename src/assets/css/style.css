@@ -465,4 +465,9 @@ input[type="text"]:not(.browser-default) {
 
 #project-name-input {
     width: 100%;
+
+    &.invalid {
+        color: #aa0000;
+        font-style: italic;
+    }
 }

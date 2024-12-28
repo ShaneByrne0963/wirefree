@@ -7,7 +7,7 @@ import { RootState } from "../../state/store";
 import { setProjectName, toggleGrid } from "../../state/slices/controlSlice";
 import GridWindow from "./window/grid/GridWindow";
 import useOutsideClick from "../../hooks/useOutsideClick";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function ControlPanel() {
   const hasGrid = useSelector(
@@ -56,24 +56,49 @@ function ControlPanel() {
   );
 }
 
+const projectNameLength = 30;
 function ProjectName() {
   const { ref, isActive, handleClickInside } = useOutsideClick();
   const projectName = useSelector(
     (state: RootState) => state.controls.projectName
   );
+  const [isValid, setIsValid] = useState(true);
   const nameInput = useRef(projectName);
   const dispatch = useDispatch();
 
-  if (!isActive && nameInput.current !== projectName) {
-    const cleanName = nameInput.current.trim();
-    if (cleanName) {
-      dispatch(setProjectName(cleanName));
+  // Update the project name when the user clicks out of the input, if valid
+  useEffect(() => {
+    if (!isActive && isValid && nameInput.current !== projectName) {
+      const cleanName = nameInput.current.trim();
+      if (cleanName) {
+        dispatch(setProjectName(cleanName));
+      }
     }
     nameInput.current = projectName;
-  }
+    setIsValid(true);
+  }, [isActive]);
 
   function handleChange(event: React.ChangeEvent) {
     nameInput.current = (event.target as HTMLInputElement).value;
+    let inputValid = true;
+
+    // Ensure no invalid characters are allowed in the file name
+    const cleanName = nameInput.current.replace(/[<>:"/\\|?*]/g, "");
+    if (
+      nameInput.current.trim().length > projectNameLength ||
+      cleanName !== nameInput.current
+    ) {
+      inputValid = false;
+    } else {
+      const lastChar = cleanName[cleanName.length - 1];
+      if (lastChar === ".") {
+        inputValid = false;
+      }
+    }
+
+    if (inputValid !== isValid) {
+      setIsValid(inputValid);
+    }
   }
 
   function handleFocus(event: React.FocusEvent) {
@@ -86,15 +111,18 @@ function ProjectName() {
       id="project-name-container"
       ref={ref}
       onClick={handleClickInside}
-      onFocus={handleFocus}
     >
       {isActive ? (
         <input
           type="text"
           id="project-name-input"
-          className="plain-input browser-default"
+          className={
+            "plain-input browser-default" + (isValid ? "" : " invalid")
+          }
           defaultValue={projectName}
+          maxLength={projectNameLength}
           onChange={handleChange}
+          onFocus={handleFocus}
           autoFocus
         ></input>
       ) : (
