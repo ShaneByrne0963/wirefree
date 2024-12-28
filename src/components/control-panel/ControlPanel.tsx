@@ -55,9 +55,12 @@ function ControlPanel() {
 }
 
 function ProjectName() {
+  const projectName = useSelector(
+    (state: RootState) => state.controls.projectName
+  );
   return (
     <a role="button" id="project-name">
-      New Project
+      {projectName}
     </a>
   );
 }

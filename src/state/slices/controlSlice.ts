@@ -11,7 +11,8 @@ export interface GridProps {
   heightUnits: gridUnits;
 }
 
-export interface ShapeState {
+export interface ControlState {
+  projectName: string;
   selectedTool: string;
   shapeTool: string;
   selectedShapes: string[];
@@ -20,7 +21,8 @@ export interface ShapeState {
   grid: GridProps;
 }
 
-const initialState:ShapeState = {
+const initialState: ControlState = {
+  projectName: "New Project",
   selectedTool: "",
   shapeTool: "Rectangle",
   selectedShapes: [],
@@ -36,9 +38,12 @@ const initialState:ShapeState = {
 }
 
 const controlSlice = createSlice({
-  name: "shapes",
+  name: "controls",
   initialState,
   reducers: {
+    setProjectName(state, action:PayloadAction<string>) {
+      state.projectName = action.payload;
+    },
     selectTool(state, action:PayloadAction<string>) {
       state.selectedTool = action.payload;
     },
@@ -91,6 +96,7 @@ const controlSlice = createSlice({
 });
 
 export const {
+  setProjectName,
   selectTool,
   deselectTool,
   selectShapeTool,

@@ -10,7 +10,7 @@ import { selectTool } from "../../state/slices/controlSlice";
 import deselectShapes from "../../hooks/deselectShapes";
 
 const minShapeSize = 2;
-const minClickDistance = 8;
+const minClickDistance = 16;
 
 function CanvasContainer() {
   const dispatch = useDispatch();

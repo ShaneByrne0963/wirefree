@@ -4,6 +4,7 @@ import {
   GridProps,
   setGridProperty,
   setGridStatus,
+  setProjectName,
 } from "../../state/slices/controlSlice";
 import {
   ScreenSizeState,
@@ -82,6 +83,9 @@ function ProjectLoader() {
         )
       )
         return handleInvalidInput();
+
+      // Set the project name
+      dispatch(setProjectName(files[0].name.replace(".json", "")));
 
       // Screen size properties
       setProjectProperties(() => {
