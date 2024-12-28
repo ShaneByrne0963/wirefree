@@ -25,7 +25,8 @@ export function downloadFile(filename: string, text: string) {
  * @param data All the saved data of the project
  */
 export function saveProject(data: {[key: string]: any}) {
-  const name = data.name || "New Project";
+  const name = data.name;
+  delete data.name;
   downloadFile(name + ".json", JSON.stringify(data));
 }
 

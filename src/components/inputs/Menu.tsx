@@ -39,7 +39,7 @@ function Menu(props: MenuProps) {
     "Load Project": () => document.getElementById("project-loader")?.click(),
     "Save Project": () => {
       const data = {
-        name: "New Project",
+        name: controlData.projectName,
         version: "0.0.0",
         screenSizes: screenData,
         pages: pageData,
