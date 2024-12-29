@@ -1,7 +1,5 @@
-import { useContext } from "react";
 import { RootState } from "../../state/store";
 import SidePanelLabel from "./SidePanelLabel";
-import { ThemeContext } from "../../context";
 import ScreenSizeButton from "./ScreenSizeButton";
 import AddScreenSize from "./AddScreenSize";
 import { useDispatch, useSelector } from "react-redux";
@@ -40,12 +38,9 @@ type SectionComponentProps = {
 ///////// Components
 
 function SidePanelSection(props: SidePanelSectionProps) {
-  const color = useContext(ThemeContext);
   let labelHtml = null;
   if (props.label) {
-    labelHtml = (
-      <SidePanelLabel color={color} text={props.label}></SidePanelLabel>
-    );
+    labelHtml = <SidePanelLabel text={props.label}></SidePanelLabel>;
     if (props.labelButton) {
       labelHtml = (
         <div className="label-with-button">

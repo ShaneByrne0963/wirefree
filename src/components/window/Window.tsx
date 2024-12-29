@@ -3,12 +3,10 @@ import { RootState } from "../../state/store";
 import {
   MouseEvent,
   TransitionEvent,
-  useContext,
   useEffect,
   useLayoutEffect,
   useState,
 } from "react";
-import { ThemeContext } from "../../context";
 import {
   ConfirmActionState,
   WindowMessageState,
@@ -54,7 +52,6 @@ function WindowContainer() {
 }
 
 function Window(props: WindowProps) {
-  const color = useContext(ThemeContext);
   const dispatch = useDispatch();
   const active = props.window.active;
   const label = props.window.label;
@@ -105,7 +102,7 @@ function Window(props: WindowProps) {
         style={windowCss}
         onTransitionEnd={handleTransitionEnd}
       >
-        <div className={color + " window-top lighten-2 z-depth-1"}>
+        <div className="grey window-top lighten-2 z-depth-1">
           <span>{label}</span>
           <button
             className="close plain"

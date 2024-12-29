@@ -1,7 +1,5 @@
 import PageName from "./pages/PageName";
 import SidePanelSection from "./SidePanelSection";
-import { useContext } from "react";
-import { ThemeContext } from "../../context";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../state/store";
 import { addLayerToPage } from "../../state/slices/pageSlice";
@@ -34,9 +32,8 @@ function SidePanel() {
     }
   }
 
-  const color = useContext(ThemeContext);
   return (
-    <div id="side-panel" className={color + " lighten-3"}>
+    <div id="side-panel" className="grey lighten-1">
       <PageName></PageName>
       <SidePanelSection
         sectionType="screen"

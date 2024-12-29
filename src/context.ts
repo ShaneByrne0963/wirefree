@@ -1,5 +1,3 @@
-import { createContext } from "react";
-
 // Default Screen Sizes
 export const defaultScreenSizes = [
   { name: "Desktop", width: 1920, height: 1080 },
@@ -9,5 +7,3 @@ export const defaultScreenSizes = [
 ];
 
 export type Axis = "x" | "y";
-
-export const ThemeContext = createContext('red');

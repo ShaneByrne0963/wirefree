@@ -1,5 +1,4 @@
-import { useContext, useRef } from "react";
-import { ThemeContext } from "../../context";
+import { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { openMenu } from "../../state/slices/menuSlice";
 import ProjectLoader from "../inputs/ProjectLoader";
@@ -23,14 +22,13 @@ function NavBar() {
       "Export All Pages",
     ],
   };
-  const color = useContext(ThemeContext);
   return (
-    <nav id="nav-bar" className={color + " lighten-2"}>
+    <nav id="nav-bar" className="grey darken-2">
       <div className="nav-wrapper">
         <ul id="nav-mobile" className="left hide-on-med-and-down">
           {Object.keys(navItems).map((key, index) => (
             <NavButton
-              color={color}
+              color="grey"
               name={key}
               key={index}
               items={navItems[key as keyof typeof navItems]}
@@ -62,7 +60,7 @@ function NavButton(props: NavButtonProps) {
     <li>
       <a
         role="button"
-        className={props.color + "-text text-lighten-5"}
+        className="grey-text text-lighten-5"
         onClick={handleClick}
         ref={ref}
       >
