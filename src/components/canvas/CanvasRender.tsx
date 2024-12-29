@@ -47,11 +47,14 @@ function CanvasRender(props: exportProps) {
 
   // Render the canvas when it is loaded
   useEffect(() => {
-    if (!rendered.current) {
-      rendered.current = true;
-      exportPage();
-      setTimeout(() => dispatch(removeExportingPage()), 10);
+    async function startExport() {
+      if (!rendered.current) {
+        rendered.current = true;
+        await exportPage();
+        dispatch(removeExportingPage());
+      }
     }
+    startExport();
   }, []);
 
   function renderShape(value: ShapeProps, index: number) {

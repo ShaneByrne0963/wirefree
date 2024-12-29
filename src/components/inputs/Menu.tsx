@@ -57,6 +57,9 @@ function Menu(props: MenuProps) {
       dispatch(
         setExportingPages([{ screenSize: selectedScreen, page: selectedPage }])
       ),
+    "Export All Pages": () => {
+      console.log("Hello World");
+    },
   };
 
   // Set the position of the menu

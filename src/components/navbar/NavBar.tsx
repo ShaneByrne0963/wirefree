@@ -20,6 +20,7 @@ function NavBar() {
       "Save Project",
       "Divider",
       "Export Page",
+      "Export All Pages",
     ],
   };
   const color = useContext(ThemeContext);
