@@ -94,7 +94,11 @@ function SectionComponent(props: SectionComponentProps) {
   return (
     <div
       id={"section-" + props.sectionType}
-      className={"side-panel-section " + sectionSize}
+      className={
+        "side-panel-section " +
+        sectionSize +
+        (props.sectionType === "screen" ? " wide" : "")
+      }
     >
       {props.sectionType === "shapes" && (
         <ShapeList tab={props.selectedIndex}></ShapeList>

@@ -102,10 +102,10 @@ function Window(props: WindowProps) {
         style={windowCss}
         onTransitionEnd={handleTransitionEnd}
       >
-        <div className="grey window-top lighten-2 z-depth-1">
-          <span>{label}</span>
+        <div className="grey window-top darken-2 z-depth-1">
+          <span className="grey-text text-lighten-5">{label}</span>
           <button
-            className="close plain"
+            className="close plain grey-text text-lighten-5"
             onClick={() => dispatch(setWindowActive([label, false]))}
           >
             &times;
