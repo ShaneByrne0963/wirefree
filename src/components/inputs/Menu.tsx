@@ -7,7 +7,10 @@ import {
 } from "../../state/slices/windowSlice";
 import { saveProject } from "../../helpers";
 import { RootState } from "../../state/store";
-import { setExportingPages } from "../../state/slices/controlSlice";
+import {
+  exportProps,
+  setExportingPages,
+} from "../../state/slices/controlSlice";
 
 interface MenuProps {
   index: number;
@@ -58,7 +61,16 @@ function Menu(props: MenuProps) {
         setExportingPages([{ screenSize: selectedScreen, page: selectedPage }])
       ),
     "Export All Pages": () => {
-      console.log("Hello World");
+      let screens: exportProps[] = [];
+      screenData.activeScreens.map((screen) =>
+        pageData.pages.map((page) =>
+          screens.push({
+            screenSize: screen.name,
+            page: page.name,
+          })
+        )
+      );
+      dispatch(setExportingPages(screens));
     },
   };
 

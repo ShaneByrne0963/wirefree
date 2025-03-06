@@ -29,6 +29,9 @@ function CanvasRender(props: exportProps) {
     height: `${screenSizeData.height}px`,
   };
   let renderElements: ShapeProps[] = [];
+  const exportingPages = useSelector(
+    (state: RootState) => state.controls.exportingPages
+  );
 
   pageData.layers.map((layer: string) => {
     // Regular layers
@@ -45,15 +48,21 @@ function CanvasRender(props: exportProps) {
     }
   });
 
-  // Render the canvas when it is loaded
-  useEffect(() => {
-    async function startExport() {
-      if (!rendered.current) {
-        rendered.current = true;
-        await exportPage();
-        dispatch(removeExportingPage());
+  async function startExport() {
+    if (!rendered.current) {
+      rendered.current = true;
+      await exportPage();
+      dispatch(removeExportingPage());
+      if (exportingPages.length > 1) {
+        setTimeout(() => {
+          rendered.current = false;
+          startExport();
+        }, 10);
       }
     }
+  }
+  // Render the canvas when it is loaded
+  useEffect(() => {
     startExport();
   }, []);
 
