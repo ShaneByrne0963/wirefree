@@ -1,6 +1,5 @@
 import { MouseEvent, useRef, useState } from "react";
 import Canvas from "./Canvas";
-import { clamp } from "../../helpers";
 import { useDispatch, useSelector } from "react-redux";
 import { addShape } from "../../state/slices/pageSlice";
 import { ShapeProps, ShapeStyles } from "./CanvasShape";
@@ -76,10 +75,8 @@ function CanvasContainer() {
         const canvasRect = canvasElement.getBoundingClientRect();
         const canvasStyles = window.getComputedStyle(canvasElement);
         const canvasScale = parseFloat(canvasStyles.getPropertyValue("scale"));
-        let createPointX =
-          clamp(mouseX - canvasRect.x, 0, canvasRect.width) / canvasScale;
-        let createPointY =
-          clamp(mouseY - canvasRect.y, 0, canvasRect.height) / canvasScale;
+        let createPointX = (mouseX - canvasRect.x) / canvasScale;
+        let createPointY = (mouseY - canvasRect.y) / canvasScale;
 
         // Snap to the grid
         if (controlData.grid.enabled) {
@@ -93,10 +90,10 @@ function CanvasContainer() {
     }
   }
 
-  // This mouse move event updates the creating shape's size
   function handleMouseMove(event: any) {
     let shapeCreateElement = document.querySelector("#shape-create");
     if (shapeCreateElement) {
+      // Update the creating shape's size
       const [startX, startY] = shapeCreatePoint;
       const [mouseX, mouseY] = [event.clientX, event.clientY];
       const canvasElement = document.querySelector("#canvas");
@@ -104,10 +101,8 @@ function CanvasContainer() {
         const canvasRect = canvasElement.getBoundingClientRect();
         const canvasStyles = window.getComputedStyle(canvasElement);
         const canvasScale = parseFloat(canvasStyles.getPropertyValue("scale"));
-        let currentX =
-          clamp(mouseX - canvasRect.x, 0, canvasRect.width) / canvasScale;
-        let currentY =
-          clamp(mouseY - canvasRect.y, 0, canvasRect.height) / canvasScale;
+        let currentX = (mouseX - canvasRect.x) / canvasScale;
+        let currentY = (mouseY - canvasRect.y) / canvasScale;
         // Snap to the grid
         if (controlData.grid.enabled) {
           currentX = snapToGrid(currentX, "x");
