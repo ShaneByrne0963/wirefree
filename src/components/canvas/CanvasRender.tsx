@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import { exportPage } from "../../helpers";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../state/store";
@@ -11,7 +11,7 @@ import {
 
 function CanvasRender(props: exportProps) {
   const dispatch = useDispatch();
-  const rendered = useRef(false);
+  const [count, setCount] = useState(0);
   const pageData = useSelector((state: RootState) => state.pages.pages).filter(
     (page) => page.name === props.page
   )[0].data[props.screenSize];
@@ -29,9 +29,6 @@ function CanvasRender(props: exportProps) {
     height: `${screenSizeData.height}px`,
   };
   let renderElements: ShapeProps[] = [];
-  const exportingPages = useSelector(
-    (state: RootState) => state.controls.exportingPages
-  );
 
   pageData.layers.map((layer: string) => {
     // Regular layers
@@ -48,23 +45,18 @@ function CanvasRender(props: exportProps) {
     }
   });
 
-  async function startExport() {
-    if (!rendered.current) {
-      rendered.current = true;
-      await exportPage();
-      dispatch(removeExportingPage());
-      if (exportingPages.length > 1) {
-        setTimeout(() => {
-          rendered.current = false;
-          startExport();
-        }, 10);
-      }
-    }
-  }
   // Render the canvas when it is loaded
   useEffect(() => {
+    async function startExport() {
+      //console.log(renderElements.length);
+      if (renderElements.length > 0) {
+        await exportPage();
+      }
+      dispatch(removeExportingPage());
+      setCount(count + 1);
+    }
     startExport();
-  }, []);
+  }, [count]);
 
   function renderShape(value: ShapeProps, index: number) {
     const shapeHtml =
