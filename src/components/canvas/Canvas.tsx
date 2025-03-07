@@ -8,7 +8,7 @@ import CanvasGrid from "./CanvasGrid";
 import CanvasText from "./CanvasText";
 
 interface CanvasProps {
-  startPoint: number[];
+  startPoint: number[] | null;
   shapeProps: ShapeHtmlProps;
 }
 
@@ -95,7 +95,7 @@ function Canvas(props: CanvasProps) {
   return (
     <div id="canvas" className="z-depth-2" ref={canvasRef}>
       <div id="canvas-elements">{renderElements.map(renderShape)}</div>
-      {props.startPoint[0] >= 0 && (
+      {props.startPoint !== null && (
         <CanvasCreateShape props={props.shapeProps}></CanvasCreateShape>
       )}
       {gridData.enabled && <CanvasGrid></CanvasGrid>}

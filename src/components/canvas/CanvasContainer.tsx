@@ -18,7 +18,7 @@ function CanvasContainer() {
   const controlData = useSelector((state: RootState) => state.controls);
   const handleDeselect = deselectShapes();
 
-  const [mouseStart, setMouseStart] = useState([-1, -1]);
+  const [mouseStart, setMouseStart] = useState<number[] | null>(null);
   const shapeCurrentPoint = useRef([-1, -1]);
   const hasClicked = useRef(false);
   // Used to determine if the user clicks directly on an element
@@ -105,7 +105,7 @@ function CanvasContainer() {
   // Update the creating shape's size
   function handleShapeCreateMove(event: any) {
     let shapeCreateElement = document.querySelector("#shape-create");
-    if (shapeCreateElement) {
+    if (shapeCreateElement && mouseStart !== null) {
       const [startX, startY] = mouseStart;
       const [mouseX, mouseY] = [event.clientX, event.clientY];
       const canvasElement = document.querySelector("#canvas");
@@ -207,7 +207,7 @@ function CanvasContainer() {
     }
     // Finally, reset the state of the start and end points
     shapeCurrentPoint.current = [-1, -1];
-    setMouseStart([-1, -1]);
+    setMouseStart(null);
   }
 
   function handleShapeMove() {
@@ -219,11 +219,11 @@ function CanvasContainer() {
     document.removeEventListener("mousemove", handleShapeMove);
     document.removeEventListener("mouseup", handleShapeMoveEnd);
     hasClicked.current = false;
-    setMouseStart([-1, -1]);
+    setMouseStart(null);
   }
 
   // Listen for mouse movements to update the shape size
-  if (mouseStart[0] >= 0 && !hasClicked.current) {
+  if (mouseStart !== null && !hasClicked.current) {
     hasClicked.current = true;
     if (mouseEventType.current === "create") {
       document.addEventListener("mousemove", handleShapeCreateMove);
