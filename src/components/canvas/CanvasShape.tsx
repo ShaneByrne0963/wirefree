@@ -31,7 +31,7 @@ function CanvasShape(props: ShapeLocalProps) {
   };
   let className = "canvas-element canvas-shape";
   if (props.selected) {
-    className += " selected";
+    className += " selected z-depth-3";
   }
   if (!props.active) {
     className += " inactive";

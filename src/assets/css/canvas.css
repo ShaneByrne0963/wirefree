@@ -2,6 +2,10 @@
     --canvas-margin: 32px;
 }
 
+body:has(#canvas-container.shape-move) {
+    cursor: grabbing;
+}
+
 #canvas-container {
     --canvas-scale: 1;
     height: 100%;

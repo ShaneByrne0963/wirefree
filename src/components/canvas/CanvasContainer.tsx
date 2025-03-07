@@ -9,7 +9,7 @@ import { selectTool } from "../../state/slices/controlSlice";
 import deselectShapes from "../../hooks/deselectShapes";
 
 const minShapeSize = 2;
-const minClickDistance = 16;
+const minClickDistance = 8;
 
 function CanvasContainer() {
   const dispatch = useDispatch();
@@ -19,6 +19,7 @@ function CanvasContainer() {
   const handleDeselect = deselectShapes();
 
   const [mouseStart, setMouseStart] = useState<number[] | null>(null);
+  const [shapeMove, setShapeMove] = useState(false);
   const shapeCurrentPoint = useRef([-1, -1]);
   const hasClicked = useRef(false);
   // Used to determine if the user clicks directly on an element
@@ -96,10 +97,6 @@ function CanvasContainer() {
         setMouseStart([createPointX, createPointY]);
       }
     }
-    document.removeEventListener("mousemove", handleShapeCreateMove);
-    document.removeEventListener("mouseup", handleShapeCreate);
-    document.removeEventListener("mousemove", handleShapeMove);
-    document.removeEventListener("mouseup", handleShapeMoveEnd);
   }
 
   // Update the creating shape's size
@@ -210,15 +207,20 @@ function CanvasContainer() {
     setMouseStart(null);
   }
 
-  function handleShapeMove() {
-    console.log("Moving");
+  function handleShapeMove(event: any) {
+    const distanceX = Math.abs(mouseClickOrigin.current[0] - event.clientX);
+    const distanceY = Math.abs(mouseClickOrigin.current[1] - event.clientY);
+
+    if (distanceX >= minClickDistance || distanceY >= minClickDistance) {
+      setShapeMove(true);
+    }
   }
 
   function handleShapeMoveEnd() {
-    console.log("Moved");
     document.removeEventListener("mousemove", handleShapeMove);
     document.removeEventListener("mouseup", handleShapeMoveEnd);
     hasClicked.current = false;
+    setShapeMove(false);
     setMouseStart(null);
   }
 
@@ -229,7 +231,6 @@ function CanvasContainer() {
       document.addEventListener("mousemove", handleShapeCreateMove);
       document.addEventListener("mouseup", handleShapeCreate);
     } else if (mouseEventType.current === "move") {
-      console.log("Adding events");
       document.addEventListener("mousemove", handleShapeMove);
       document.addEventListener("mouseup", handleShapeMoveEnd);
     }
@@ -244,6 +245,9 @@ function CanvasContainer() {
   }
   if (controlData.selectedTool === "Text") {
     classList.push("text-outline");
+  }
+  if (shapeMove) {
+    classList.push("shape-move");
   }
 
   return (
