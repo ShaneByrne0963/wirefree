@@ -95,8 +95,8 @@ function CanvasContainer() {
             .querySelectorAll(".canvas-element.selected")
             .forEach((element: Element) => {
               let el = element as HTMLElement;
-              let left = parseInt(el.style.left.replace("px", ""));
-              let top = parseInt(el.style.top.replace("px", ""));
+              let left = el.style.left.replace("px", "");
+              let top = el.style.top.replace("px", "");
 
               selectedStyles[el.id] = [left, top];
             });
@@ -236,14 +236,24 @@ function CanvasContainer() {
         const canvasStyles = window.getComputedStyle(canvasElement);
         const canvasScale = parseFloat(canvasStyles.getPropertyValue("scale"));
 
+        // Update the positions of each selected element
         for (let [key, value] of Object.entries(selectedShapes.current) as [
           string,
           [string, string]
         ]) {
           const element = document.getElementById(key);
           if (!element) continue;
-          element.style.left = `${value[0] + distanceX / canvasScale}px`;
-          element.style.top = `${value[1] + distanceY / canvasScale}px`;
+          let left = parseInt(value[0]) + distanceX / canvasScale;
+          let top = parseInt(value[1]) + distanceY / canvasScale;
+
+          // Snap to grid
+          if (controlData.grid.enabled) {
+            left = snapToGrid(left, "x");
+            top = snapToGrid(top, "y");
+          }
+
+          element.style.left = left + "px";
+          element.style.top = top + "px";
         }
       }
     }
