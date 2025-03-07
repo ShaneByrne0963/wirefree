@@ -26,6 +26,7 @@ function CanvasContainer() {
   const mouseClickOrigin = useRef([0, 0]);
   const clickedElement = useRef<HTMLElement | null>(null);
   const mouseEventType = useRef<"create" | "move" | null>(null);
+  const selectedShapes = useRef<any>(null);
 
   function snapToGrid(value: number, axis: Axis) {
     let snapValue = 0;
@@ -88,6 +89,18 @@ function CanvasContainer() {
         if (clickedElement.current.closest(".selected")) {
           mouseEventType.current = "move";
           setMouseStart([createPointX, createPointY]);
+          // Store the left and top styles of all selected elements for reference
+          let selectedStyles: Record<string, any> = {};
+          document
+            .querySelectorAll(".canvas-element.selected")
+            .forEach((element: Element) => {
+              let el = element as HTMLElement;
+              let left = parseInt(el.style.left.replace("px", ""));
+              let top = parseInt(el.style.top.replace("px", ""));
+
+              selectedStyles[el.id] = [left, top];
+            });
+          selectedShapes.current = selectedStyles;
         }
       } else if (
         controlData.selectedTool === "Shapes" ||
@@ -208,11 +221,31 @@ function CanvasContainer() {
   }
 
   function handleShapeMove(event: any) {
-    const distanceX = Math.abs(mouseClickOrigin.current[0] - event.clientX);
-    const distanceY = Math.abs(mouseClickOrigin.current[1] - event.clientY);
+    const distanceX = event.clientX - mouseClickOrigin.current[0];
+    const distanceY = event.clientY - mouseClickOrigin.current[1];
 
-    if (distanceX >= minClickDistance || distanceY >= minClickDistance) {
-      setShapeMove(true);
+    if (
+      Math.abs(distanceX) >= minClickDistance ||
+      Math.abs(distanceY) >= minClickDistance
+    ) {
+      if (!shapeMove) {
+        setShapeMove(true);
+      }
+      const canvasElement = document.querySelector("#canvas");
+      if (canvasElement) {
+        const canvasStyles = window.getComputedStyle(canvasElement);
+        const canvasScale = parseFloat(canvasStyles.getPropertyValue("scale"));
+
+        for (let [key, value] of Object.entries(selectedShapes.current) as [
+          string,
+          [string, string]
+        ]) {
+          const element = document.getElementById(key);
+          if (!element) continue;
+          element.style.left = `${value[0] + distanceX / canvasScale}px`;
+          element.style.top = `${value[1] + distanceY / canvasScale}px`;
+        }
+      }
     }
   }
 
@@ -222,6 +255,7 @@ function CanvasContainer() {
     hasClicked.current = false;
     setShapeMove(false);
     setMouseStart(null);
+    selectedShapes.current = null;
   }
 
   // Listen for mouse movements to update the shape size
