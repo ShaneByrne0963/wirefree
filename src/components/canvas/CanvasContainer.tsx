@@ -1,7 +1,7 @@
 import { MouseEvent, useRef, useState } from "react";
 import Canvas from "./Canvas";
 import { useDispatch, useSelector } from "react-redux";
-import { addShape } from "../../state/slices/pageSlice";
+import { addShape, updateShape } from "../../state/slices/pageSlice";
 import { ShapeProps, ShapeStyles } from "./CanvasShape";
 import { RootState } from "../../state/store";
 import { Axis } from "../../context";
@@ -250,6 +250,23 @@ function CanvasContainer() {
   }
 
   function handleShapeMoveEnd() {
+    // Update all the moved shapes in the store
+    for (let key of Object.keys(selectedShapes.current)) {
+      const element = document.getElementById(key);
+      if (!element) continue;
+      let update = {
+        styles: {
+          left: parseInt(element.style.left.replace("px", "")),
+          top: parseInt(element.style.top.replace("px", "")),
+        },
+      };
+      let layer = element.getAttribute("data-layer");
+      let index = element.getAttribute("data-index");
+      if (!layer || !index) continue;
+      dispatch(updateShape([layer, parseInt(index), update]));
+    }
+
+    // Reset all values
     document.removeEventListener("mousemove", handleShapeMove);
     document.removeEventListener("mouseup", handleShapeMoveEnd);
     hasClicked.current = false;
