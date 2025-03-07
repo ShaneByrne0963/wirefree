@@ -18,12 +18,13 @@ function CanvasContainer() {
   const controlData = useSelector((state: RootState) => state.controls);
   const handleDeselect = deselectShapes();
 
-  const [shapeCreatePoint, setShapeCreatePoint] = useState([-1, -1]);
+  const [mouseStart, setMouseStart] = useState([-1, -1]);
   const shapeCurrentPoint = useRef([-1, -1]);
-  const isCreatingShape = useRef(false);
+  const hasClicked = useRef(false);
   // Used to determine if the user clicks directly on an element
   const mouseClickOrigin = useRef([0, 0]);
   const clickedElement = useRef<HTMLElement | null>(null);
+  const mouseEventType = useRef<"create" | "move" | null>(null);
 
   function snapToGrid(value: number, axis: Axis) {
     let snapValue = 0;
@@ -66,35 +67,46 @@ function CanvasContainer() {
     const [mouseX, mouseY] = [event.clientX, event.clientY];
     mouseClickOrigin.current = [mouseX, mouseY];
     clickedElement.current = event.target as HTMLElement;
-    if (
-      controlData.selectedTool === "Shapes" ||
-      controlData.selectedTool === "Text"
-    ) {
-      const canvasElement = document.querySelector("#canvas");
-      if (canvasElement) {
-        const canvasRect = canvasElement.getBoundingClientRect();
-        const canvasStyles = window.getComputedStyle(canvasElement);
-        const canvasScale = parseFloat(canvasStyles.getPropertyValue("scale"));
-        let createPointX = (mouseX - canvasRect.x) / canvasScale;
-        let createPointY = (mouseY - canvasRect.y) / canvasScale;
+    const canvasElement = document.querySelector("#canvas");
+    let createPointX, createPointY;
 
-        // Snap to the grid
-        if (controlData.grid.enabled) {
-          createPointX = snapToGrid(createPointX, "x");
-          createPointY = snapToGrid(createPointY, "y");
+    if (canvasElement) {
+      const canvasRect = canvasElement.getBoundingClientRect();
+      const canvasStyles = window.getComputedStyle(canvasElement);
+      const canvasScale = parseFloat(canvasStyles.getPropertyValue("scale"));
+      createPointX = (mouseX - canvasRect.x) / canvasScale;
+      createPointY = (mouseY - canvasRect.y) / canvasScale;
+
+      // Snap to the grid
+      if (controlData.grid.enabled) {
+        createPointX = snapToGrid(createPointX, "x");
+        createPointY = snapToGrid(createPointY, "y");
+      }
+
+      if (controlData.selectedTool === "") {
+        if (clickedElement.current.closest(".selected")) {
+          mouseEventType.current = "move";
+          setMouseStart([createPointX, createPointY]);
         }
-        setShapeCreatePoint([createPointX, createPointY]);
-        document.removeEventListener("mousemove", handleMouseMove);
-        document.removeEventListener("mouseup", handleMouseUp);
+      } else if (
+        controlData.selectedTool === "Shapes" ||
+        controlData.selectedTool === "Text"
+      ) {
+        mouseEventType.current = "create";
+        setMouseStart([createPointX, createPointY]);
       }
     }
+    document.removeEventListener("mousemove", handleShapeCreateMove);
+    document.removeEventListener("mouseup", handleShapeCreate);
+    document.removeEventListener("mousemove", handleShapeMove);
+    document.removeEventListener("mouseup", handleShapeMoveEnd);
   }
 
-  function handleMouseMove(event: any) {
+  // Update the creating shape's size
+  function handleShapeCreateMove(event: any) {
     let shapeCreateElement = document.querySelector("#shape-create");
     if (shapeCreateElement) {
-      // Update the creating shape's size
-      const [startX, startY] = shapeCreatePoint;
+      const [startX, startY] = mouseStart;
       const [mouseX, mouseY] = [event.clientX, event.clientY];
       const canvasElement = document.querySelector("#canvas");
       if (canvasElement) {
@@ -140,11 +152,11 @@ function CanvasContainer() {
   }
 
   // This mouse up event creates the shape and adds it to the selected layer
-  function handleMouseUp() {
+  function handleShapeCreate() {
     // Remove the events listening for mouse actions, as the process has reached its end
-    document.removeEventListener("mousemove", handleMouseMove);
-    document.removeEventListener("mouseup", handleMouseUp);
-    isCreatingShape.current = false;
+    document.removeEventListener("mousemove", handleShapeCreateMove);
+    document.removeEventListener("mouseup", handleShapeCreate);
+    hasClicked.current = false;
 
     const shapeCreateElement = document.querySelector("#shape-create");
     if (shapeCreateElement) {
@@ -195,14 +207,32 @@ function CanvasContainer() {
     }
     // Finally, reset the state of the start and end points
     shapeCurrentPoint.current = [-1, -1];
-    setShapeCreatePoint([-1, -1]);
+    setMouseStart([-1, -1]);
+  }
+
+  function handleShapeMove() {
+    console.log("Moving");
+  }
+
+  function handleShapeMoveEnd() {
+    console.log("Moved");
+    document.removeEventListener("mousemove", handleShapeMove);
+    document.removeEventListener("mouseup", handleShapeMoveEnd);
+    hasClicked.current = false;
+    setMouseStart([-1, -1]);
   }
 
   // Listen for mouse movements to update the shape size
-  if (shapeCreatePoint[0] >= 0 && !isCreatingShape.current) {
-    document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseup", handleMouseUp);
-    isCreatingShape.current = true;
+  if (mouseStart[0] >= 0 && !hasClicked.current) {
+    hasClicked.current = true;
+    if (mouseEventType.current === "create") {
+      document.addEventListener("mousemove", handleShapeCreateMove);
+      document.addEventListener("mouseup", handleShapeCreate);
+    } else if (mouseEventType.current === "move") {
+      console.log("Adding events");
+      document.addEventListener("mousemove", handleShapeMove);
+      document.addEventListener("mouseup", handleShapeMoveEnd);
+    }
   }
 
   let classList = [];
@@ -224,7 +254,7 @@ function CanvasContainer() {
       className={classList.join(" ")}
     >
       <Canvas
-        startPoint={shapeCreatePoint}
+        startPoint={mouseStart}
         shapeProps={{ type: controlData.shapeTool, color: controlData.color1 }}
       ></Canvas>
     </div>
